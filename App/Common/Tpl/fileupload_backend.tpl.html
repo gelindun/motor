@@ -1,0 +1,45 @@
+<div class="image-modal modal console">
+    <div class="modal-dialog" style="width:90%;max-width:900px;">
+        <div class="modal-content">
+            <div class="modal-body " style="overflow:hidden;min-height:300px;">
+                <div style="width:180px;position:absolute;overflow:hidden;">
+                    <!-- The fileinput-button span is used to style the file input field as button -->
+                    <dl class="fileinput-button">
+                        <dd id="fileuploader" style="text-align: center;">添加文件</dd>
+                    </dl>
+                    <div style="margin-top:5px;text-align:center;" class="upload-btn">
+                        <button type="button" class="btn btn-primary start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>开始上传</span>
+                        </button>
+                        <button type="button" class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>取消</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="img_list" style="margin-left:200px;">
+                    <div class="img_list_container photo_list" style="min-height: 200px;">
+                        <ul class="img_box clearfix">
+
+                            <li class='img_box_simple' style="display:none;">
+                                <span class=""><img alt="" src=""></span>
+                                <i></i>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="fanye_foot clearfix" >
+                        <ul class="ajax-page pagination-sm pagination" style="float:right;"></ul>
+                    </div>
+                    <div id="fileQueue"></div>
+                </div>
+                <!-- The global file processing state -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /#image-modal -->
+<script type="text/javascript" src="__STATIC__/common/js/upload_backend.js"></script>

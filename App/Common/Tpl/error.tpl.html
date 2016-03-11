@@ -1,0 +1,36 @@
+<?php
+    if(C('LAYOUT_ON')) {
+        echo '{__NOLAYOUT__}';
+    }
+?>
+<!DOCTYPE html>
+<html >
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+<title>错误</title>
+<style type="text/css">
+*{ padding: 0; margin: 0; }
+html{ overflow-y: scroll; }
+body{   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  line-height: 25px;
+  color: #333; }
+img{ border: 0; }
+.t-center {text-align: center;}
+</style>
+
+</head>
+<body>
+<?php if(!isset($e['trace'])){?>
+<div style='margin:20px auto;' class='t-center'>
+    <img src='/Public/static/common/img/404.gif' />
+</div>
+<?php }else{?>
+<div style='margin:20px auto;max-width: 800px;'>
+    <h3><?php echo strip_tags($e['message']);?></h3>
+    <p>FILE: <?php echo $e['file'] ;?> &#12288;LINE: <?php echo $e['line'];?></p>
+    <p><?php echo nl2br($e['trace']);?></p>
+</div>
+ <?php }?>
+</body>
+</html>
