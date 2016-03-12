@@ -1,0 +1,5 @@
+.sortable,.sub-sortable {cursor:move;}
+.type-sort .sortable {margin:5px;}.type-sort .sortable .sort-li {margin-bottom:5px;overflow: hidden;}.type-sort .sort-li .sort-blk-warp {background-color: #f4f4f4;border:1px solid #d9d9d9;text-align:left;padding:3px 10px;}
+.type-sort li .tools {display: none;float: right;color: #dd4b39;} .type-sort .sort-li .sort-blk-warp:hover .tools {display:block;}
+.type-sort .sub-sortable {margin:2px;overflow:hidden;}.type-sort .sub-sortable .sub-sort-li {margin:2px 5px;float:left;padding:2px 5px;border-bottom:1px solid #d9d9d9;}
+.type-sort .sub-sortable .sub-sort-li .tools {display: block;padding:0 5px;}.type-sort .sub-sortable .sub-sort-li:hover {background-color:#f4f4f4;}

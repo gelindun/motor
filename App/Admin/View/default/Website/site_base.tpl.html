@@ -1,0 +1,104 @@
+{{layout name="Public/layout" /}}
+<script type="text/javascript" src="__PUBLIC__/Admin/js/web_site.js"></script>
+<script type="text/javascript">$(function(){web_site.site_base();})</script>
+<!-- Main content -->
+<section class="content">
+
+    <div class="box box-primary" style="overflow:hidden;">
+        <!-- form start -->
+        <form id="siteBase" action="?" method="POST" >
+            <div class="box-body">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="title">网站名称</label>
+                        <input type="text" class="form-control w-300" name="site_title"
+                               value='{{$SITE_BASE['site_title']}}' required placeholder="填写网站名称">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">扩展宣传语</label>
+                        <input type="text" class="form-control w-500" name="site_title_ext"
+                                value='{{$SITE_BASE['site_title_ext']}}' required placeholder="扩展宣传语">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="descript">公司名</label>
+                        <input type="text" class="form-control w-300" name="com_name"
+                               value='{{$SITE_BASE['com_name']}}' required placeholder="公司名">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">公司地址</label>
+                        <input type="text" class="form-control w-500" name="com_address"
+                               value='{{$SITE_BASE['com_address']}}' required placeholder="公司地址">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">联系人</label>
+                        <input type="text" class="form-control w-200" name="com_contact"
+                               value='{{$SITE_BASE['com_contact']}}' required placeholder="联系人">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">400电话</label>
+                        <input type="text" class="form-control w-500" name="com_400"
+                               value='{{$SITE_BASE['com_400']}}' required placeholder="400电话">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">联系电话</label>
+                        <input type="text" class="form-control w-500" name="com_tel"
+                               value='{{$SITE_BASE['com_tel']}}' required placeholder="联系电话/多个电话以','分割">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">Email</label>
+                        <input type="email" class="form-control w-200" name="com_email"
+                               value='{{$SITE_BASE['com_email']}}' required placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">QQ</label>
+                        <input type="text" class="form-control w-500" name="com_QQ"
+                               value='{{$SITE_BASE['com_QQ']}}' required placeholder="多个QQ用','隔开">
+                    </div>
+                    <div class="form-group">
+                        <label for="descript">版权信息</label>
+                        <input type="text" class="form-control w-500" name="com_copy"
+                               value='{{$SITE_BASE['com_copy']}}' required placeholder="例 版权所有 © 2008-2015">
+                    </div>
+                    <div class="form-group">
+                        <label for="com_icp">备案号</label>
+                        <input type="text" class="form-control w-500" name="com_icp"
+                               value='{{$SITE_BASE['com_icp']}}' required placeholder="备案号">
+                    </div>
+                    <div class="form-group">
+                        <label for="com_intro">首页公司介绍</label>
+                        <textarea class="form-control w-500" rows="3" name="com_intro">{{$SITE_BASE['com_intro']}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="com_team">首页团队介绍</label>
+                        <textarea class="form-control w-500" rows="3" name="com_team">{{$SITE_BASE['com_team']}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="com_solution">首页解决方案</label>
+                        <textarea class="form-control w-500" rows="3" name="com_solution">{{$SITE_BASE['com_solution']}}</textarea>
+                    </div>
+
+
+<!--                    <div class="form-group">
+                        <div id="files" class="files w-500"></div>
+                        <button type="button" class="btn btn-primary img_select">
+                            <i class="glyphicon glyphicon-camera"></i>
+                            <span>选择LOGO</span>
+                        </button>
+                        <input type="hidden" name="logo"  />
+                    </div>-->
+
+                </div>
+
+            </div><!-- /.box-body -->
+            <input type='hidden' name='action' value='edit_siteBase' />
+            <div class="box-footer text-center">
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="reset" class="btn btn-info">重置</button>
+            </div>
+
+        </form>
+    </div>
+</section><!-- /.content -->
+
+
