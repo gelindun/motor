@@ -1,1 +1,59 @@
 {{layout name="Public/layout" /}}
+<script type="text/javascript" src="__PUBLIC__/Admin/js/resource.js"></script>
+<script type="text/javascript">
+    $(function(){resource.index();})
+</script>
+<!-- Main content -->
+<section class="content">
+    <div class="box" style="overflow:hidden;">
+        
+        <div class="box-header">
+            <h3 class="box-title status_warp">
+                <a class="{{eq name='filetype' value='1'}}curr{{/eq}}" href="{{:U('/File/index',array('type'=>1))}}">图片</a>
+            </h3>
+            <div class="box-tools">
+                &nbsp;
+            </div>
+        </div>
+        
+        
+        <div id="image-warp" class="box-body no-padding" style="min-height: 300px;">
+            
+            {{eq name='filetype' value='1'}}
+            {{volist name="resList.lists" id="r"}}
+            <div class="col-md-3 " style="width:auto;position:relative;">
+                <a href="{{$r.filesrc|showPic}}" class="thumbnail" target="_blank">
+                    <img src="{{$r.filethumbsrc|showPic}}" />
+                </a>
+                <i class="fa fa-remove act-remove" _id='{{$r.id}}'
+                   style="position:absolute;top:20px;right:25px;color:#f00;font-size:20px;cursor:pointer;"></i>
+            </div>
+            {{/volist}}
+            {{else /}}
+            <table class="table table-hover">
+                <tbody>
+                    <tr>
+                        <th>文件名</th>
+                        <th>文件大小</th>
+                        <th>扩展名</th>
+                        <th>添加时间</th>
+                        <th>操作</th>
+                    </tr>
+                    {{volist name="resList.lists" id="r"}}
+                    <tr>
+                        <td>{{$r.filename}}</td>
+                        <td>{{$r.sizekb}}</td>
+                        <td>{{$r.ext}}</td>
+                        <td>{{$r.create_time|date='Y-m-d H:i',###}}</td>
+                        <td><i class="fa fa-remove act-remove" _id='{{$r.id}}'></i></td>
+                    </tr>
+                    {{/volist}}
+            {{/eq}}
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            {{$resList.show}}
+        </div>
+    </div>
+
+
+</section><!-- /.content -->
