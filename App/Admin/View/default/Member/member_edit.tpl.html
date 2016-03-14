@@ -1,0 +1,106 @@
+{{layout name="Public/layout" /}}
+<script  type="text/javascript" src="__STATIC__/pcasunzip/pcasunzip.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/member.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var ue = UE.getEditor('remark',admin_options);
+        member.member_edit();
+        
+    })
+</script>
+<section class="content-header">
+    <h1>
+        <a href="/Member/index"> <button class="btn btn-primary btn-xs"> < 返回商户列表</button></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 商户</a></li>
+    </ol>
+</section>
+<!-- Main content -->
+<section class="content">
+
+    <div class="box box-primary" style="overflow:hidden;">
+
+        <!-- form start -->
+        <form id="wikiForm" action="?" method="POST">
+
+            <div class="box-body">
+                <div class="col-lg-12">
+                    <div class='form-group'>
+                        <label for="title"><button type="button" class="btn btn-primary logo_select">
+                            <span>选择图片(200*200)</span>
+                        </button></label>
+                        <div class="case_logo img_div_warp" >
+                            {{notempty name="resPage.head_img" }}
+                            <img src="{{$resPage.head_img|showPic}}" />
+                            {{/notempty}}
+                        </div>
+                        <div id="logo" class="files w-500"></div>
+                        
+                        <input type="hidden" name="head_img"
+                               value="{{notempty name='resPage.head_img' }}{{$resPage.head_img}}{{/notempty}}"
+                               style="width:100%;height:100%;"  />
+                    </div>
+                    <div class="form-group">
+                        <label for="uname">用户名</label>
+                        <input type="text" class="form-control w-300"
+                               value="{{$resPage.uname}}" {{notempty name="resPage.aid"}}readonly="readonly"{{/notempty}}
+                               name="uname" id="uname" required placeholder="填写用户名">
+                    </div>
+                    <div class="form-group">
+                        <label for="upwd">密码 
+                            {{notempty name="resPage.id"}}(更新时填写密码即修改密码){{/notempty}}</label>
+                        <input type="password" class="form-control w-300"
+                               name="upwd" id="upwd" {{empty name="resPage.id"}}required{{/empty}}
+                               placeholder="填写密码">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">选择代理商</label>
+                        <select name="aid" class="form-control w-300" >
+                            <option value="0">系统</option>
+                            {{volist name="resColumn" id="v" key="k"}}
+                            <option value="{{$v.aid}}">{{$v.uname}}</option>
+                            {{/volist}}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">启用
+                        <input type="checkbox" class=""
+                               value="1"
+                               {{notempty name="resPage.status"}}checked="checked"{{/notempty}}
+                               name="status" id="status" ></label>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contact">联系电话</label>
+                        <input type="text" class="form-control w-300"
+                               value="{{$resPage.mobile}}"
+                               name="mobile" id="contact" required placeholder="联系电话">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">联系邮箱</label>
+                        <input type="text" class="form-control w-300"
+                               value="{{$resPage.email}}"
+                               name="email" id="email" required placeholder="联系邮箱">
+                    </div>
+                    
+                    
+                    <div class="form-group">
+                        <label for="title">备注</label>
+                        <script id="remark" name="remark" style="min-height:200px;"
+                                type="text/plain" class=" w-800" required>{{$resPage["remark"]}}</script>
+                    </div>
+                </div>
+                
+            </div><!-- /.box-body -->
+            <input type="hidden" name='action' value='edit_member' />
+            <input type="hidden" name='id' value='{{$resPage["id"]}}' />
+            <div class="box-footer text-center">
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="reset" class="btn btn-info">重置</button>
+            </div>
+
+        </form>
+    </div>
+</section><!-- /.content -->
+{{include file='./App/Common/Tpl/fileupload_backend.tpl.html' /}}

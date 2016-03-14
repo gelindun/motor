@@ -1,0 +1,99 @@
+{{layout name="Public/layout" /}}
+<script type="text/javascript" src="__PUBLIC__/Admin/js/order.js"></script>
+<script type="text/javascript">
+    $(function(){
+        order.index();
+    })
+    
+</script>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+         <a href="{{:U('/Order/index',array("order_type"=>$CLEAN_FORM))}}">
+             <button class="btn 
+                {{eq name="order_type" value="$CLEAN_FORM"}}btn-primary{{else /}}btn-default{{/eq}} btn-xs"> 发动机清洗订单 </button></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 订单</a></li>
+        <li class="active">订单列表</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title status_warp">
+                <a class='{{eq name="order_status" value="0"}}curr{{/eq}}'
+                        href="{{:U('/Order/index',array("order_type"=>$order_type,"order_status" => 0))}}">未付款</a>
+                <a  class='{{eq name="order_status" value="1"}}curr{{/eq}}'
+                    href="{{:U('/Order/index',array("order_type"=>$order_type,"order_status" => 1))}}">待确认</a>
+                <a  class='{{eq name="order_status" value="2"}}curr{{/eq}}'
+                    href="{{:U('/Order/index',array("order_type"=>$order_type,"order_status" => 2))}}">已付款</a>
+                {{neq name="order_type" value="$CLEAN_FORM"}}
+                <a  class='{{eq name="order_status" value="3"}}curr{{/eq}}'
+                    href="{{:U('/Order/index',array("order_type"=>$order_type,"order_status" => 3))}}">已发货</a>
+                <a  class='{{eq name="order_status" value="4"}}curr{{/eq}}'
+                    href="{{:U('/Order/index',array("order_type"=>$order_type,"order_status" => 4))}}">已完成</a>
+                {{/neq}}
+            </h3>
+            <div class="box-tools">
+                <div class="input-group">
+                    <form action="{{:U('/Order')}}" method="get">
+                    <input type="text" name="keyword" value='{{$keyword}}'
+                           class="form-control input-sm " style="width: 150px;" placeholder="输入订单号">
+                    <div class="input-group-btn ">
+                        <i class="fa fa-search"></i><input type='submit' class="btn btn-sm btn-default" />
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody><tr>
+                        <th>ID</th>
+                        <th>订单号</th>
+                        <th>下单时间</th>
+                        <th>订单状态</th>
+                        <th>操作</th>
+                    </tr>
+                    {{volist name="resList.lists" id="v"}}
+                    <tr>
+                        <td>{{$v.id}}</td>
+                        <td>{{$v.order_id}}</td>
+                        <td>{{$v.time_add|date='Y-m-d H:i', ###}}</td>
+                        <td>{{$v['status_title']}}</td>
+                        <td>
+                            <span class='fa fa-pencil show_detail' data-toggle="tooltip" title="订单详情" ></span>
+                        </td>
+                    </tr>
+                    <tr class='order_detail'>
+                        <td colspan="5" >
+                            {{volist name="v.child.lists" id="r"}}
+                            {{eq name="v.order_type" value="$CLEAN_FORM"}}
+                            <dl class='order-info'>
+                                <dd class="metting-info">
+                                    <p class="title">{{$r['title']}}
+                                    &nbsp;
+                                    <span class="attr">
+                                            <span class="ticket">{{$r['title']}} x {{$r['count']}}</span>
+                                        <span class="amount">总金额: <b class="money">¥ {{$r['priceTotal']}}</b></span>
+                                    </span>
+                                    </p>
+                                </dd>
+                            </dl>
+                            {{/eq}}
+                            {{/volist}}
+                        </td>
+                    </tr>
+                    {{/volist}}
+                </tbody></table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            {{$resList.show}}
+        </div>
+    </div>
+
+
+</section><!-- /.content -->

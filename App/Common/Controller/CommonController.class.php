@@ -20,6 +20,7 @@ class CommonController extends Controller {
         $this->_arr['CTR_NAME'] = CONTROLLER_NAME;
         $this->_arr['MODULE_NAME'] = MODULE_NAME;
         $this->_arr['SITE_BASE'] = D('site\SiteBase')->readBase();
+        $this->_arr['CLEAN_FORM'] = C("CLEAN_FORM");
         
     }
     

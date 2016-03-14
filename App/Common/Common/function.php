@@ -1184,3 +1184,50 @@ function uploadFile($name, $arrType=array(), $arrThumb=array(),$errRtn=0) {
         }
     }
 }
+
+/**
+ * 搜索字段替换
+ */
+function Usearch($_arr,$parameter = array()){
+    $_parameter  = empty($parameter) ? I('get.') : $parameter;
+    foreach($_arr as $k => $v){
+        //$_parameter[$k] = urlencode($v);
+        $_parameter[$k] = $v;
+    }
+    
+    $_url = U(ACTION_NAME, $_parameter);
+    return $_url;
+}
+/**
+ * 一级主机名
+ * @param type $url
+ * @return string
+ */
+function hostName($_url){
+  
+  $data = parse_url($_url);
+  
+  $data = $data['host'];
+  $data = explode('.', $data);
+  $data = $data[count($data) - 2] . '.' . $data[count($data) - 1];
+ 
+  return $data;
+}
+/**
+ * 跨域名URL
+ * @param type $_key
+ * @param type $_path
+ * @param type $_params
+ * @return type
+ */
+function uDomain($_key,$_path ='',$_params = array()){
+    $_arr = array(
+        'www' => 'www',
+        'admin' => 'admin'
+    );
+    $_url =  'http://'.$_arr[$_key].C('MAIN_DOMAIN');
+    if($_path){
+        $_url .= U($_path,$_params);
+    }
+    return $_url;
+}
