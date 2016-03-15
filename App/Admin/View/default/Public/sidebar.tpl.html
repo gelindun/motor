@@ -17,10 +17,21 @@
                     <a href="{{:U('/Website/article')}}"><i class="fa fa-ellipsis-h"></i> 新闻资讯管理</a></li>
                 <li {{if condition='"__ACTION__" eq "/File/index"'}} class="active" {{/if}} >
                     <a href="{{:U('/File/index')}}"><i class="fa fa-ellipsis-h"></i> 资源管理</a></li>
+                <li {{if condition='"__ACTION__" eq "/Service/index"'}} class="active" {{/if}} >
+                    <a href="{{:U('/Service/index')}}"><i class="fa fa-ellipsis-h"></i> 售后反馈</a></li>
+                
+              </ul>
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-user"></i> <span>用户中心</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
                 <li {{if condition='"__ACTION__" eq "/Member/index"'}} class="active" {{/if}} >
                     <a href="{{:U('/Member/index')}}"><i class="fa fa-ellipsis-h"></i> 用户管理</a></li>
                 <li {{if condition='"__ACTION__" eq "/Order/index"'}} class="active" {{/if}} >
                     <a href="{{:U('/Order/index')}}"><i class="fa fa-ellipsis-h"></i> 订单管理</a></li>
+                
                 
               </ul>
             </li>

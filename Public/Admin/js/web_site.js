@@ -16,7 +16,7 @@ var web_site = {
         });
     },
     note_edit:function(){
-        $('.datetime').datetimepicker({format: "YYYY-MM-DD HH:mm"});
+        //$('.datetime').datetimepicker({format: "YYYY-MM-DD HH:mm"});
         $("#wikiForm").validate({
             submitHandler:function(form){
                 btsalert.loading();
@@ -46,68 +46,6 @@ var web_site = {
                     });
                 },"json");
             }
-        });
-    },case_list:function(){
-        $(".list-delete").css({"cursor":"pointer"}).on("click",function(){
-            if(!confirm("确定删除?")){
-                return false;
-            }
-            var _id = $(this).attr("_id");
-            if(_id){
-                btsalert.loading();
-                $.post("?",{"action":"delete_case","id":_id},function(data){
-                    btsalert.loading(1);
-                    btsalert.alert(data.msg,function(){
-                        window.location.reload();
-                    });
-                },"json");
-            }
-        });
-    },case_edit:function(){
-        $('.datetime').datetimepicker({format: "YYYY-MM-DD HH:mm"});
-        $("#wikiForm").validate({
-            submitHandler:function(form){
-                btsalert.loading();
-                $(form).ajaxSubmit({
-                    success: function (data) {
-                        btsalert.loading(1);
-                        btsalert.alert(data.msg);
-                        if(parseInt(data.status)){
-                            $(form)[0].reset();
-                        }
-                    }, dataType: 'json'
-                }); 
-            }
-        });
-        $(".qr_select").on("click",function(){
-            wzsImgUpload.callBack = function(path){
-                if($(".case_qr_code").find("img").length<1){
-                    $("<img >").appendTo(".case_qr_code");
-                }
-                $(".case_qr_code").find("img").attr("src",path);
-                $("input[name=qr_code]").val(path);
-            }
-            wzsImgUpload.rtnFileModal();
-        });
-        $(".logo_select").on("click",function(){
-            wzsImgUpload.callBack = function(path){
-                if($(".case_logo").find("img").length<1){
-                    $("<img >").appendTo(".case_logo");
-                }
-                $(".case_logo").find("img").attr("src",path);
-                $("input[name=logo]").val(path);
-            }
-            wzsImgUpload.rtnFileModal();
-        });
-        $(".pic_url_select").on("click",function(){
-            wzsImgUpload.callBack = function(path){
-                if($(".pic_url").find("img").length<1){
-                    $("<img >").appendTo(".pic_url");
-                }
-                $(".pic_url").find("img").attr("src",path);
-                $("input[name=pic_url]").val(path);
-            }
-            wzsImgUpload.rtnFileModal();
         });
     },article_list:function(){
         $(".list-delete").css({"cursor":"pointer"}).on("click",function(){

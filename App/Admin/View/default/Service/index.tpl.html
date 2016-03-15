@@ -1,17 +1,18 @@
 {{layout name="Public/layout" /}}
-<script type="text/javascript" src="__PUBLIC__/Admin/js/Member.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/web_site.js"></script>
 <script type="text/javascript">
     $(function(){
-        member.index();
+        web_site.note_list();
     })
     
 </script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <a href="/Member/member_edit"><button class="btn btn-primary btn-xs"> + 添加用户</button></a>
+        <a href="/Service/index?act=edit"><button class="btn btn-primary btn-xs"> + 添加</button></a>
     </h1>
     <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 售后反馈</a></li>
         <li class="active">列表</li>
     </ol>
 </section>
@@ -20,10 +21,10 @@
 <section class="content">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">列表</h3>
+            <h3 class="box-title">反馈列表</h3>
             <div class="box-tools">
                 <div class="input-group">
-                    <form action="{{:U('/Member/index')}}" method="get">
+                    <form action="{{:U('/Service/index')}}" method="get">
                     <input type="text" name="keyword" value='{{$keyword}}'
                            class="form-control input-sm " style="width: 150px;" placeholder="Search">
                     <div class="input-group-btn ">
@@ -37,21 +38,19 @@
             <table class="table table-hover">
                 <tbody><tr>
                         <th>ID</th>
-                        <th>名称/状态</th>
+                        <th>标题</th>
                         <th>添加时间</th>
-                        <th>备注</th>
+                        <th>描述</th>
                         <th>操作</th>
                     </tr>
                     {{volist name="resList.lists" id="r"}}
                     <tr>
                         <td>{{$r.id}}</td>
-                        <td>{{$r.uname}}
-                        ({{notempty name="r.status"}}启用{{else /}}禁用{{/notempty}})
-                        </td>
+                        <td>{{:msubstr($r['title'],0,30)}}</td>
                         <td>{{$r.time_add|date='Y-m-d H:i', ###}}</td>
-                        <td style="max-width:300px;">{{$r['remark']}}</td>
-                        <td><a class='fa fa-pencil' data-toggle="tooltip" title="编辑" href="{{:U('/Member/Member_edit/',array('id'=>$r['id']))}}"></a>
-                            &nbsp;&nbsp;<span data-toggle="tooltip" title="删除" class='fa fa-remove list-delete' _id='{{$r.id}}'></span></td>
+                        <td>{{$r['content']}}</td>
+                        <td><a class='fa fa-pencil' href="{{:U('/Service/index',array('act'=>'edit','id'=>$r['id']))}}"></a>
+                            &nbsp;&nbsp;<span class='fa fa-remove note-delete' _id='{{$r.id}}'></span></td>
                         
                     </tr>
                     {{/volist}}
