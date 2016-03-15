@@ -55,15 +55,6 @@
                                placeholder="填写密码">
                     </div>
                     <div class="form-group">
-                        <label for="title">选择代理商</label>
-                        <select name="aid" class="form-control w-300" >
-                            <option value="0">系统</option>
-                            {{volist name="resColumn" id="v" key="k"}}
-                            <option value="{{$v.aid}}">{{$v.uname}}</option>
-                            {{/volist}}
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="status">启用
                         <input type="checkbox" class=""
                                value="1"
