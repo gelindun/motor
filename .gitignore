@@ -3,3 +3,4 @@ Runtime
 Uploadfiles
 Cache
 *.bak.*
+.DS_Store
