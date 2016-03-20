@@ -6,7 +6,7 @@
           <ul class="sidebar-menu">
             <li class="header">系统管理导航 </li>
 <!--            <li class="{{eq name='CTR_NAME' value='Website'}}active{{/eq}} treeview">-->
-            <li class="active treeview">
+            <li class="treeview">
               <a href="#">
                 <i class="fa fa-dashboard"></i> <span>官网</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
@@ -42,7 +42,7 @@
               </a>
               <ul class="treeview-menu">
                 <li {{if condition='"__ACTION__" eq "/Merchant/index"'}} class="active" {{/if}} ><a href="{{:U('/Merchant/index')}}"><i class="fa fa-ellipsis-h"></i> 门店管理</a></li>
-                
+                <li {{if condition='"__ACTION__" eq "/Price/index"'}} class="active" {{/if}} ><a href="{{:U('/Price/index')}}"><i class="fa fa-ellipsis-h"></i> 定价管理</a></li>
               </ul>
             </li>
             
@@ -50,3 +50,10 @@
         </section>
         <!-- /.sidebar -->
       </aside>
+<script>
+    $(function(){
+        $.each($(".treeview-menu").find("li.active"),function(i,n){
+            $(this).parents(".treeview-menu").parent().addClass("active");
+        })
+    })
+</script>

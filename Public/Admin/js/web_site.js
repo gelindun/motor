@@ -177,6 +177,95 @@ var web_site = {
                 }); 
             }
         });
+    },merchant_edit:function(){
+        //$('.datetime').datetimepicker({format: "YYYY-MM-DD HH:mm"});
+        $("#wikiForm").validate({
+            submitHandler:function(form){
+                btsalert.loading();
+                $(form).ajaxSubmit({
+                    success: function (data) {
+                        btsalert.loading(1);
+                        btsalert.alert(data.msg);
+                        if(parseInt(data.status)){
+                            $(form)[0].reset();
+                        }
+                    }, dataType: 'json'
+                }); 
+            }
+        });
+    },map_init:function(){
+        var myAddress=$('input[name=address]').val();
+        var lng = $('input[name=lng]').val()||'116.331398';
+        var lat = $('input[name=lat]').val()||'39.897445';
+        var destPoint = new BMap.Point(lng,lat);
+        var map = new BMap.Map('map');
+        map.centerAndZoom(new BMap.Point(destPoint.lng, destPoint.lat), 12);
+        map.enableScrollWheelZoom();
+        map.addControl(new BMap.NavigationControl());
+        var marker = new BMap.Marker(destPoint);
+        map.addOverlay(marker);
+        
+        map.addEventListener('click', function(e){
+            destPoint = e.point;
+            console.log(e)
+            set_primary_input();
+            map.clearOverlays();
+            map.addOverlay(new BMap.Marker(destPoint)); 
+        });
+        
+        var ac = new BMap.Autocomplete({'input':'address','location':map});
+        ac.addEventListener('onhighlight', function(e) {
+            ac.setInputValue(e.toitem.value.business);
+        });
+        
+        ac.setInputValue(myAddress);
+        ac.addEventListener('onconfirm', function(e) {//鼠标点击下拉列表后的事件
+            var _value = e.item.value;
+            myAddress = _value.business;
+            ac.setInputValue(myAddress);
+            
+            map.clearOverlays();    //清除地图上所有覆盖物
+            local = new BMap.LocalSearch(map, {renderOptions:{map: map}}); //智能搜索
+            local.setMarkersSetCallback(markersCallback);
+            local.search(myAddress);
+        });
+        
+        var markersCallback = function(posi){
+            $('#locBtn').attr('disabled', false);
+            if(posi.length==0){
+                alert('定位失败，请重新输入详细地址或直接点击地图选择地点！');
+                return false;
+            }
+            for(var i=0; i<posi.length; i++){
+                if(i==0){
+                    destPoint = posi[0].point;
+                    set_primary_input();
+                }
+                posi[i].marker.addEventListener('click', function(data){
+                    destPoint = data.target.getPosition(0);
+                });  
+            }
+        }
+        
+        var set_primary_input=function(){
+            $('input').filter('[name=lng]').val(destPoint.lng).end()
+            .filter('[name=lat]').val(destPoint.lat);
+        }
+        
+        $('input[name=address]').keyup(function(event){
+            if(event.which == 13){
+                $('#locBtn').click();
+            }
+        });
+        
+        $('#locBtn').click(function(){
+            if(!$('input[name=address]').val()){return false};
+            $(this).attr('disabled', true);
+            local = new BMap.LocalSearch(map, {renderOptions:{map: map}}); //智能搜索
+            local.setMarkersSetCallback(markersCallback);
+            local.search($('input[name=address]').val());
+            return false;
+        });
     }
 };
 

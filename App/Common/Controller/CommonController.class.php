@@ -19,6 +19,7 @@ class CommonController extends Controller {
         $this->_arr['ACT_NAME'] = ACTION_NAME;
         $this->_arr['CTR_NAME'] = CONTROLLER_NAME;
         $this->_arr['MODULE_NAME'] = MODULE_NAME;
+        $this->_arr['map_baidu_key'] = '70c24e8f7953423f1c93588bbc0de511';
         $this->_arr['SITE_BASE'] = D('site\SiteBase')->readBase();
         $this->_arr['CLEAN_FORM'] = C("CLEAN_FORM");
         

@@ -47,6 +47,24 @@ class BaseModel extends Model{
         }
         return $_return;
     }
+
+    public function getAllPagesize($where,$order="",$rollPage=0,$group="") {
+        $_return = array();
+        
+        $_count = $this->_getCount($where);
+        $_return['count'] = $_count;
+        
+        if($group){
+            $_return['lists'] = $this->where($where)
+                ->order($order)->group($group)
+                ->select();
+        }else{
+            $_return['lists'] = $this->where($where)
+                ->order($order)
+                ->select();
+        }
+        return $_return;
+    }
     
     protected function _getCount($where) {
         return $this->where($where)->count();

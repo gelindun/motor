@@ -1,0 +1,53 @@
+{{layout name="Public/layout" /}}
+<script type="text/javascript" src="__PUBLIC__/Admin/js/web_site.js"></script>
+<script type="text/javascript">
+    $(function(){
+        web_site.price_list();
+    })
+    
+</script>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">定价列表</h3>
+            <div class="box-tools">
+                <div class="input-group">
+                    <form action="{{:U('/Service/index')}}" method="get">
+                    <input type="text" name="keyword" value='{{$keyword}}'
+                           class="form-control input-sm " style="width: 150px;" placeholder="Search">
+                    <div class="input-group-btn ">
+                        <i class="fa fa-search"></i><input type='submit' class="btn btn-sm btn-default" />
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+                <tbody><tr>
+                        <th>ID</th>
+                        <th>门店</th>
+                        <th>添加时间</th>
+                        <th>定价</th>
+                    </tr>
+                    {{volist name="resList.lists" id="r"}}
+                    <tr>
+                        <td>{{$r.id}}</td>
+                        <td>{{:msubstr($r['title'],0,30)}}</td>
+                        <td>{{$r.time_add|date='Y-m-d H:i', ###}}</td>
+                        <td>{{$r['定价']}}</td>
+                        
+                    </tr>
+                    {{/volist}}
+                </tbody></table>
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            {{$resList.show}}
+        </div>
+    </div>
+
+
+</section><!-- /.content -->

@@ -14,6 +14,12 @@ class AreaModel extends \Common\Model\BaseModel{
     protected $_validate = array(
      
     );
+    /**
+    *	获取地区数组
+    */
+    public function fetchArea($_pid=0){
+    	
+    }
     
     
 }
