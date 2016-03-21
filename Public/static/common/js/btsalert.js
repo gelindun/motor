@@ -30,4 +30,7 @@ btsalert.alert = function(msg,callback){
     $('#BtsAlertMdl').on('hidden.bs.modal', function (e) {
         callback();
     })
+    setTimeout(function(){
+        $('#BtsAlertMdl').modal('hide');
+    },2000);
 }
