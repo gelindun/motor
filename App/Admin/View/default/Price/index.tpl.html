@@ -25,28 +25,42 @@
                 </div>
             </div>
         </div><!-- /.box-header -->
-        <div class="box-body table-responsive no-padding">
-            <table class="table table-hover">
-                <tbody><tr>
-                        <th>ID</th>
-                        <th>门店</th>
-                        <th>添加时间</th>
-                        <th>定价</th>
-                    </tr>
-                    {{volist name="resList.lists" id="r"}}
-                    <tr>
-                        <td>{{$r.id}}</td>
-                        <td>{{:msubstr($r['title'],0,30)}}</td>
-                        <td>{{$r.time_add|date='Y-m-d H:i', ###}}</td>
-                        <td>{{$r['定价']}}</td>
-                        
-                    </tr>
-                    {{/volist}}
-                </tbody></table>
+        <div class="box-body table-responsive" style="min-height:300px;padding:20px 0;">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <dl class="col-data-dl">
+                    <dt>{{:msubstr($r['title'],0,30)}}泰然四路213栋xxxx [{{$r.id}}]</dt>
+                    <dd class="dd-desc"> {{$r.time_add|date='Y-m-d H:i', ###}}</dd>
+                    <dd class="price-table">
+                        <table class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <th>缸数</th>
+                            <th>定价</th>
+                        </tr>
+                    </thead>
+                    <tbody class="vote-tbody">
+                        <tr class="tr-vote">
+                            <td>4缸</td>
+                            <td class="w-100">
+                                <div class="input-group">
+                                  <div class="input-group-addon">￥</div>
+                                  <input type="text" class="form-control " placeholder="定价">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" style="text-align:right;">
+                                <button class="btn btn-sm btn-primary item-act-add"> + 保存 </button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+                    </dd>
+                </dl>
+            </div>
         </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-            {{$resList.show}}
-        </div>
     </div>
 
 
