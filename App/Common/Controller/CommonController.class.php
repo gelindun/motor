@@ -32,6 +32,7 @@ class CommonController extends Controller {
         );
         $_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
         if(strstr($_user_agent, 'micromessenger')) {
+            $this->_arr['isWeixin'] = true;
             vendor('Weixin.jssdk');
             $jssdk = new \JSSDK($this->_arr['WX_BASE']['wx_appid'], $this->_arr['WX_BASE']['wx_appsecret']);
             $this->_arr['signPackage'] = $jssdk->GetSignPackage();
