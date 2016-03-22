@@ -1,0 +1,35 @@
+{{include file="Public:header" /}}
+<script src="__PUBLIC__/Home/js/order.js" type="text/javascript"></script>
+<dl class="row bg-gray">
+    <dd class="col-xs-12">
+        <div class="widget-order-body">
+            <div class="table-order">
+                <div class="tit">确认订单信息</div>
+                <div class="con">
+                    <span class="ele"> 订单总价 : {{$amountCart}} </span>
+                </div>
+            </div>
+            {{notempty name="error"}}
+            <div class="table-con">
+                <p class="table-error">{{$error}}</p>
+            </div>
+            <div class="box-payStats">
+
+                <div class="con-btn">
+                    <span class="btn btn-primary" onclick="javascript:window.history.back()"
+                          id="err_back">返回</span>
+                </div>
+            </div>
+            {{else /}}
+            <!-- 物流等信息未完成 -->
+            {{/notempty}}
+        </div>
+
+    </dd>
+</dl>
+<script>
+    $(function(){
+        order_obj.checkout();
+    })
+</script>
+{{include file="Public:footer" /}}

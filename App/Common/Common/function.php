@@ -1221,10 +1221,17 @@ function hostName($_url){
  * @return type
  */
 function uDomain($_key,$_path ='',$_params = array()){
-    $_arr = array(
+    if(C('APP_DOMAIN_SUFFIX') == 'cc'){
+      $_arr = array(
         'www' => 'www',
         'admin' => 'admin'
-    );
+      );
+    }else{
+      $_arr = array(
+        'www' => 'm',
+        'admin' => 'ad'
+      );
+    }
     $_url =  'http://'.$_arr[$_key].C('MAIN_DOMAIN');
     if($_path){
         $_url .= U($_path,$_params);

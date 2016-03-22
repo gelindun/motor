@@ -67,7 +67,7 @@ class JSSDK {
   private function getAccessToken() {
     // access_token 应该全局存储与更新，以下代码以写入到文件中做示例
     $data = json_decode(file_get_contents($this->_cache_path . "access_token.json"));
-    if ($data->expire_time < time()) {
+    if (!$data->expire_time||$data->expire_time < time()) {
       $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=$this->appId&secret=$this->appSecret";
       $res = json_decode($this->httpGet($url));
       $access_token = $res->access_token;

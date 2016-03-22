@@ -75,7 +75,7 @@ class OrderModel extends \Common\Model\BaseModel{
             return false;
         }
         if($pay_type == '微信支付') {
-            $_return_url = C('MAIN_DOMAIN').U('/Paywx/index',array(
+            $_return_url = uDomain('www','/Paywx/index',array(
                 "oid" => $oid
             ));
         } else if($pay_type == '线下支付') {

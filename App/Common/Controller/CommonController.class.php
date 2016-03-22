@@ -10,10 +10,8 @@ use Think\Controller;
 class CommonController extends Controller {
     protected $_arr     = array(); //输出模板变量
     const ADMIN_UID = 'admin_uid';
-    const AGENT_UID = 'agent_uid';
-    const MEMBER_ID = 'member_id';//主账号
-    const MEMBER_UID = 'member_uid';//子账号
     const FRONT_UID = 'front_uid';//前台会员
+    const COOKIE_PRODUCT = 'ton_product';
 
     public function _initialize() {
         $this->_arr['ACT_NAME'] = ACTION_NAME;
@@ -22,6 +20,25 @@ class CommonController extends Controller {
         $this->_arr['map_baidu_key'] = '70c24e8f7953423f1c93588bbc0de511';
         $this->_arr['SITE_BASE'] = D('site\SiteBase')->readBase();
         $this->_arr['CLEAN_FORM'] = C("CLEAN_FORM");
+        $this->_arr['CLEAN_PRO'] = D('product\Product')->clean_form();
+
+        $this->_arr['WX_BASE'] = array(
+            'wx_token' => '267b78c8276e323c69d267a155e14f86',//token ,md5('wx92517b64ec9c35b0')
+            'wx_aeskey' => 'WENkxAekIREc0eP2HtoQOPLqiDMQnwOrRFnr0VuIeAB',//AESKey
+            'wx_appid' => 'wx92517b64ec9c35b0',//appid
+            'wx_appsecret' => '5942af545618e950a3ce6447eea8ca17',//appsecret
+            'wx_pay_mchid' => '1322218301',//WXPAY_MCHID
+            'wx_pay_key' => '293cb31f6acbaaed291a3b5fc1adc28f' //WXPAY_KEY md5(wx_pay_mchid)
+        );
+        $_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+        if(strstr($_user_agent, 'micromessenger')) {
+            vendor('Weixin.jssdk');
+            $jssdk = new \JSSDK($this->_arr['WX_BASE']['wx_appid'], $this->_arr['WX_BASE']['wx_appsecret']);
+            $this->_arr['signPackage'] = $jssdk->GetSignPackage();
+        }
+        // test start
+        $this->_arr['front_uid'] = 1;
+        //  test end
         
     }
     
@@ -89,7 +106,37 @@ class CommonController extends Controller {
         return $_info;
     }
     
-    
+    /**
+     * 返回判断前台用户
+     * @param type $_return
+     * @param type $from_url
+     * @return type
+     */
+    protected function chkLogin($_return = false,$from_url="") {
+        if(!$from_url)$from_url = urlencode("http://".$this->_arr['s_domain'] . $_SERVER['REQUEST_URI']);
+        else{
+            if(!strpos($from_url,C('COOKIE_DOMAIN'))){
+                $from_url = "http://".$this->_arr['s_domain'] . $from_url;
+            }
+            $from_url = urlencode(urldecode($from_url));
+        }
+            
+        if(empty($this->_arr['front_uid'])) {
+            if(!$_return){
+                $this->redirect('/My/login/' ,array(
+                        'jump_url' => $from_url
+                    ));
+                exit;
+            }else{
+                return array(
+                    "status" => 0,
+                    "url" => U('/My/login/',array(
+                        'jump_url' => $from_url
+                    ))
+                );
+            }
+        }
+    }
     
    
 }

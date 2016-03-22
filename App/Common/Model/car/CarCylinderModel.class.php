@@ -15,6 +15,10 @@ class CarCylinderModel extends \Common\Model\BaseModel{
     					"title" => "四缸发动机",
     					"key" => 4
     				),
+                "5" => array(
+                        "title" => "五缸发动机",
+                        "key" => 5
+                    ),
     			"6" => array(
     					"title" => "六缸发动机",
     					"key" => 6
