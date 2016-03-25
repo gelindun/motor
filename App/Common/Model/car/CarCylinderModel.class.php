@@ -7,28 +7,28 @@ namespace Common\Model\car;
  * D('car\CarCylinder')->;
  * 车型
  */
-class CarCylinderModel extends \Common\Model\BaseModel{
+class CarCylinderModel {
     
     public function cylinderList(){
     	$_arr = array(
     			"4" => array(
-    					"title" => "四缸发动机",
+    					"title" => "四缸",
     					"key" => 4
     				),
                 "5" => array(
-                        "title" => "五缸发动机",
+                        "title" => "五缸",
                         "key" => 5
                     ),
     			"6" => array(
-    					"title" => "六缸发动机",
+    					"title" => "六缸",
     					"key" => 6
     				),
     			"8" => array(
-    					"title" => "八缸发动机",
+    					"title" => "八缸",
     					"key" => 8
     				),
     			"12" => array(
-    					"title" => "十二缸发动机",
+    					"title" => "十二",
     					"key" => 12
     				)
     		);

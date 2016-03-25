@@ -48,17 +48,6 @@ $(function () {
     require = null;
         wx.config(_config);
         wx.ready(function () {
-            //wx.scanQRCode();
-            document.querySelector('.act-scan').onclick = function () {
-                wx.scanQRCode({
-                    needResult: 1,
-                    desc: '扫描二维码',
-                    success: function (res) {
-                        var result = res.resultStr;
-                        tipAlert("result:"+result)
-                    }
-                });
-             };
             
             wx.onMenuShareAppMessage({
                 "imgUrl": dataForWeixin.img || "",
@@ -127,7 +116,7 @@ $(function () {
             });
         })
         wx.error(function (res) {
-            tipAlert("result:"+JSON.stringify(res))
+            //tipAlert("result:"+JSON.stringify(res))
         });
 })
 

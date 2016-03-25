@@ -13,11 +13,11 @@ class PropertyModel extends \Common\Model\BaseModel{
     */
     public function clean_form($key = ""){
     	$_arr = array(
-    			"st" => array(
+    			"store" => array(
                         "key" => "st",
                         "title" => '门店'
                     ),
-                "cl" => array(
+                "cylinder" => array(
                         "key" => "cl",
                         "title" => '发动机缸数'
                     )
