@@ -38,6 +38,7 @@ class CommonController extends Controller {
             $this->_arr['signPackage'] = $jssdk->GetSignPackage();
         }
         $this->_arr[self::FRONT_UID] = safeGetCookie(self::FRONT_UID);
+        $this->_readSeo();
         // test start
         //$this->_arr['front_uid'] = 1;
         //  test end
@@ -106,6 +107,25 @@ class CommonController extends Controller {
             echo json_encode($custom_error);exit;
         }
         return $_info;
+    }
+
+    /**
+     * 读取各模块及方法，然后分别设置SEO信息；
+     */
+    private function _readSeo() {
+        $_file_name = C('DATA_CACHE_PATH')."site_seo.php";
+        $_www_seo = require_once $_file_name;
+        $_seo_name = strtoupper(MODULE_NAME . '_' . CONTROLLER_NAME . '_' . ACTION_NAME);
+        if(!$_www_seo[$_seo_name]['title']) {
+            $_seo_name = 'HOME_EMPTY_INDEX';
+        }
+        $p = (int)I('get.p');
+        if($p > 1) {
+            $_www_seo[$_seo_name]['title'] = $_www_seo[$_seo_name]['title'] . '_第' . $p . '页';
+        }
+        $this->_arr['seo_title'] = $_www_seo[$_seo_name]['title'];
+        $this->_arr['seo_keywords'] = $_www_seo[$_seo_name]['seo_keywords'];
+        $this->_arr['seo_description'] = $_www_seo[$_seo_name]['seo_description'];
     }
     
     /**

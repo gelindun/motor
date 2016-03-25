@@ -46,7 +46,6 @@ $(function () {
     var ua = navigator.userAgent.toLowerCase();
     define = null;
     require = null;
-    //$.getScript(wx_sdk, function () {
         wx.config(_config);
         wx.ready(function () {
             //wx.scanQRCode();
@@ -67,6 +66,7 @@ $(function () {
                 "desc": dataForWeixin.desc || dataForWeixin.title || document.title || "",
                 "title": dataForWeixin.title || "",
                 trigger: function (res) {
+                    alert("result:"+JSON.stringify(res) + " obj"+JSON.stringify(dataForWeixin))
                 },
                 success: function (res) {
                     if (success_ext)
@@ -129,7 +129,6 @@ $(function () {
         wx.error(function (res) {
             tipAlert("result:"+JSON.stringify(res))
         });
-    //})
 })
 
 function getUrlParameterAdv(lsURL) {
