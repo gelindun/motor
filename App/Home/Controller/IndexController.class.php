@@ -10,9 +10,13 @@ class IndexController extends HomeController {
     }
     
     public function index(){
-        
-       
-        
+        $this->D_AdminArticle =D('site\AdminArticle');
+       	$_where = array();
+       	$_order = array(
+            'time_show' => "DESC"
+        );
+        $_resList = $this->D_AdminArticle->rtnList($_where,10,$_order);
+        $this->_arr['rstArticle'] = $_resList;
         $this->_showDisplay();
     }
    

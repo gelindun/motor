@@ -12,9 +12,9 @@
  * @return string
  */
 function msubstr($str, $start=0, $length=50, $charset="utf-8", $suffix=false) {
-    if(function_exists("mb_substr"))
+    if(function_exists("mb_substr")){
         $slice = mb_substr($str, $start, $length, $charset);
-    elseif(function_exists('iconv_substr')) {
+    }elseif(function_exists('iconv_substr')) {
         $slice = iconv_substr($str,$start,$length,$charset);
         if(false === $slice) {
             $slice = '';
