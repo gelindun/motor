@@ -10,12 +10,13 @@
                             {{notempty name="resPage['logo']"}}
                             <li style="text-align:center;">
                                 <div class="ui-avatar-lg" style="display:inline-block;">
-                                    <span style="background-image:url({{$resPage['logo']|showPic}})"></span>
+                                    <span style="background-image:url({{$resPage['logo']|showPic}});
+                                    background-size:contain;"></span>
                                 </div>
                             </li>
                             {{/notempty}}
                             <li>
-                                <i class="ui-icon-history"></i> {{$resPage['time_show']|date='Y/m/d',###}}
+                                <i class="ui-icon-history"></i> {{$resPage['time_add']|date='Y/m/d',###}}
                                 <i class="ui-icon-scan"></i> {{$resPage['view_count']}} 人气
                             </li>
                             <li>
