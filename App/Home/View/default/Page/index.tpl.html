@@ -1,0 +1,40 @@
+{{include file="Public:header" /}}
+{{include file="Public:header_detail_inc" /}}
+        <section class="ui-container index-block">
+           
+            <section id="list">
+                <div>
+                    <div >
+                        
+                        <ul class="ui-list ui-list-pure mar-v-10">
+                            {{notempty name="resPage['pic_url']"}}
+                            <li style="text-align:center;">
+                                <div class="ui-avatar-lg" style="display:inline-block;">
+                                    <span style="background-image:url({{$resPage['pic_url']|showPic}})"></span>
+                                </div>
+                            </li>
+                            {{/notempty}}
+                            {{notempty name="resPage['time_show']"}}
+                            <li>
+                                <i class="ui-icon-history"></i> {{$resPage['time_show']|date='Y/m/d',###}}
+                            </li>
+                            {{/notempty}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-warper">
+                    {{empty name="resPage['content']"}}
+                    抱歉，小编正在抓紧时间编辑页面！
+                    {{/empty}}
+                    {{$resPage['content']}}
+                 </div>
+
+                
+            </section>
+            
+
+
+        </section><!-- /.ui-container-->
+<!--loading-->
+
+{{include file="Public:footer" /}}
