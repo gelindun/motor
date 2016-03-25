@@ -21,15 +21,14 @@
                         </div>
                         <div class="ui-list-info">
                             <h4 class="ui-nowrap">
-                                <a href="{{:U('/Article/detail',array('id'=>$r['id']))}}"
-                                   title="{{$r['title']}}">{{$r['title']}}</a></h4>
-                            <p class="ui-nowrap">{{$r.time_show|date='y-m-d',###}}</p>
+                                <a href="{{:U('/Merchants/detail',array('id'=>$r['id']))}}"
+                                   title="{{$r['store_name']}}">{{$r['store_name']}}</a></h4>
+                            <p class="ui-nowrap">{{$r['address']}}</p>
                         </div>
                     </li>
                     {{/volist}}
                 </ul>
                
-                <div style="display:none;">{{$resList.show}}</div>
                 
             </section>
             

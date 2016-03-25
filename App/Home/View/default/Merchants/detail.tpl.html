@@ -18,6 +18,9 @@
                                 <i class="ui-icon-history"></i> {{$resPage['time_show']|date='Y/m/d',###}}
                                 <i class="ui-icon-scan"></i> {{$resPage['view_count']}} 人气
                             </li>
+                            <li>
+                                <i class="ui-icon-pin"></i> <a href="http://api.map.baidu.com/marker?location={{$resPage.lat|number_format=5}},{{$resPage.lng|number_format=5}}&amp;title={{$resPage.store_name}}&amp;name={{$resPage.title}}&amp;content=&amp;output=html">{{$resPage['address']}} 导航</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
