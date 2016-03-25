@@ -26,7 +26,7 @@ class PriceController extends AdminController {
             //$_clean_form['store']['key'].'|'.$_data['store']
             $_where = array(
             		"pro_str" => $_pro_str,
-            		"pro_key" => array('like',$_clean_form['store']['key'].'|%')
+            		"pro_key" => array('like',$_clean_form['store']['key'].'|'.$_data['store'].'%')
             	);
             $D_PropertyPrice->where($_where)->delete();
             foreach($_data['price'] as $k => $v){
