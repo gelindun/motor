@@ -5,10 +5,11 @@
 <script type="text/javascript" src="__PUBLIC__/static/area/js/area_select.js"></script>
 <script type="text/javascript">
     $(function(){
+        area_obj.initArea();
         var ue = UE.getEditor('container',admin_options);
         web_site.merchant_edit();
         web_site.map_init();
-        area_obj.initArea();
+        
     })
     
 </script>
@@ -33,10 +34,24 @@
                     <div class="form-group">
                         <label for="title">{{$store_title}}标题</label>
                         <input type="text" class="form-control w-500"
-                               value="{{$resWiki.title}}"
-                               name="title" id="title" required placeholder="填写标题">
+                               value="{{$resWiki.store_name}}"
+                               name="store_name" id="store_name" required placeholder="填写标题">
                     </div>
-
+                    <div class='form-group'>
+                        <label for="title"><button type="button" class="btn btn-primary logo_select">
+                            <span>选择图片(200*200)</span>
+                        </button></label>
+                        <div class="case_logo img_div_warp" >
+                            {{notempty name="resWiki.logo" }}
+                            <img src="{{$resWiki.logo|showPic}}" />
+                            {{/notempty}}
+                        </div>
+                        <div id="logo" class="files w-500"></div>
+                        
+                        <input type="hidden" name="logo"
+                               value="{{notempty name='resWiki.logo' }}{{$resWiki.logo}}{{/notempty}}"
+                               style="width:100%;height:100%;"  />
+                    </div>
                     <div class="form-group">
                         <label for="title">所属地区</label>
                         <div class="w-500 area-content">
@@ -71,9 +86,7 @@
                                 <div class="mc" data-area="2" data-widget="tab-content" style="display: block;"></div>
                                 
                               </div>
-                            <input type="hidden" name="province" />
-                            <input type="hidden" name="city" />
-                            <input type="hidden" name="area" />
+                            <input type="hidden" name="area_str" value="{{$resWiki['area_str']}}" />
                         </div>
                     </div>
 
@@ -115,3 +128,4 @@
         </form>
     </div>
 </section><!-- /.content -->
+{{include file='./App/Common/Tpl/fileupload_backend.tpl.html' /}}

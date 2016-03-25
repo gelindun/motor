@@ -32,10 +32,10 @@ class OrderModel extends \Common\Model\BaseModel{
      */
     public function payType($_key = false){
         $_arr = array(
-            0   =>    array(
-                "title" => "线下支付",
-                "ext"   =>  "offline"
-            ),
+            // 0   =>    array(
+            //     "title" => "线下支付",
+            //     "ext"   =>  "offline"
+            // ),
             1   =>  array(
                 "title" =>  "微信支付",
                 "ext"   =>  "wechat"

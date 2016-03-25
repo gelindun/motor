@@ -16,6 +16,7 @@ class MerchantModel extends \Common\Model\BaseModel{
         if($_where){
             $rst = $this->where($_where)->data($_data)->save();
         }else{
+            $_data['time_add'] = time();
             $rst = $this->data($_data)->add();
         }
         return $rst;

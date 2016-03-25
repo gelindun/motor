@@ -37,8 +37,9 @@ class CommonController extends Controller {
             $jssdk = new \JSSDK($this->_arr['WX_BASE']['wx_appid'], $this->_arr['WX_BASE']['wx_appsecret']);
             $this->_arr['signPackage'] = $jssdk->GetSignPackage();
         }
+        $this->_arr[self::FRONT_UID] = safeGetCookie(self::FRONT_UID);
         // test start
-        $this->_arr['front_uid'] = 1;
+        //$this->_arr['front_uid'] = 1;
         //  test end
         
     }

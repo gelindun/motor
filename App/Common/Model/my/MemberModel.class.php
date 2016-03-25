@@ -12,9 +12,9 @@ class MemberModel extends \Common\Model\BaseModel{
     protected $trueTableName = 'ton_member';
     
     public function write($_data,$_where = array()){
-        if($_data['pic_url']){
-            $_data['pic_url'] = str_replace(C('DATA_UPLOADS'), '', $_data['pic_url']);
-            $_data['pic_url'] = str_replace('//', '/', $_data['pic_url']);
+        if($_data['head_img']){
+            $_data['head_img'] = str_replace(C('DATA_UPLOADS'), '', $_data['head_img']);
+            $_data['head_img'] = str_replace('//', '/', $_data['head_img']);
         }
         if($_data['date_birth']){
             $_data['date_birth'] = strtotime($_data['date_birth']);
@@ -88,8 +88,7 @@ class MemberModel extends \Common\Model\BaseModel{
             array('uname','','用户名已经存在！',0,'unique',3),
             array('uname','/^[a-zA-Z][a-zA-Z0-9_]{2,19}$/','用户名不合法！'),
             array('email','','Email已被绑定！',0,'unique',3),
-            array('mobile','','手机号码已被绑定！',0,'unique',2),
-            array('pic_url','require','请选择图片！',2)
+            array('mobile','','手机号码已被绑定！',0,'unique',2)
         );
     }
     

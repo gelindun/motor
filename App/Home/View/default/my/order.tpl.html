@@ -1,0 +1,104 @@
+{{assign name="hide_banner" value="1" /}}
+{{include file="Public:header" /}}
+<script src="__PUBLIC__/Home/js/my.js" type="text/javascript"></script>
+<div class="container">
+    
+
+{{include file="my:menu_inc" /}}
+    
+<div class="col-md-10 to-inside-content">
+<!-- Main content -->
+    <section class="content profile-warp" >
+        <ul class="ui-row my-base-info">
+            <li class="ui-col t-center">
+                <h3 style="font-size:20px;">我的订单</h3>
+            </li>
+        </ul>
+        <h4 class="to-inside-content-header to-link-tab">
+            <a href="?order_type=ticket" class="{{eq name="order_type" value="ticket"}}active{{/eq}}">清洗</a>
+            <!--a href="?order_type=product" class="{{eq name="order_type" value="product"}}active{{/eq}}">产品</a-->
+            <ul class="order_menu_ul">
+                <li class='status_warp'>
+                    <a class='{{eq name="order_status" value="0"}}curr{{/eq}}'
+                        href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 0))}}">未付款</a>
+                    <a  class='{{eq name="order_status" value="1"}}curr{{/eq}}'
+                        href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 1))}}">待确认</a>
+                    <a  class='{{eq name="order_status" value="2"}}curr{{/eq}}'
+                        href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 2))}}">已付款</a>
+                    {{neq name="order_type" value="ticket"}}
+                    <a  class='{{eq name="order_status" value="3"}}curr{{/eq}}'
+                        href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 3))}}">已发货</a>
+                    <a  class='{{eq name="order_status" value="4"}}curr{{/eq}}'
+                        href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 4))}}">已完成</a>
+                    {{/neq}}
+                </li>
+            </ul>
+        </h4>
+            {{empty name="resList.lists"}}
+                {{eq name="order_type" value="ticket"}}
+                <div style="margin:20px 0;text-align:center;font-size:18px;">
+                    您尚未参加参加任何活动？快来<a style="color:#3377aa" href="{{:U('/Activity')}}">寻找活动</a>
+                </div>
+                {{else /}}
+                <div style="margin:20px 0;text-align:center;font-size:18px;">
+                    您尚未购买任何产品</a>
+                </div>
+                {{/eq}}
+            {{else /}}
+            {{volist name="resList.lists" id="v"}}
+            <div class="ticket-order-list">
+                <h4 style="font-weight: bold;">
+                    <P>订单号：{{$v['order_id']}}
+                    <span class="status">
+                            <font class="normal">{{$v['status_title']}}</font>
+                            {{lt name="v['order_status']" value="1"}}<a href="{{:U('/Order/payment',array("order_id"=>$v['order_id']))}}">去支付</a>{{/lt}}
+                    </span>
+                    </P>
+                    <P>下单时间：{{$v['time_add']|date='Y-m-d H:i',###}}</P>
+                    
+                </h4>
+                <table class="table order-item" style="width:100%;">
+                    <tbody>
+                        {{volist name="v.child.lists" id="r"}}
+                        {{eq name="v.order_type" value="ticket"}}
+                        <tr style="border-top:1px dashed #d9d9d9;background-color:#fafafa;">
+                        <td class="order-info" style="padding:5px 10px;">
+                            <dl class="order-detail">
+                                <dd class="metting-info">
+                                    <p class="title">
+                                        <a href="{{:U('/Activity/detail',array('id'=>$r['ticket']['activity']['id']))}}"
+                                           target="_blank">{{$r['ticket']['activity']['title']}}</a>
+                                    </p>
+                                    <p class="time">
+                                        <i class="icon icon-time"></i>{{$r['ticket']['time_start']|date='Y-m-d H:i',###}} ~ {{$r['ticket']['time_end']|date='Y-m-d H:i',###}}
+                                    </p>
+                                    <p class="attr">
+                                            <span class="ticket">{{$r['ticket']['title']}} x {{$r['count']}}</span>
+                                        <span class="amount">总金额: <b class="money">¥ {{$r['ticket']['priceTotal']}}</b></span>
+                                    </p>
+                                </dd>
+                            </dl>
+                        
+                        </tr>
+                        {{/eq}}
+                        {{/volist}}
+                    </tbody>
+                </table>
+            </div>
+            {{/volist}}
+            {{/empty}}
+            <div class=" clearfix">
+                {{$resList.show}}
+            </div>
+    </section>
+    <!-- /.content -->
+</div>
+</div>
+<script src="__STATIC__/infinitescroll/jquery.infinitescroll.js" type="text/javascript"></script>
+<script>
+$(function(){
+    my.order();
+})
+</script> 
+{{include file="Public:footer" /}}
+

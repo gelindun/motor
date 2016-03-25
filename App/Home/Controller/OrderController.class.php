@@ -110,7 +110,6 @@ class OrderController extends HomeController {
      */
     public function payment($_isWeixin = false){
         $_isWeixin = $this->_arr['isWeixin'];
-
         $D_Order = D('order\Order');
         $_order_id = I('get.order_id');
         $_where = array(

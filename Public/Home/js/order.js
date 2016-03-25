@@ -1,3 +1,4 @@
+
 var order_obj = {
     confirm : function(){
         var subsum = $(".sub-sum");
@@ -11,10 +12,10 @@ var order_obj = {
             var _t = $(this);
             var _id = _t.attr("_id");
             if(confirm('确认删除门票?')){
-                btsalert.loading();
+                var el=$.loading({content:'loading...'})
                 $.post('?',{tid:_id,action:'delete_ticket'},function(data){
-                    btsalert.loading(1);
-                    btsalert.alert(data.msg, function () {
+                    el.hide();
+                    tipAlert(data.msg,function(){
                         window.location.reload();
                     });
                 },'json');
@@ -23,12 +24,23 @@ var order_obj = {
         $("#sub_order").on("click",function(){
             window.location.href = "/Order/checkout"
         });
+    },checkout:function(){
+        
     },payment:function(){
+        $(".ul_order_type").on("click","li",function(){
+            $(".ul_order_type").find("li").removeClass("curr");
+            var _t = $(this);
+            _ext = _t.attr("_ext");
+            _t.addClass("curr");
+            $("input[name=pay_type]").val(_t.html());
+            $(".ul_order_ext").find("li").hide();
+            $("li[ext="+_ext+"]").show();
+        });
         $("#sub_to_pay").on("click",function(){
             var _pay_type = $("input[name=pay_type]").val();
             var _ext = $(".ul_order_type").find("li.curr").attr("_ext");
             if(!_pay_type){
-                btsalert.alert('请选择支付方式');
+                tipAlert('请选择支付方式');
                 return false;
             }
             post_obj = {
@@ -39,46 +51,30 @@ var order_obj = {
                 post_obj.pay_remark = $("textearea").val();
             }else if(_ext === "wechat"){
                 if($("li[ext=wechat]").find("img").length){
-                    btsalert.alert('请扫描二维码进行支付');
+                    tipAlert('请选择支付方式');
                     return true;
                 }
             }
-            btsalert.loading();
+            var el=$.loading({content:'loading...'});
             $.post("?",post_obj,function(data){
-                btsalert.loading(1);
+                el.hide();
                 if(data.msg)
-                    btsalert.alert(data.msg);
+                    tipAlert(data.msg);
                 if(typeof(data.result.url)!="undefined"){
-                    if(_ext !== 'wechat'){
-                        btsalert.alert('支付跳转中,请稍候');
-                        window.location.href = data.result.url;
-                    }else{
-                        btsalert.alert('扫描二维码进行支付');
+                    if(_ext === 'wechat' && !isWeixin()){
+                        tipAlert('扫描二维码进行支付');
                         $("li[ext=wechat]").empty().append(qrCode(data.result.url));
+                    }else{
+                        tipAlert('支付跳转中,请稍候');
+                        window.location.href = data.result.url;
                     }
                 }
             },"json")
-        });
-        $(".ul_order_type").on("click","li",function(){
-            $(".ul_order_type").find("li").removeClass("curr");
-            var _t = $(this);
-            _ext = _t.attr("_ext");
-            _t.addClass("curr");
-            $("input[name=pay_type]").val(_t.html());
-            $(".ul_order_ext").find("li").hide();
-            $("li[ext="+_ext+"]").show();
         });
         if(order_status < 1){
             chkOrderstatus(order_id);
         }
     }
-}
-function qrCode(url){
-    var qr = qrcode(10, 'M');
-    qr.addData(url);
-    qr.make();
-    var img = qr.createImgTag();
-    return img;
 }
 
 function chkOrderstatus(order_id){
@@ -87,4 +83,12 @@ function chkOrderstatus(order_id){
             window.location.reload();
         }
     },'json')
+}
+
+function qrCode(url){
+    var qr = qrcode(10, 'M');
+    qr.addData(url);
+    qr.make();
+    var img = qr.createImgTag();
+    return img;
 }

@@ -1,2 +1,14 @@
+<footer class="ui-footer ui-footer-btn">
+            <ul class="ui-tiled ui-border-t menu-footer">
+                
+                <li data-href="{{:U('/Index')}}" class="act-all {{eq name='CTR_NAME' value='Index'}}curr{{/eq}}"><i class="fa fa-home"></i><div><span>首页</span></div></li>
+                <li data-href="{{:U('/Merchants')}}" class=" act-mine {{eq name='CTR_NAME' value='Merchants'}}curr{{/eq}}"><i class="fa fa-calendar"></i><div><span>门店</span></div></li>
+                <li  class="act-scan" id="qr-scan"><i class="fa fa-tint"></i><div><span>清洗</span></div></li>
+                <li data-href="{{:U('/Article')}}" class=" act-all {{eq name='CTR_NAME' value='Article'}}curr{{/eq}}"><i class="fa fa-newspaper-o"></i><div><span>资讯</span></div></li>
+                <li data-href="{{:U('/My')}}" class="act-setting  {{eq name='CTR_NAME' value='My'}}curr{{/eq}}"><i class="fa fa-user"></i><div><span>我的</span></div></li>
+            </ul>
+        </footer>
+
 </body>
+{{include file='Public:footer_inc' /}}
 </html>

@@ -63,7 +63,7 @@ class MerchantController extends AdminController {
             "s_type" => $s_type
         );
         if($_key_word){
-            $_map["title"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map["store_name"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
             $_map["content"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
             $_map['_logic'] = 'or';
             $_where['_complex'] = $_map;

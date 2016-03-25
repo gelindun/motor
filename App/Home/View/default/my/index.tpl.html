@@ -1,0 +1,61 @@
+{{include file="Public:header" /}}
+<script src="__PUBLIC__/Home/js/my.js" type="text/javascript"></script>
+    
+
+        <section class="ui-container my-base-warp">
+            
+            <ul class="ui-row my-base-info">
+                <li class="ui-col t-center">
+                    <span class="ui-avatar-lg">
+                        <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" >
+                    </span>
+                    <!--h3>{{$my_info.real_name}}</h3-->
+                </li>
+            </ul>
+            
+            <div class="my-index-list">
+                <div class="ui-border-t">
+                    <div class="ui-grp-my ui-form">
+                        <div class="ui-form-item ui-form-item-link ui-border-b">
+                            <a href="/My/profile"><i class="fa fa-pencil-square-o bg-00b7ee"></i>&nbsp;帐户基本信息</a>
+                        </div>
+                        <div class="ui-form-item ui-form-item-link ui-border-b">
+                            <a href="/My/passwd"><i class="fa fa-eye-slash bg-eb6100"></i>&nbsp;修改密码</a>
+                        </div>
+<!--                        <div class="ui-form-item ui-form-item-link ui-border-b">
+                            <a href="/my/bind"><i class="fa fa-plus bg-8fc31f"></i>&nbsp;账号绑定</a></a>
+                        </div>-->
+                    </div>
+                    
+                    <div class="ui-grp-my  ui-form">
+                        <div class="ui-form-item ui-form-item-link ui-border-b">
+                            <a href="/My/order"><i class="fa fa-bar-chart bg-eb6877"></i>&nbsp;我的订单</a>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    
+                    <div class="ui-grp-my  ui-form">
+                        <div class="ui-form-item ui-form-item-link ui-border-b">
+                            <a href="/My/logout"><i class="fa fa-sign-out bg-eb6100"></i>&nbsp;退出登录</a>
+                        </div>
+                    </div>
+                    <!--div class="ui-form-item ui-form-item-link ui-border-b">
+                        <a href="/my/message"><i class="fa fa-mail-forward"></i>我的消息</a>
+                    </div-->
+                    
+                </div>
+            </div>
+            
+            
+
+
+        </section><!-- /.ui-container-->
+
+<script>
+$(function(){
+    my.index();
+})
+</script> 
+{{include file="Public:footer" /}}

@@ -1,0 +1,54 @@
+{{include file="Public:header" /}}
+<script  type="text/javascript" src="__STATIC__/pcasunzip/pcasunzip.js"></script>
+<script src="__STATIC__/validation/jq.validation.js" type="text/javascript"></script>
+<script src="__STATIC__/jquery-upload-file/js/jquery.form.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Home/js/my.js" type="text/javascript"></script>
+
+        <section class="ui-container my-base-warp">
+            
+            <ul class="ui-row my-base-info">
+                <li class="ui-col t-center">
+                    <h3 style="font-size:20px;">修改密码</h3>
+                </li>
+            </ul>
+            
+            <form id="passwdForm" action="?" method="POST" >
+            <div class="my-index-list">
+                <div class="ui-grp-my ui-form ui-border-t">
+                    <div class="ui-form-item ui-border-b">
+                        <label>当前密码 <i class="ui-txt-red">*</i></label>
+                        <input type="password" class="form-control w-300" name="upwd"
+                                   value=""  id="upwd" placeholder="填写当前密码">
+                    </div>
+                    <div class="ui-form-item ui-border-b">
+                        <label>新密码 <i class="ui-txt-red">*</i></label>
+                        <input type="password" class="form-control w-300" name="newpasswd"
+                                    value="" id="newpasswd" placeholder="填写新密码">
+                    </div>
+                    <div class="ui-form-item ui-border-b">
+                        <label>确认密码 <i class="ui-txt-red">*</i></label>
+                        <input type="password" class="form-control w-300"
+                                   value=""
+                                   name="repasswd" id="repasswd" placeholder="再次输入密码">
+                    </div>
+                    
+                </div>
+            </div>
+                <input type="hidden" name='action' value='edit_passwd' />
+                <input type="hidden" name='id' value='{{$resPage["id"]}}' />
+                <div class="ui-btn-wrap" style="text-align: center;">
+                    <button type="submit" class="ui-btn ui-btn-primary">确定</button>
+                    <button type="reset" class="ui-btn disabled">取消</button>
+                </div>
+            </form>
+            
+
+
+        </section><!-- /.ui-container-->
+<script>
+    
+$(function(){
+    my.passwd();
+})
+</script> 
+{{include file="Public:footer" /}}

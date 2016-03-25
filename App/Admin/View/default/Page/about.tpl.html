@@ -7,7 +7,14 @@
     })
     
 </script>
-
+<section class="content-header">
+    <h1>
+        <a href="/Page/index"> <button class="btn btn-primary btn-xs"> < 返回列表</button></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> {{$pageTitle}}</a></li>
+    </ol>
+</section>
 <!-- Main content -->
 <section class="content">
 
@@ -18,22 +25,26 @@
 
             <div class="box-body">
                 <div class="col-lg-12">
-                    
-                    
-                    <div class="form-group">
-                        <label for="title">发布时间</label>
-                        <div id="datetimepicker" class="input-group datetime  w-300">
-                            <input class="form-control" name='time_show'
-                                   value="{{notempty name="resPage['time_show']"}}{{$resPage["time_show"]|date='Y-m-d h:m:s',###}}{{/notempty}}"
-                                   data-format="dd/MM/yyyy hh:mm:ss" type="text" required />
-                            <span class="input-group-addon">
-                                <i class="fa fa-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
-                            </span>
+                    <div class='form-group'>
+                        <label for="title">{{$pageTitle}}</label>
+                    </div>
+
+                    <div class='form-group'>
+                        <label for="title"><button type="button" class="btn btn-primary logo_select">
+                            <span>选择图片(200*200)</span>
+                        </button></label>
+                        <div class="case_logo img_div_warp" >
+                            {{notempty name="resPage.pic_url" }}
+                            <img src="{{$resPage.pic_url|showPic}}" />
+                            {{/notempty}}
                         </div>
+                        <div id="pic_url" class="files w-500"></div>
                         
+                        <input type="hidden" name="pic_url"
+                               value="{{notempty name='resPage.pic_url' }}{{$resPage.pic_url}}{{/notempty}}"
+                               style="width:100%;height:100%;"  />
                     </div>
                     
-                   
                     
                     <div class="form-group">
                         <label for="title">详细内容</label>
@@ -44,7 +55,7 @@
                 
             </div><!-- /.box-body -->
             <input type="hidden" name='action' value='edit_page' />
-            <input type="hidden" name='s_type' value='{{$resPage["s_type"]}}' />
+            <input type="hidden" name='s_key' value='{{$s_key}}' />
             <div class="box-footer text-center">
                 <button type="submit" class="btn btn-primary">提交</button>
                 <button type="reset" class="btn btn-info">重置</button>
@@ -53,3 +64,4 @@
         </form>
     </div>
 </section><!-- /.content -->
+{{include file='./App/Common/Tpl/fileupload_backend.tpl.html' /}}

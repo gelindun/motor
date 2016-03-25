@@ -165,7 +165,17 @@ var web_site = {
             }
          });
     },about:function(){
-        $('.datetime').datetimepicker({format: "YYYY-MM-DD HH:mm"});
+        $(".logo_select").on("click",function(){
+            wzsImgUpload.callBack = function(path){
+                if($(".case_logo").find("img").length<1){
+                    $("<img >").appendTo(".case_logo");
+                }
+                $(".case_logo").find("img").attr("src",path);
+                $("input[name=pic_url]").val(path);
+            }
+            wzsImgUpload.rtnFileModal();
+        });
+        
         $("#wikiForm").validate({
             submitHandler:function(form){
                 btsalert.loading();
@@ -193,6 +203,18 @@ var web_site = {
                 }); 
             }
         });
+
+        $(".logo_select").on("click",function(){
+            wzsImgUpload.callBack = function(path){
+                if($(".case_logo").find("img").length<1){
+                    $("<img >").appendTo(".case_logo");
+                }
+                $(".case_logo").find("img").attr("src",path);
+                $("input[name=logo]").val(path);
+            }
+            wzsImgUpload.rtnFileModal();
+        });
+
     },map_init:function(){
         var myAddress=$('input[name=address]').val();
         var lng = $('input[name=lng]').val()||'116.331398';

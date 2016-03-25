@@ -2,7 +2,7 @@
 
 namespace Admin\Controller;
 use Think\Controller;
-//s_type about 关于我们 solution 解决方案
+//s_type about,company,product,help
 class PageController extends AdminController {
    
 
@@ -10,56 +10,53 @@ class PageController extends AdminController {
          parent::_initialize();
          
     }
-    
-    public function about(){
+
+    public function index(){
         $D_Page = D('site\Page');
-        $_where = array(
-            "s_type" => "about"
-        );
-        $_page = $D_Page->where($_where)->find();
-        if($_page){
-            $_where_p = $_where;
-        }
-        $_page['s_type'] = "about";
+        $this->_arr['keyArr'] = $D_Page->pgKeys();
+        $this->note_rules = $D_Page->vRule();
         if(I('post.action') === 'edit_page'){
             $_data = I('post.');
+            $_data['time_show'] = time();
             unset($_data['action']);
-            $_data['time_show'] = strtotime($_data['time_show']);
-            if($D_Page->write($_data,$_where_p)){
+            $rules = $this->note_rules;
+            if ($D_Page->validate($rules)->create($_data)){
+                $_where = array();
+                $_where_s = array(
+                        's_key' => $_data['s_key']
+                    );
+                if($D_Page->where($_where_s)->find()){
+                    $_where = $_where_s;
+                }
+                $D_Page->write($_data,$_where);
                 pushJson('更新成功');
             }else{
-                pushError ('更新失败');
+                pushError ($D_Page->getError());
             }
         }
-        $_page['content'] = htmlspecialchars_decode($_page['content']);
-        $this->_arr['resPage'] = $_page;
-        $this->_showDisplay();
-    }
-    
-    public function solution(){
-        $D_Page = D('site\Page');
-        $_where = array(
-            "s_type" => "solution"
-        );
-        $_page = $D_Page->where($_where)->find();
-        if($_page){
-            $_where_p = $_where;
-        }
-        $_page['s_type'] = "solution";
-        if(I('post.action') === 'edit_page'){
-            $_data = I('post.');
-            unset($_data['action']);
-            $_data['time_show'] = strtotime($_data['time_show']);
-            if($D_Page->write($_data,$_where_p)){
-                pushJson('更新成功');
-            }else{
-                pushError ('更新失败');
+        $_action = I('get.act');
+        if($_action === 'edit'){
+            $_tem_str = 'about';
+            
+            $_key = I('get.key');
+            if($this->_arr['keyArr'][$_key]){
+                $_where = array('s_key'=>$_key);
+                $_resPage = $D_Page->where($_where)->find();
+                if($_resPage){
+                    $this->_arr['resPage'] = $_resPage;
+                    $this->_arr['resPage']['content'] = htmlspecialchars_decode($this->_arr['resPage']['content']);
+                }
             }
+            $this->_arr['pageTitle'] = $this->_arr['keyArr'][$_key]['title'];
+            $this->_arr['s_key'] = $_key;
+            $this->_showDisplay($_tem_str);
+            exit;
         }
-        $_page['content'] = htmlspecialchars_decode($_page['content']);
-        $this->_arr['resPage'] = $_page;
         $this->_showDisplay();
     }
 
+    
+    
+   
     
 }

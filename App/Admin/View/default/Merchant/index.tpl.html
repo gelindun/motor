@@ -46,10 +46,10 @@
                     {{volist name="resList.lists" id="r"}}
                     <tr>
                         <td>{{$r.id}}</td>
-                        <td>{{:msubstr($r['title'],0,30)}}</td>
+                        <td>{{:msubstr($r['store_name'],0,30)}}</td>
                         <td>{{$r.time_add|date='Y-m-d H:i', ###}}</td>
                         <td>{{$r['address']}}</td>
-                        <td><a class='fa fa-pencil' href="{{:U('/Service/index',array('act'=>'edit','id'=>$r['id']))}}"></a>
+                        <td><a class='fa fa-pencil' href="{{:U('/Merchant/index',array('act'=>'edit','id'=>$r['id']))}}"></a>
                             &nbsp;&nbsp;<span class='fa fa-remove note-delete' _id='{{$r.id}}'></span></td>
                         
                     </tr>

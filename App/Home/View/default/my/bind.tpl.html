@@ -1,0 +1,31 @@
+{{include file="Public:header" /}}
+<script  type="text/javascript" src="__STATIC__/pcasunzip/pcasunzip.js"></script>
+<script src="__STATIC__/validation/jq.validation.js" type="text/javascript"></script>
+<script src="__STATIC__/jquery-upload-file/js/jquery.form.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Home/js/my.js" type="text/javascript"></script>
+
+        <section class="ui-container my-base-warp">
+           <ul class="ui-row my-base-info">
+                <li class="ui-col t-center">
+                    <h3 style="font-size:20px;">绑定账号</h3>
+                </li>
+            </ul>
+            <div class="my-index-list bind-list">
+                <div class="ui-form ui-border-t">
+                    <div class="ui-form-item ui-form-item-switch ui-border-b">
+                        <p><i  class="fa fa-wechat"></i> 微信账号{{notempty name="resPage.wechat"}}:{{$resPage['wechat']}}{{/notempty}}</p>
+                        <label class="ui-switch">
+                            <button class="ui-btn ui-btn-primary">绑定</button>
+                        </label>
+                    </div>
+                </div>
+            </div>
+                
+        </section><!-- /.ui-container-->
+<script>
+    
+$(function(){
+    my.bind();
+})
+</script> 
+{{include file="Public:footer" /}}

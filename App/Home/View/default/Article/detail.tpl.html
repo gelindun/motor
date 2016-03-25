@@ -1,0 +1,36 @@
+{{include file="Public:header" /}}
+{{include file="Public:header_detail_inc" /}}
+        <section class="ui-container index-block">
+           
+            <section id="list">
+                <div>
+                    <div >
+                        
+                        <ul class="ui-list ui-list-pure mar-v-10">
+                            {{notempty name="resPage['logo']"}}
+                            <li style="text-align:center;">
+                                <div class="ui-avatar-lg" style="display:inline-block;">
+                                    <span style="background-image:url({{$resPage['logo']|showPic}})"></span>
+                                </div>
+                            </li>
+                            {{/notempty}}
+                            <li>
+                                <i class="ui-icon-history"></i> {{$resPage['time_show']|date='Y/m/d',###}}
+                                <i class="ui-icon-scan"></i> {{$resPage['view_count']}} 人气
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-warper">
+                    {{$resPage['content']}}
+                 </div>
+
+                
+            </section>
+            
+
+
+        </section><!-- /.ui-container-->
+<!--loading-->
+
+{{include file="Public:footer" /}}

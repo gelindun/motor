@@ -9,18 +9,60 @@ class ArticleController extends HomeController {
 
     public function _initialize() {
         parent::_initialize();
-        $this->_arr['title'] = "新闻资讯";
-        
+        $this->D_AdminArticle =D('site\AdminArticle');
+        $this->D_AdminArticleType =D('site\AdminArticleType');
+        $_type = I('get.tid');
+        $_order_type = array(
+            "order_id" => "DESC",
+            "id" => "DESC"
+        );
+        $_where_type = array();
+        $_where_type['pid'] = $_type?$_type:0;
+        $_resTypeList = $this->D_AdminArticleType->where($_where_type)->order($_order_type)->select();
+        $this->_arr['resTypeList'] = $_resTypeList;
     }
     
     public function index(){
+        $_type = I('get.tid');
+        $_where = array();
+        if($_type){
+            $_where['tid'] = $_type;
+        }
+        $_order = array(
+            'time_show' => "DESC"
+        );
+        $_resList = $this->D_AdminArticle->rtnList($_where,20,$_order);
         
+        foreach($_resList['lists'] as $k=>$v){
+            $_resList['lists'][$k]['content'] = htmlspecialchars_decode($v['content']);
+            $_resList['lists'][$k]['content'] = strip_tags($_resList['lists'][$k]['content']);
+            $_where_tp = array(
+                "id" => $v['tid']
+            );
+            $_resList['lists'][$k]['type_name'] = $this->D_AdminArticleType->where($_where_tp)->getField('title');
+        }
+        $this->_arr['resList'] = $_resList;
+        $this->_arr['s_type'] = $_type;
         
-        $this->_showDisplay('article:index');
+        $this->_showDisplay('Article:index');
     }
     
     public function detail(){
+        $_id = (int)I('get.id');
         
-        $this->_showDisplay('article:detail');
+        $_where = array(
+            'id' => $_id
+        );
+        $_rst = $this->D_AdminArticle->where($_where)->find();
+        if(!$_rst){
+            $this->redirect('/');
+        }
+        $_rst['content'] = htmlspecialchars_decode($_rst['content']);
+        $this->_arr['resPage'] = $_rst;
+        $this->D_AdminArticle->where($_where)->setInc('view_count');
+        
+        $this->_arr['seo_title'] = $this->_arr['seo_keywords'] = $_rst['title'];
+        $this->_arr['seo_description'] = msubstr(strip_tags($_rst['content']),0,100);
+        $this->_showDisplay('Article:detail');
     }
 }

@@ -1,0 +1,14 @@
+<div class="ui-header">
+    {{if condition="$CTR_NAME eq 'Article'" }}
+    <form action="{{:U('/Article')}}" method="GET">
+    {{assign name="placeholder_word" value="资讯" /}}
+    {{/if}}
+    
+    <div class="search-wrap">
+        <input type="text" name="key" placeholder="输入{{$placeholder_word}}关键词" />
+    </div>
+    <button type="submit" class="head-t-r">
+        <i class="fa fa-search"></i>
+    </button>
+    </form>
+</div>

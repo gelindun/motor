@@ -22,7 +22,7 @@ var member = {
                     $("<img >").appendTo(".case_logo");
                 }
                 $(".case_logo").find("img").attr("src",path);
-                $("input[name=pic_url]").val(path);
+                $("input[name=head_img]").val(path);
             }
             wzsImgUpload.rtnFileModal();
         });

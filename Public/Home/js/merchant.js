@@ -1,0 +1,5 @@
+var merchant = {
+	index : function(){
+
+	}
+}
