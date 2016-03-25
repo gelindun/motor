@@ -66,7 +66,7 @@ $(function () {
                 "desc": dataForWeixin.desc || dataForWeixin.title || document.title || "",
                 "title": dataForWeixin.title || "",
                 trigger: function (res) {
-                    alert("result:"+JSON.stringify(res) + " obj"+JSON.stringify(dataForWeixin))
+                    //alert("result:"+JSON.stringify(res) + " obj"+JSON.stringify(dataForWeixin))
                 },
                 success: function (res) {
                     if (success_ext)

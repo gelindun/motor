@@ -25,7 +25,8 @@ var web_site = {
                         btsalert.loading(1);
                         btsalert.alert(data.msg);
                         if(parseInt(data.status)){
-                            $(form)[0].reset();
+                            if(typeof(data.result.url)!="undefined")
+                                window.location.href = data.result.url;
                         }
                     }, dataType: 'json'
                 }); 
@@ -73,7 +74,8 @@ var web_site = {
                         btsalert.loading(1);
                         btsalert.alert(data.msg);
                         if(parseInt(data.status)){
-                            $(form)[0].reset();
+                            if(typeof(data.result.url)!="undefined")
+                                window.location.href = data.result.url;
                         }
                     }, dataType: 'json'
                 }); 
@@ -197,7 +199,8 @@ var web_site = {
                         btsalert.loading(1);
                         btsalert.alert(data.msg);
                         if(parseInt(data.status)){
-                            $(form)[0].reset();
+                            if(typeof(data.result.url)!="undefined")
+                                window.location.href = data.result.url;
                         }
                     }, dataType: 'json'
                 }); 

@@ -3,11 +3,14 @@
     <form action="{{:U('/Article')}}" method="GET">
     {{assign name="placeholder_word" value="资讯" /}}
     {{/if}}
-    
+    {{if condition="$CTR_NAME eq 'Merchants'" }}
+    <form action="{{:U('/Merchants')}}" method="GET">
+    {{assign name="placeholder_word" value="门店" /}}
+    {{/if}}
     <div class="search-wrap">
-        <input type="text" name="key" placeholder="输入{{$placeholder_word}}关键词" />
+        <input type="text" name="key" value="{{$keyWord}}" placeholder="输入{{$placeholder_word}}关键词" />
     </div>
-    <button type="submit" class="head-t-r">
+    <button type="submit" class="head-t-r" style="z-index:1000;">
         <i class="fa fa-search"></i>
     </button>
     </form>

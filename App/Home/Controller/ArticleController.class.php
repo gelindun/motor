@@ -28,6 +28,17 @@ class ArticleController extends HomeController {
         if($_type){
             $_where['tid'] = $_type;
         }
+        $_key_word = $this->_arr['key_word'] = I('get.key');
+        $_where = array();
+        $_order = array(
+            'id' => "DESC"
+        );
+        if($_key_word){
+            $_map["title"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map["content"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map['_logic'] = 'or';
+            $_where['_complex'] = $_map;
+        }
         $_order = array(
             'time_show' => "DESC"
         );
@@ -43,7 +54,7 @@ class ArticleController extends HomeController {
         }
         $this->_arr['resList'] = $_resList;
         $this->_arr['s_type'] = $_type;
-        
+        $this->_arr['keyWord'] = $_key_word;
         $this->_showDisplay('Article:index');
     }
     

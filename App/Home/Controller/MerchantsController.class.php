@@ -13,10 +13,17 @@ class MerchantsController extends HomeController {
     }
     
     public function index(){
+        $_key_word = $this->_arr['key_word'] = I('get.key');
         $_where = array();
         $_order = array(
             'id' => "DESC"
         );
+        if($_key_word){
+            $_map["store_name"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map["content"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map['_logic'] = 'or';
+            $_where['_complex'] = $_map;
+        }
         $_resList = $this->D_Merchant->getAllPagesize($_where,$_order);
         
         foreach($_resList['lists'] as $k=>$v){
@@ -24,7 +31,7 @@ class MerchantsController extends HomeController {
             $_resList['lists'][$k]['content'] = strip_tags($_resList['lists'][$k]['content']);
         }
         $this->_arr['resList'] = $_resList;
-        
+        $this->_arr['keyWord'] = $_key_word;
         $this->_showDisplay();
     }
     

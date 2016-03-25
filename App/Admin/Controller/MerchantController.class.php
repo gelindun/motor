@@ -24,7 +24,7 @@ class MerchantController extends AdminController {
                     );
                 }
                 $D_Merchant->write($_data,$_where);
-                pushJson('更新成功');
+                pushJson('更新成功',array('url'=>U('/Merchant/index')));
             }else{
                 pushError ($D_Merchant->getError());
             }

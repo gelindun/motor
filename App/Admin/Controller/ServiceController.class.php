@@ -23,7 +23,7 @@ class ServiceController extends AdminController {
                     );
                 }
                 $D_Service->write($_data,$_where);
-                pushJson('更新成功');
+                pushJson('更新成功',array('url'=>U('/Service/index')));
             }else{
                 pushError ($D_Service->getError());
             }
