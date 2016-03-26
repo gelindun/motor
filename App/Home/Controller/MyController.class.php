@@ -140,12 +140,16 @@ class MyController extends HomeController {
 
     }
    
-    
+    /**
+    *  目前只开放微信登录， 如需开放用户名密码登录
+    *  设置 $_weixinOnly = false;
+    **/
     public function login(){
         if($this->_arr[self::FRONT_UID]&&I('get.action') !== 'bind'){
             redirect("/");
         }
-        if(I('get.type') == 'weixin'){
+        $_weixinOnly = true;
+        if(I('get.type') == 'weixin' || $_weixinOnly){
             vendor('Weixin.wechat', '', '.class.php');
             $options = array(
                 'token'=> $this->_arr['WX_BASE']['wx_token'],
