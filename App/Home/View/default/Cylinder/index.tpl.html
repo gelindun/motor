@@ -1,9 +1,92 @@
 {{include file="Public:header" /}}
+<style>body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}</style>
 <script src="__PUBLIC__/Home/js/cylinder.js" type="text/javascript"></script>
     <body ontouchstart>
-      <h3 style="margin:20px auto;text-align:center;">
-        <img src="__PUBLIC__/Home/img/logo.png" width="175">
+      <h3 class="">
+        <span class="ui-avatar-lg" style="margin:30px auto;">
+            <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" >
+        </span>
       </h3>
+
+      <div class="ui-form ui-border-t">
+        <form action="#">
+            <div class="ui-form-item ui-form-item-l ui-border-b">
+                <label class="ui-border-r">
+                    您的称呼
+                </label>
+                <input type="text" value="测试" placeholder="怎么称呼您">
+                </a>
+            </div>
+            
+            <div class="ui-form-item ui-form-item-l ui-border-b">
+                <label class="ui-border-r">
+                    联系手机
+                </label>
+                <input type="text" placeholder="您的联系电话">
+                </a>
+            </div>
+            <div class="ui-form-item ui-form-item-l ui-border-b">
+                <label class="ui-border-r">
+                    车牌号码
+                </label>
+                <input type="text" placeholder="您的车牌号码" value="粤">
+            </div>
+            <div class="ui-form-item ui-form-item-l ui-border-b">
+                <label >
+                    汽车品牌
+                </label>
+                <div class="ui-select-group">
+                    <div class="ui-select">
+                        <select>
+                            <option>奥迪</option>
+                            <option selected>大众</option>
+                            <option>本田</option>
+                        </select>
+                    </div>
+                    <div class="ui-select">
+                        <select>
+                            <option>一汽奥迪</option>
+                            <option selected>进口奥迪</option>
+                            <option>上海大众</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-form-item ui-form-item-l ui-border-b">
+                <label >
+                    选择门店
+                </label>
+                <div class="ui-select">
+                        <select name="store_id">
+                            <option>深圳香蜜湖</option>
+                            <option selected>深圳泰然四路颈松大厦店</option>
+                            <option>广州本田4s店</option>
+                        </select>
+                </div>
+            </div>
+            <div class="ui-label-list ui-border-b" style="padding:10px 0;text-align:center;">
+                <label class="ui-label ui-tag-selected">四缸</label>
+                <label class="ui-label">五缸</label>
+                <label class="ui-label">六缸</label>
+                <label class="ui-label">八缸</label>
+                <label class="ui-label">十二缸</label>
+            </div>
+            <div class="ui-form-item ui-form-item-l ui-border-b">
+                <label class="ui-border-r">
+                    合计：￥
+                </label>
+                <input type="text" value="100" placeholder="0" readonly="true">
+                </a>
+            </div>
+            <div class="ui-btn-wrap" style="text-align:center;">
+                <button class="ui-btn ui-btn-primary">
+                    确认下单
+                </button>
+            </div>
+        </form>
+    </div>
+
+
         
 {{include file="Public:footer" /}}
 
