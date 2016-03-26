@@ -20,7 +20,8 @@ class MyController extends HomeController {
             if ($this->_arr['CTR_NAME'] == 'My' && 
                     ($this->_arr['ACT_NAME'] == 'login'|| 
                     $this->_arr['ACT_NAME'] == 'register' ||
-                    $this->_arr['ACT_NAME'] == 'agreement') ) {
+                    $this->_arr['ACT_NAME'] == 'agreement'||
+                    $this->_arr['ACT_NAME'] == 'snsCallBack') ) {
                
             } else {
                 $this->redirect('/My/login');
@@ -34,52 +35,9 @@ class MyController extends HomeController {
     public function snsCallBack(){
         
         $D_MemberBind = D('my\MemberBind');
+        $D_Member = D('my\Member');
         $D_User = D('my\Member');
-        if(I('post.do_action') && $_do_action = I('post.do_action')){
-            $_data = I('post.','','trim');
-            $_bind_info = array(
-                "type_uid" => $_data['type_uid'],
-                "type" => $_data['type']
-            );
-            unset($_data['type_uid']);
-            unset($_data['type']);
-            if($_do_action == 'user_login'){
-                unset($_data['do_action']);
-                $rtn = $this->_do_login($_data,1);
-                if($rtn){
-                    $this->setCookie($rtn);
-                    $_where = array(
-                        'type_uid' => $_bind_info['type_uid'],
-                        'type' => $_bind_info['type'],
-                        'front_uid' => $rtn['id']
-                    );
-                    $_binded = $D_MemberBind->where($_where)->find();
-                    $_where_temp = array(
-                        'type' => $_bind_info['type'],
-                        'front_uid' => $rtn['id']
-                    );
-                    $_bindAcount = $D_MemberBind->where($_where_temp)->find();
-                    if($_binded){
-                        pushJson("绑定失败，您登陆的账号已被绑定");
-                    }else if($_bindAcount){
-                        pushJson("绑定失败，您绑定的账号已被占用");
-                    }else{
-                       $D_MemberBind->updateUid($rtn['id'],$_bind_info);
-                        pushJson('绑定成功',array('redirect'=>$this->jump_url)); 
-                    }
-                    
-                }
-                pushError('绑定失败');
-            }else if($_do_action == 'user_register'){
-                $_rst =  $D_User->write($_data);
-                if(!is_array($_rst)){
-                    $this->setCookie($_rst);
-                    $D_MemberBind->updateUid($_rst,$_bind_info);
-                    pushJson('绑定成功',array('redirect'=>$this->jump_url));
-                }
-                pushError('绑定失败'.$_rst['msg']);
-            }
-        }
+      
         
         if(safeGetCookie('user_info')){
             $token = safeGetCookie('token');
@@ -109,6 +67,7 @@ class MyController extends HomeController {
         }
         
         $_bind_rtn = $D_MemberBind->addBind($_data);
+
         if($_bind_rtn['status']){
             $_bind_info = $_bind_rtn['bind_info'];
             if($this->_arr['front_uid']){
@@ -133,6 +92,29 @@ class MyController extends HomeController {
                     $this->_arr['error'] = "绑定失败，您登陆的账号已被绑定";
                 }
             }else if(!$this->_arr['front_uid']){
+                if($_data['type'] == "weixin"){
+                    $_data_reg = array(
+                        "uname" => "#".$_data['type'].dechex(time().rand(100,999)),
+                        "real_name" => $_data["nick"],
+                        "head_img" => $_data["head"]
+                    );
+                    $_rst =  $D_User->addData($_data_reg);
+                    if(!is_array($_rst) && $_rst){
+                        $D_MemberBind->where(array(
+                                "type" => $_data['type'],
+                                "type_uid" => $_data['type_uid']
+                            ))->data(
+                                array("front_uid" => $_rst)
+                            )->save();
+                        $_rtn = $D_User->where(array(
+                            'uname' => $_data_reg['uname']
+                        ))->find();
+                        $this->setCookie($_rtn);
+                        redirect(urldecode($this->jump_url));
+                        //pushJson('注册成功',array('redirect'=>$this->jump_url));
+                    }
+                    $this->_arr['error'] = "绑定失败，请检查网络状况是否正常！";
+                }
                 
             }else{
                 $this->_arr['error'] = "绑定失败，您登陆的账号已被绑定";
@@ -160,6 +142,9 @@ class MyController extends HomeController {
    
     
     public function login(){
+        if($this->_arr[self::FRONT_UID]&&I('get.action') !== 'bind'){
+            redirect("/");
+        }
         if(I('get.type') == 'weixin'){
             vendor('Weixin.wechat', '', '.class.php');
             $options = array(
@@ -175,7 +160,7 @@ class MyController extends HomeController {
                 $_data = array(
                     'type' => 'weixin',
                     'type_name' => '微信',
-                    'type_uid' => $_jsonRes['unionid'],
+                    'type_uid' => $_jsonRes['unionid']?$_jsonRes['unionid']:$_jsonRes['openid'],
                     'oauth_token' => $_json['access_token'],
                     'name' => $_jsonRes['nickname'],
                     'nick' => $_jsonRes['nickname'],
@@ -194,9 +179,7 @@ class MyController extends HomeController {
             }
             exit;
         }
-        if($this->_arr[self::FRONT_UID]&&I('get.action') !== 'bind'){
-            redirect("/");
-        }
+        
         
         $_callBack = I('get.type');
         if($_callBack){

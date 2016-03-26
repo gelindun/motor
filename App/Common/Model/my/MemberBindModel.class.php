@@ -52,6 +52,11 @@ class MemberBindModel extends \Common\Model\BaseModel{
                 $_return['status'] = 0;
                 $_return['msg'] = '帐号已经绑定';
                 $_return['front_uid'] = $bindInfo['front_uid'];
+                D('Member')->where(array(
+                		"id" => $bindInfo['front_uid']
+                	))->data(array(
+                		"head_img" => $_data['head']
+                	))->save();
             }else{
                 $_where = array(
                     'type_uid' => $bindInfo['type_uid'],

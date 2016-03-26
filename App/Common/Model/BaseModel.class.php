@@ -80,4 +80,34 @@ class BaseModel extends Model{
                 ->select();
         return $_res;
     }
+
+    /**
+     * 修改相关信息
+     * @param type $where
+     * @return type
+     */
+    public function saveData($data, $where = array()) {
+        $this->create();
+        return $this->where($where)->save($data);
+    }
+    
+    /**
+     * 增加相关信息
+     * @param type $where
+     * @return type
+     */
+    public function addData($data) {
+        if($this->create($data)) {
+             return $this->add();
+        }
+    }
+    
+    /**
+     * 删除相关信息
+     * @param type $where
+     * @return type
+     */
+    public function deleteData($where) {
+        return $this->where($where)->delete();
+    }
 }
