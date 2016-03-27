@@ -8,3 +8,11 @@ $.validator.setDefaults({
     },
     errorElement: "i",
 });
+$.validator.addMethod("UserName",
+    function (value, element) {
+        return this.optional(element) || /^[a-zA-Z][a-zA-Z0-9_]{1,19}$/.test(value);
+    }, "用户名只能包括中文字、英文字母、数字和下划线");
+$.validator.addMethod("mobile",
+    function (value, element) {
+         return this.optional(element) || /^1(3|4|5|6|7|8)[0-9]{9}$/.test(value);
+    }, "请确认手机号格式正确");
