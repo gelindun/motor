@@ -48,7 +48,7 @@ class PaywxController extends HomeController {
     public function index(){
         $_isWeixin = strpos($_SERVER['HTTP_USER_AGENT'], 'MicroMessenger');
         $_fromPc = I('get.from') === 'pc'?true:false;
-        $notify_url = $this->_arr['s_domain'] . U('/Paywx/notify_url',array(
+        $notify_url = uDomain('www','/Paywx/notify_url',array(
             'oid' => I('get.oid')
         ));
         //使用统一支付接口
@@ -64,7 +64,7 @@ class PaywxController extends HomeController {
             $jsApi = new \JsApi_pub();
             if(!I('get.code')) {
                 //触发微信返回code码
-                //'http://test.itokit.com/'
+                //'http://m.green-ton.com/'
                 $_pay_url = uDomain('www').$_SERVER['REQUEST_URI'];
                 C('WXPAY_JS_API_CALL_URL',urlencode($_pay_url));
                 $_url = $jsApi->createOauthUrlForCode(C('WXPAY_JS_API_CALL_URL'));
@@ -132,7 +132,7 @@ class PaywxController extends HomeController {
         }
         $returnXml = $notify->returnXml();
         $log_name= C('DATA_CACHE_PATH')."/notify_url.log";//log文件路径
-
+        //$this->log_result($log_name,"pay test:".M()->_sql());
         if($notify->checkSign() == TRUE)
         {
             if ($notify->data["return_code"] == "FAIL") {
@@ -145,11 +145,12 @@ class PaywxController extends HomeController {
                 $out_trade_no = $notify->data["out_trade_no"];
                 $D_Order = D('order\Order');
                 $_data_order = array(
-                    "order_type" => '微信支付',
+                    "pay_type" => '微信支付',
                     "order_status" => 2
                 );
                 $_where = array( "order_id" => $out_trade_no );
-                $D_Order->orderStatusinc($_data_order,$_where);
+                $D_Order->saveData($_data_order,$_where);
+                //$this->log_result($log_name,"pay test:".M()->_sql());
                 exit("success");
             }
             //商户自行增加处理流程,更新订单状态,数据库操作,推送支付完成信息
@@ -165,7 +166,7 @@ class PaywxController extends HomeController {
     }
     
     private  function  log_result($path,$word) {
-        $path = $path?$path:"log_tenpay.txt";
+        $path = $path?$path:C('DATA_CACHE_PATH')."log_tenpay.txt";
         $fp = fopen($path,"a");
         flock($fp, LOCK_EX) ;
         fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time())."\n".$word."\n\n");
