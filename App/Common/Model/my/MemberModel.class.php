@@ -50,6 +50,7 @@ class MemberModel extends \Common\Model\BaseModel{
                 }
                 
             }else if($_data['action'] == "edit_profile"){
+                $rules = $this->profileRule();
                 if($this->validate($rules)->create($_data)){
                     $rst = $this->where($_where)->data($_data)->save();
                 }else{
@@ -87,6 +88,13 @@ class MemberModel extends \Common\Model\BaseModel{
             array('uname','require','请填写用户名！'),
             array('uname','','用户名已经存在！',0,'unique',3),
             array('uname','/^[a-zA-Z][a-zA-Z0-9_]{2,19}$/','用户名不合法！'),
+            array('email','','Email已被绑定！',0,'unique',3),
+            array('mobile','','手机号码已被绑定！',0,'unique',2)
+        );
+    }
+
+    public function profileRule(){
+        return array(
             array('email','','Email已被绑定！',0,'unique',3),
             array('mobile','','手机号码已被绑定！',0,'unique',2)
         );
