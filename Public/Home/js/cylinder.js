@@ -7,11 +7,12 @@ if('ontouchstart' in window){
 if($.validator){
     $.validator.setDefaults({
         errorPlacement: function (error, element) {
-            el_1 = $.tips({
-                content:error.html(),
-                stayTime:1500,
-                type:"error"
-            })
+            if($(".ui-poptips-error").length < 1)
+                el_1 = $.tips({
+                    content:error.html(),
+                    stayTime:1500,
+                    type:"error"
+                })
         },
         errorElement: "i",
     });

@@ -16,7 +16,7 @@
         <form action="?" method="post" id="cylinderForm">
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
-                    您的称呼
+                    <i class="fa fa-user"></i> 您的称呼
                 </label>
                 <input type="text" name="nickName" value="" placeholder="怎么称呼您">
                 </a>
@@ -24,20 +24,20 @@
             
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
-                    联系手机
+                    <i class="fa fa-phone-square"></i> 联系手机
                 </label>
                 <input type="text" name="mobile" placeholder="您的联系电话">
                 </a>
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
-                    车牌号码
+                    <i class="fa fa-tag"></i> 车牌号码
                 </label>
                 <input type="text" name="plate_num" placeholder="您的车牌号码" value="粤">
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label >
-                    汽车品牌
+                    <i class="fa fa-car"></i> 汽车品牌
                 </label>
                 <div class="ui-select-group">
                     <div class="ui-select" style="max-width:47%;">
@@ -56,10 +56,11 @@
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label >
-                    选择门店
+                    <i class="fa fa-map-marker"></i> 选择门店
                 </label>
                 <div class="ui-select">
                         <select name="store_id" id="stores">
+                            <option >请选择门店名称</option>
                             {{volist name="resStore.lists" id="r"}}
                             <option value="{{$r.id}}"
                              lat="{{$r.lat}}" lng="{{$r.lng}}">{{$r['store_name']}}</option>
@@ -80,7 +81,7 @@
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
-                    合计：￥
+                   <i class="fa fa-cny"></i> 合计：
                 </label>
                 <input type="text" name="amount"  placeholder="0" readonly="true">
                 </a>
