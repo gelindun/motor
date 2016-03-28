@@ -7,7 +7,7 @@ namespace Common\Model\car;
  * D('car\CarFBrand')->;
  * 车品牌
  */
-class CarFBrandModel extends \Common\Model\BaseModel{
+class CarBrandModel extends \Common\Model\BaseModel{
     
     protected $trueTableName = 'ton_car_brand';
     

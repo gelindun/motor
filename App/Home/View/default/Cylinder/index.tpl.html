@@ -1,6 +1,7 @@
 {{include file="Public:header" /}}
 <style>body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}</style>
 <script src="__STATIC__/validation/jq.validation.js" type="text/javascript"></script>
+<script src="__STATIC__/jquery-upload-file/js/jquery.form.js" type="text/javascript"></script>
 <script src="__PUBLIC__/Home/js/cylinder.js" type="text/javascript"></script>
     <body ontouchstart>
       <h3 class="">
@@ -15,7 +16,7 @@
                 <label class="ui-border-r">
                     您的称呼
                 </label>
-                <input type="text" name="nickName" value="测试" placeholder="怎么称呼您">
+                <input type="text" name="nickName" value="" placeholder="怎么称呼您">
                 </a>
             </div>
             
@@ -37,18 +38,16 @@
                     汽车品牌
                 </label>
                 <div class="ui-select-group">
-                    <div class="ui-select">
+                    <div class="ui-select" style="max-width:47%;">
                         <select name="car_brand">
-                            <option>奥迪</option>
-                            <option selected>大众</option>
-                            <option>本田</option>
+                            {{volist name="resCarBrand.lists" id="r"}}
+                            <option value="{{$r['id']}}">{{$r['title']}}</option>
+                            {{/volist}}
                         </select>
                     </div>
-                    <div class="ui-select">
-                        <select name="car_series">
-                            <option>一汽奥迪</option>
-                            <option selected>进口奥迪</option>
-                            <option>上海大众</option>
+                    <div class="ui-select" style="max-width:47%;">
+                        <select name="car_series" >
+                            <option>请选择车系</option>
                         </select>
                     </div>
                 </div>
@@ -59,27 +58,31 @@
                 </label>
                 <div class="ui-select">
                         <select name="store_id">
-                            <option>深圳香蜜湖</option>
-                            <option selected>深圳泰然四路颈松大厦店</option>
-                            <option>广州本田4s店</option>
+                            {{volist name="resStore.lists" id="r"}}
+                            <option value="{{$r.id}}">{{$r['store_name']}}</option>
+                            {{/volist}}
                         </select>
                 </div>
             </div>
-            <div class="ui-label-list ui-border-b" style="padding:10px 0;text-align:center;">
-                <label class="ui-label ui-tag-selected">四缸</label>
-                <label class="ui-label">五缸</label>
-                <label class="ui-label">六缸</label>
-                <label class="ui-label">八缸</label>
-                <label class="ui-label">十二缸</label>
+            <div class="ui-label-list ui-border-b cylinder_tag"
+             style="padding:10px 0;text-align:center;">
+                {{assign name="ckey" value="0" /}}
+                {{volist name="resCarCylinder" id="r"}}
+                <label class="ui-label 
+                {{eq name='ckey' value='0'}}ui-tag-selected{{/eq}}"
+                 data-id="{{$r['key']}}">{{$r['title']}}</label>
+                 <?php $ckey++;?>
+                {{/volist}}
                 <input type="hidden" name="cylinder_id">
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
                     合计：￥
                 </label>
-                <input type="text" name="amount" value="100" placeholder="0" readonly="true">
+                <input type="text" name="amount"  placeholder="0" readonly="true">
                 </a>
             </div>
+            <input type="hidden" name="action" value="post_order" />
             <div class="ui-btn-wrap" style="text-align:center;">
                 <button class="ui-btn ui-btn-primary">
                     确认下单

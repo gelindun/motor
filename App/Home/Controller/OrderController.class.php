@@ -20,11 +20,14 @@ class OrderController extends HomeController {
         
         $this->_showDisplay();
     }
+
+
     /**
+     * 订单测试
      * 核对订单信息,（选择物流,支付方式 预留）
      */
-    public function checkout(){
-        $this->chkLogin(0, U('/Order/checkout'));
+    public function checkoutTest(){
+        $this->chkLogin(0, U('/Order/checkoutTest'));
         $D_Order = D('order\Order');
         $_countProduct = 0;
         $_error = "";
@@ -79,7 +82,7 @@ class OrderController extends HomeController {
                     "order_status" => $_orderStatus
                 );
                 $_data_order['price'] = $_amountCart;
-                $_data_order['order_type'] = $v['type'];
+                $_data_order['order_type'] = $this->_arr['CLEAN_PRO']['type'];
                 $_data_order = array_merge($_data_temp,$_data_order);
                 //dump($_data_order);
                 $_oid = $D_Order->write($_data_order);
@@ -87,7 +90,7 @@ class OrderController extends HomeController {
 
                 //更新订单end
                 if(!$_amountCart){//免费订单
-                    $_url = U('/My/order',array('order_type'=>$v['type'],'order_status'=>2));
+                    $_url = U('/My/order',array('order_type'=>$this->_arr['CLEAN_PRO']['type'],'order_status'=>2));
                 }else{
                     $_url = U('/Order/payment',array('order_id'=>$_redirectOid));
                 }
