@@ -376,6 +376,29 @@ class MyController extends HomeController {
         foreach($_resList['lists'] as $k=>$v){
             $_tempStatus = $v['order_status'];
             $_resList['lists'][$k]['status_title'] = $_tempOrderstatus[$_tempStatus];
+            if($v['order_type'] == $_clean_form['type']){
+                $_proDetail = json_decode($v['product_info'],true);
+                $_proDetail = $_proDetail[0]['product_detail'];
+                //[nickName] => ayoway [mobile] => 13800138000 [plate_num] => 粤 
+                //[car_brand] => 35 [car_series] => 6 
+                //[store_id] => 3 [cylinder_id] => 4 [amount] => 100
+                $_proInfo = "";
+                foreach($_proDetail as $kk => $vv){
+                    if($kk == "nickName"||$kk == "mobile"){
+                        $_proInfo .= $vv." ";
+                    }
+                    if($kk == "plate_num"){
+                        $_proInfo .= "车牌号：".$vv." ";
+                    }
+                    if($kk == "store_id"){
+
+                    }
+                    if($kk == "cylinder_id"){
+                        
+                    }
+                }
+                $_resList['lists'][$k]['product_info'] = $_proInfo;
+            }
             $_resList['lists'][$k]["child"] = $D_Order->rtnOrderdetail($v);
         }
         $this->_arr['resList'] = $_resList;

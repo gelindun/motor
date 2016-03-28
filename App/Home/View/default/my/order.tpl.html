@@ -49,6 +49,7 @@
             {{volist name="resList.lists" id="v"}}
             <div class="ticket-order-list">
                 <h4 style="font-weight: bold;">
+                    <p>订单价格：{{$v['price']}}</p>
                     <P>订单号：{{$v['order_id']}}
                     <span class="status">
                             <font class="normal">{{$v['status_title']}}</font>
@@ -60,29 +61,21 @@
                 </h4>
                 <table class="table order-item" style="width:100%;">
                     <tbody>
-                        {{volist name="v.child.lists" id="r"}}
+                        {{notempty name="v.product_info"}}
                         {{eq name="v.order_type" value="$clean_type"}}
                         <tr style="border-top:1px dashed #d9d9d9;background-color:#fafafa;">
                         <td class="order-info" style="padding:5px 10px;">
                             <dl class="order-detail">
                                 <dd class="metting-info">
                                     <p class="title">
-                                        <a href="{{:U('/Activity/detail',array('id'=>$r['ticket']['activity']['id']))}}"
-                                           target="_blank">{{$r['ticket']['activity']['title']}}</a>
-                                    </p>
-                                    <p class="time">
-                                        <i class="icon icon-time"></i>{{$r['ticket']['time_start']|date='Y-m-d H:i',###}} ~ {{$r['ticket']['time_end']|date='Y-m-d H:i',###}}
-                                    </p>
-                                    <p class="attr">
-                                            <span class="ticket">{{$r['ticket']['title']}} x {{$r['count']}}</span>
-                                        <span class="amount">总金额: <b class="money">¥ {{$r['ticket']['priceTotal']}}</b></span>
+                                       {{$v['product_info']}}
                                     </p>
                                 </dd>
                             </dl>
                         
                         </tr>
                         {{/eq}}
-                        {{/volist}}
+                        {{/notempty}}
                     </tbody>
                 </table>
             </div>
