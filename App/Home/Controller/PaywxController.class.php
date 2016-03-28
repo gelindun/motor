@@ -146,7 +146,8 @@ class PaywxController extends HomeController {
                 $D_Order = D('order\Order');
                 $_data_order = array(
                     "pay_type" => '微信支付',
-                    "order_status" => 2
+                    "order_status" => 2,
+                    "time_pay" => time()
                 );
                 $_where = array( "order_id" => $out_trade_no );
                 $D_Order->saveData($_data_order,$_where);
