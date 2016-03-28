@@ -8,14 +8,15 @@
     
 <div class="col-md-10 to-inside-content">
 <!-- Main content -->
-    <section class="content profile-warp" >
+    <section class="content profile-warp" style="padding-bottom:70px;">
         <ul class="ui-row my-base-info">
             <li class="ui-col t-center">
                 <h3 style="font-size:20px;">我的订单</h3>
             </li>
         </ul>
         <h4 class="to-inside-content-header to-link-tab">
-            <a href="?order_type=ticket" class="{{eq name="order_type" value="ticket"}}active{{/eq}}">清洗</a>
+            <a href="?order_type={{$clean_type}}"
+             class="{{eq name="order_type" value="$clean_type"}}active{{/eq}}">清洗</a>
             <!--a href="?order_type=product" class="{{eq name="order_type" value="product"}}active{{/eq}}">产品</a-->
             <ul class="order_menu_ul">
                 <li class='status_warp'>
@@ -25,7 +26,7 @@
                         href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 1))}}">待确认</a>
                     <a  class='{{eq name="order_status" value="2"}}curr{{/eq}}'
                         href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 2))}}">已付款</a>
-                    {{neq name="order_type" value="ticket"}}
+                    {{neq name="order_type" value="$clean_type"}}
                     <a  class='{{eq name="order_status" value="3"}}curr{{/eq}}'
                         href="{{:U('/My/order',array("order_type"=>$order_type,"order_status" => 3))}}">已发货</a>
                     <a  class='{{eq name="order_status" value="4"}}curr{{/eq}}'
@@ -35,9 +36,9 @@
             </ul>
         </h4>
             {{empty name="resList.lists"}}
-                {{eq name="order_type" value="ticket"}}
+                {{eq name="order_type" value="$clean_type"}}
                 <div style="margin:20px 0;text-align:center;font-size:18px;">
-                    您尚未参加参加任何活动？快来<a style="color:#3377aa" href="{{:U('/Activity')}}">寻找活动</a>
+                    暂无相关订单</a>
                 </div>
                 {{else /}}
                 <div style="margin:20px 0;text-align:center;font-size:18px;">
@@ -60,7 +61,7 @@
                 <table class="table order-item" style="width:100%;">
                     <tbody>
                         {{volist name="v.child.lists" id="r"}}
-                        {{eq name="v.order_type" value="ticket"}}
+                        {{eq name="v.order_type" value="$clean_type"}}
                         <tr style="border-top:1px dashed #d9d9d9;background-color:#fafafa;">
                         <td class="order-info" style="padding:5px 10px;">
                             <dl class="order-detail">

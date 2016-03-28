@@ -148,7 +148,7 @@ class MyController extends HomeController {
         if($this->_arr[self::FRONT_UID]&&I('get.action') !== 'bind'){
             redirect("/");
         }
-        $_weixinOnly = false;
+        $_weixinOnly = true;
         if(I('get.type') == 'weixin' || $_weixinOnly){
             vendor('Weixin.wechat', '', '.class.php');
             $options = array(
@@ -358,8 +358,9 @@ class MyController extends HomeController {
      * 前端会员首页
      */
     public function order(){
-        
-        $_orderType = I('get.order_type')?I('get.order_type'):"ticket";
+        $D_Product = D('product\Product');
+        $_clean_form = $D_Product->clean_form();
+        $this->_arr['clean_type'] = $_orderType = I('get.order_type')?I('get.order_type'):$_clean_form['type'];
         $_orderStatus   =   (int)I('get.order_status');
         $D_Order = D('order\Order');
         $_where = array(
