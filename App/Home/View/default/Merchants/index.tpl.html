@@ -1,21 +1,23 @@
 {{include file="Public:header" /}}
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={{$map_baidu_key}}"></script>
 <script src="__PUBLIC__/Home/js/merchant.js" type="text/javascript"></script>
+<script>baidu_map_ak = "{{$map_baidu_key}}"</script>
 
         
         {{include file="Public:header_inc" /}}
         
         <section class="ui-container index-block">
             
-            <section id="list">
+            <section id="stores">
                
-                <ul class="ui-list ui-list-link ui-border-b ui-list-article">
+                <ul class="ui-list ui-list-link  ui-list-article">
                     {{empty name="resList.lists"}}
                     <li class="ui-tips ui-tips-warn">
                         <i></i><span>暂时没有相关门店</span>
                     </li>
                     {{/empty}}
                     {{volist name="resList.lists" id="r"}}
-                    <li class="ui-border-t index-article-li">
+                    <li class="ui-border-t index-article-li store" lat="{{$r['lat']}}" lng="{{$r['lng']}}">
                         <div class="ui-list-img">
                             <span style="background-image:url({{$r.logo|showPic}})"></span>
                         </div>
@@ -23,7 +25,7 @@
                             <h4 class="ui-nowrap">
                                 <a href="{{:U('/Merchants/detail',array('id'=>$r['id']))}}"
                                    title="{{$r['store_name']}}">{{$r['store_name']}}</a></h4>
-                            <p class="ui-nowrap">{{$r['address']}}</p>
+                            <p class="ui-nowrap">{{$r['address']}} <i class="dis" style="color:#f00;"></i></p>
                         </div>
                     </li>
                     {{/volist}}

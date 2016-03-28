@@ -21,6 +21,7 @@ class MerchantsController extends HomeController {
         if($_key_word){
             $_map["store_name"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
             $_map["content"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map["address"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
             $_map['_logic'] = 'or';
             $_where['_complex'] = $_map;
         }
