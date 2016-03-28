@@ -89,6 +89,7 @@ cy_obj = {
             _t.fetchAmount();
         });
         _t.fetchAmount();
+        _t.storeInit();
     },fetchAmount:function(){
         var store_id = parseInt($("select[name=store_id]").val());
         var cylinder_id = parseInt($("input[name=cylinder_id]").val());
@@ -116,5 +117,58 @@ cy_obj = {
                 }
             },'json')
         }
+    },storeInit:function(){
+        //计算距离，显示最近的
+        var _t = this;
+        var showNearest=function(lat1, lng1){
+            var nearest_index=-1, nearest_dis=-1;
+            var _obj = new Array();
+            $('#stores option').each(function(index){
+                var lat = $(this).attr('lat'), lng=$(this).attr('lng');
+                if(lat && lng){
+                    var dis=getDistance(lat, lng, lat1, lng1);
+                    var dis_f=getFriendDistance(dis);
+                     if(dis)
+                        _obj.push( {"dis":dis,"index": index} );
+                    $(this).attr({'dis': store_dis,'disf':dis_f});
+                    if(nearest_dis<0 || dis<nearest_dis){
+                        nearest_dis = dis;
+                        nearest_index = index;
+                    }
+                }
+            }); 
+            _obj.sort(function(a,b){
+                return parseFloat(a.dis) - parseFloat(b.dis); 
+            });
+            $("body").append("<div id='temp_div'></div>");
+            $.each(_obj,function(i,n){
+                $('#stores option').eq(n.index).clone().appendTo($('#temp_div'));
+            })
+            $('#stores option').remove();
+            $('#stores').append($('#temp_div option'));
+            $("#stores option").eq(0).addClass('nearest').attr("selected","selected");
+            $("#temp_div").remove();
+            var _msg = "最近的门店距离您"+$("#stores option").eq(0).attr("disf")+"请确认后手动选择门店";
+            _t.fetchAmount();
+            var dia = $.dialog({
+                            title:'温馨提示',
+                            content:_msg,
+                            button:["确定"]
+                        });
+        };
+        
+        renderReverse=function(response){
+            var addr=response.result.formatted_address;
+            if(addr){
+                //$('#your_address').show();
+                //$('#your_address dd').html(addr);
+            }
+        }
+        
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function(pos){
+            showNearest(pos.point.lat, pos.point.lng);
+        });
+
     }
 }

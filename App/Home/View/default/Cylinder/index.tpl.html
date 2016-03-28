@@ -2,6 +2,8 @@
 <style>body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}</style>
 <script src="__STATIC__/jquery-upload-file/js/jquery.form.js" type="text/javascript"></script>
 <script src="__STATIC__/validation/jq.validation.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={{$map_baidu_key}}"></script>
+<script>baidu_map_ak = "{{$map_baidu_key}}"</script>
 <script src="__PUBLIC__/Home/js/cylinder.js" type="text/javascript"></script>
     <body ontouchstart>
       <h3 class="">
@@ -57,9 +59,10 @@
                     选择门店
                 </label>
                 <div class="ui-select">
-                        <select name="store_id">
+                        <select name="store_id" id="stores">
                             {{volist name="resStore.lists" id="r"}}
-                            <option value="{{$r.id}}">{{$r['store_name']}}</option>
+                            <option value="{{$r.id}}"
+                             lat="{{$r.lat}}" lng="{{$r.lng}}">{{$r['store_name']}}</option>
                             {{/volist}}
                         </select>
                 </div>
