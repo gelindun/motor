@@ -27,7 +27,7 @@ class HomeController extends \Common\Controller\CommonController {
         );
     */
     protected function createOrder($_dataPro = array()){
-    	
+    	$_isPost = I('post.');
         // test end
         $_countProduct = count($_dataPro["list"]);
         foreach($_dataPro["list"] as $k => $v){

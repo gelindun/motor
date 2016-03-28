@@ -49,18 +49,25 @@ cy_obj = {
                     required: "请选择门店和发动机缸数"
                 }
             },
+            onkeyup:false,
             submitHandler:function(form){
                 var el=$.loading({content:'loading...',})
                 $(form).ajaxSubmit({
                     success: function (data) {
                         el.hide();
                         if(typeof(data.msg)!="undefined"){
-                            $.tips({
+                            var tip = $.tips({
                                 content:data.msg,
-                                stayTime:2000,
-                                type:"success"
+                                stayTime:1000,
+                                type:"error"
+                            })
+                            tip.on("tips:hide",function(){
+                                if (data.result && data.result.url) {
+                                    window.location.href = data.result.url
+                                }
                             })
                         }
+
                         
                     }, dataType: 'json'
                 }); 
