@@ -37,6 +37,7 @@ class PaywxController extends HomeController {
         $this->_arr['order'] = array(
             'oid' => $_order['id'],
             'order_id' => $_order['order_id'],
+            'ori_price' => $_grpPrice?$_grpPrice:$_order['price'],
             'price' => ($_grpPrice?$_grpPrice:$_order['price']) * 100
         );
         
