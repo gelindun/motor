@@ -1,4 +1,9 @@
-var _click = "click";
+var _click;
+if('ontouchstart' in window){
+   _click = "touchstart"
+}else{
+   _click = "click"
+}
 if($.validator){
     $.validator.setDefaults({
         errorPlacement: function (error, element) {
@@ -12,9 +17,9 @@ if($.validator){
     });
 }
 cy_obj = {
-	index:function(){
+    index:function(){
         var _t = this;
-		$("#cylinderForm").validate({
+        $("#cylinderForm").validate({
             rules: {
                 nickName: {
                     required: true
@@ -23,12 +28,12 @@ cy_obj = {
                     mobile:true,
                 },
                 store_id:{
-                	required: true
+                    required: true
                 },
                 cylinder_id:{
-                	required: true
+                    required: true
                 },amount:{
-                	required: true
+                    required: true
                 }
             },
             messages: {
@@ -41,7 +46,7 @@ cy_obj = {
                 },cylinder_id: {
                     required: "请选择发动机缸数"
                 },amount:{
-                	required: "请选择门店和发动机缸数"
+                    required: "请选择门店和发动机缸数"
                 }
             },
             submitHandler:function(form){
@@ -50,18 +55,22 @@ cy_obj = {
                     success: function (data) {
                         el.hide();
                         if(typeof(data.msg)!="undefined"){
-                        	$.tips({
-	                            content:data.msg,
-	                            stayTime:2000,
-	                            type:"success"
-	                        })
+                            $.tips({
+                                content:data.msg,
+                                stayTime:2000,
+                                type:"success"
+                            })
                         }
                         
                     }, dataType: 'json'
                 }); 
             }
         });
-        this.fetchSeries();
+        $("select[name=car_brand]").on("change",function(){
+            _t.fetchSeries()
+        })
+
+        _t.fetchSeries();
         $("select[name=store_id]").on("change",function(){
             _t.fetchAmount();
         });
@@ -72,27 +81,26 @@ cy_obj = {
             $("input[name=cylinder_id]").val(_tag);
             _t.fetchAmount();
         });
-	},fetchAmount(){
-		var store_id = parseInt($("select[name=store_id]").val());
-		var cylinder_id = parseInt($("input[name=cylinder_id]").val());
-        console.log(store_id);
-        console.log("cl"+cylinder_id)
-		if(!isNaN(store_id)&&!isNaN(cylinder_id)){
-			var _obj = {store_id:store_id,cylinder_id:cylinder_id}
-			$.post("/Cylinder/fetchAmount",_obj,function(data){
-				if(typeof(data.result.amount)!="undefined"){
-					$("input[name=amount]").val(parseFloat(data.result.amount));
-				}
-			},'json');
-		}
+        _t.fetchAmount();
+    },fetchAmount:function(){
+        var store_id = parseInt($("select[name=store_id]").val());
+        var cylinder_id = parseInt($("input[name=cylinder_id]").val());
+        if(!isNaN(store_id)&&!isNaN(cylinder_id)){
+            var _obj = {store_id:store_id,cylinder_id:cylinder_id}
+            $.post("/Cylinder/fetchAmount",_obj,function(data){
+                if(typeof(data.result.amount)!="undefined"){
+                    $("input[name=amount]").val(parseFloat(data.result.amount));
+                }
+            },'json');
+        }
 
-	},fetchSeries(){
+    },fetchSeries:function(){
         var car_series = $("select[name=car_series]");
         var car_brand = $("select[name=car_brand]");
         if(car_brand.val()){
             var bid = parseInt(car_brand.val());
             $.get('/CarSeries/fetchSeries',{bid:bid},function(data){
-                if(typeof(data)!="undefined"&&typeof(data.result.list)!="undefined"){
+                if(typeof(data)!="undefined" && typeof(data.result.list)!="undefined"){
                     var _opt = "";
                     $.each(data.result.list,function(i,n){
                         _opt += '<option value="'+n.id+'">'+n.title+'</option>';

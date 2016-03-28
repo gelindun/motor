@@ -1,12 +1,12 @@
 {{include file="Public:header" /}}
 <style>body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}</style>
-<script src="__STATIC__/validation/jq.validation.js" type="text/javascript"></script>
 <script src="__STATIC__/jquery-upload-file/js/jquery.form.js" type="text/javascript"></script>
+<script src="__STATIC__/validation/jq.validation.js" type="text/javascript"></script>
 <script src="__PUBLIC__/Home/js/cylinder.js" type="text/javascript"></script>
     <body ontouchstart>
       <h3 class="">
         <span class="ui-avatar-lg" style="margin:30px auto;">
-            <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" >
+            <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" style="max-width:100%;" >
         </span>
       </h3>
 
@@ -73,7 +73,7 @@
                  data-id="{{$r['key']}}">{{$r['title']}}</label>
                  <?php $ckey++;?>
                 {{/volist}}
-                <input type="hidden" name="cylinder_id">
+                <input type="hidden" name="cylinder_id" value="{{$cylinder_id}}"> 
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
@@ -84,9 +84,7 @@
             </div>
             <input type="hidden" name="action" value="post_order" />
             <div class="ui-btn-wrap" style="text-align:center;">
-                <button class="ui-btn ui-btn-primary">
-                    确认下单
-                </button>
+                <input type="submit" class="ui-btn ui-btn-primary" value="确认下单" />
             </div>
         </form>
     </div>
