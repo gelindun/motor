@@ -22,7 +22,7 @@ body a {color:#626262;}
 .head-t-l,.head-t-r {display:block;position:absolute;font-size:20px;left:10px;top:6px;}
 .head-t-r {right:30px;left:auto;top:7px;color: #c2c2c2;}
 .ui-header .search-wrap {margin:0 15px;height:30px;border:1px solid #d5d5d5;background-color:#fff;border-radius:5px;}
-.search-wrap input {width:100%;height: 100%;border:0;background:transparent;padding:0 20px;color:#999;}
+.search-wrap input {width:100%;height: 100%;border:0;background:transparent;padding:0 10px;color:#999;float:left;}
 .ui-header .icon-mirco {width: 27px;height: 27px;display: block;position: absolute;}
 .ui-footer.ui-footer-btn {height:auto;background-color:#f9f9f9;background-image:none;bottom:-1px;}
 .menu-footer {padding:5px 0;font-size:14px;height:auto;}

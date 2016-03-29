@@ -15,15 +15,17 @@
                     </li>
                     {{/empty}}
                     {{volist name="resList.lists" id="r"}}
-                    <li class="ui-border-t index-article-li">
+                    <li class="ui-border-t index-article-li"  style="line-height:35px;">
                         <div class="ui-list-img">
                             <span style="background-image:url({{$r.logo|showPic}})"></span>
                         </div>
                         <div class="ui-list-info">
-                            <h4 class="ui-nowrap">
-                                <a href="{{:U('/Article/detail',array('id'=>$r['id']))}}"
-                                   title="{{$r['title']}}">{{$r['title']}}</a></h4>
-                            <p class="ui-nowrap">{{$r.time_show|date='y-m-d',###}}</p>
+                            <a href="{{:U('/Article/detail',array('id'=>$r['id']))}}"
+                                   title="{{$r['title']}}">
+                            <h4 class="ui-nowrap" style="font-size:16px;font-weight:bold;color: #017bbe;">
+                                {{$r['title']}}</h4>
+                            <p class="ui-nowrap" style="font-size:14px;
+                            margin-right:30px;">{{$r.time_show|date='y-m-d',###}}</p></a>
                         </div>
                     </li>
                     {{/volist}}
