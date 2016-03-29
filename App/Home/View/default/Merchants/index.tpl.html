@@ -10,23 +10,29 @@
             
             <section id="stores">
                
-                <ul class="ui-list ui-list-link  ui-list-article">
+                <ul class="ui-list   ui-list-article">
                     {{empty name="resList.lists"}}
                     <li class="ui-tips ui-tips-warn">
                         <i></i><span>暂时没有相关门店</span>
                     </li>
                     {{/empty}}
                     {{volist name="resList.lists" id="r"}}
-                    <li class="ui-border-t index-article-li store" lat="{{$r['lat']}}" lng="{{$r['lng']}}">
+                    <li class="ui-border-t index-article-li store" style="line-height:30px;"
+                     lat="{{$r['lat']}}" lng="{{$r['lng']}}">
+                        
+                        <div class="ui-list-info">
+                            <a href="{{:U('/Merchants/detail',array('id'=>$r['id']))}}"
+                                   title="{{$r['store_name']}}">
+                            <h4 class="ui-nowrap" style="font-size:15px;">
+                                {{$r['store_name']}}</h4>
+                            <p class="ui-nowrap" style="font-size:13px;">{{$r['address']}} </p>
+                            </a>
+                        </div>
                         <div class="ui-list-img">
                             <span style="background-image:url({{$r.logo|showPic}})"></span>
                         </div>
-                        <div class="ui-list-info">
-                            <h4 class="ui-nowrap">
-                                <a href="{{:U('/Merchants/detail',array('id'=>$r['id']))}}"
-                                   title="{{$r['store_name']}}">{{$r['store_name']}}</a></h4>
-                            <p class="ui-nowrap">{{$r['address']}} <i class="dis" style="color:#f00;"></i></p>
-                        </div>
+                        <i class="dis ui-badge"
+                         style="position:absolute;bottom:5px;right:50px;display:none;" ></i>
                     </li>
                     {{/volist}}
                 </ul>
