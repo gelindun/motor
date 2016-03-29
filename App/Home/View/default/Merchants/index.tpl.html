@@ -23,16 +23,18 @@
                         <div class="ui-list-info">
                             <a href="{{:U('/Merchants/detail',array('id'=>$r['id']))}}"
                                    title="{{$r['store_name']}}">
-                            <h4 class="ui-nowrap" style="font-size:15px;">
+                            <h4 class="ui-nowrap" style="font-size:15px;color: #017bbe;">
                                 {{$r['store_name']}}</h4>
                             <p class="ui-nowrap" style="font-size:13px;">{{$r['address']}} </p>
                             </a>
                         </div>
-                        <div class="ui-list-img">
-                            <span style="background-image:url({{$r.logo|showPic}})"></span>
+                        <div class="ui-list-img" style="margin: 10px 0;">
+                            <span style="background-image:url({{$r.logo|showPic}});
+                            border:1px solid #d9d9d9;"></span>
                         </div>
-                        <i class="dis ui-badge"
-                         style="position:absolute;bottom:5px;right:50px;display:none;" ></i>
+                        <i class="fa fa-map-marker"
+                         style="position:absolute;bottom:5px;right:50px;
+                         padding:0 5px;" >&nbsp;<span class="dis ui-badge" style="display:none;"></span></i>
                     </li>
                     {{/volist}}
                 </ul>

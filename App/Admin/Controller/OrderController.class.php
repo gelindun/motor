@@ -29,6 +29,10 @@ class OrderController extends AdminController {
         foreach($_resList['lists'] as $k=>$v){
             $_tempStatus = $v['order_status'];
             $_resList['lists'][$k]['status_title'] = $_tempOrderstatus[$_tempStatus];
+            $_user = D('my\Member')->where(array(
+                    "id" => $v['front_uid']
+                ))->find();
+            $_resList['lists'][$k]['user'] = $_user;
             $_resList['lists'][$k]["child"] = $D_Order->rtnOrderdetail($v);
         }
         $this->_arr['resList'] = $_resList;

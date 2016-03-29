@@ -96,7 +96,8 @@ class MyController extends HomeController {
                     $_data_reg = array(
                         "uname" => "#".$_data['type'].dechex(time().rand(100,999)),
                         "real_name" => $_data["nick"],
-                        "head_img" => $_data["head"]
+                        "head_img" => $_data["head"],
+                        "time_add" => time()
                     );
                     $_rst =  $D_User->addData($_data_reg);
                     if(!is_array($_rst) && $_rst){

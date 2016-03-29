@@ -54,6 +54,7 @@
                 <tbody><tr>
                         <th>ID</th>
                         <th>订单号</th>
+                        <th>用户</th>
                         <th>下单时间</th>
                         <th>订单状态</th>
                         <th>操作</th>
@@ -62,6 +63,8 @@
                     <tr>
                         <td>{{$v.id}}</td>
                         <td>{{$v.order_id}}</td>
+                        <td><img src="{{$v['user']['head_img']|showPic}}"
+                         style="height:35px;border-radius:3px;" /></td>
                         <td>{{$v.time_add|date='Y-m-d H:i', ###}}</td>
                         <td>{{$v['status_title']}}</td>
                         <td>
