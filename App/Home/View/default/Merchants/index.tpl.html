@@ -17,23 +17,26 @@
                     </li>
                     {{/empty}}
                     {{volist name="resList.lists" id="r"}}
-                    <li class="ui-border-t index-article-li store" style="line-height:30px;"
+                    <li class="ui-border-t index-article-li store" style="line-height:42px;"
                      lat="{{$r['lat']}}" lng="{{$r['lng']}}">
                         
                         <div class="ui-list-info">
                             <a href="{{:U('/Merchants/detail',array('id'=>$r['id']))}}"
                                    title="{{$r['store_name']}}">
-                            <h4 class="ui-nowrap" style="font-size:15px;color: #017bbe;">
+                            <h4 class="ui-nowrap" style="font-size:16px;font-weight:bold;color: #017bbe;">
                                 {{$r['store_name']}}</h4>
-                            <p class="ui-nowrap" style="font-size:13px;">{{$r['address']}} </p>
+                            <p class="ui-nowrap " style="font-size:14px;
+                            margin-right:30px;"><i style="color:#f74c31;"
+                            class="fa fa-external-link"></i> ({{$r['address']}})</p>
                             </a>
                         </div>
-                        <div class="ui-list-img" style="margin: 10px 0;">
+                        <a class="ui-list-img" style="margin: 10px 0;display:block;" href="{{:U('/Merchants/detail',array('id'=>$r['id']))}}"
+                                   title="{{$r['store_name']}}">
                             <span style="background-image:url({{$r.logo|showPic}});
                             border:1px solid #d9d9d9;"></span>
-                        </div>
+                        </a>
                         <i class="fa fa-map-marker"
-                         style="position:absolute;bottom:5px;right:50px;
+                         style="position:absolute;bottom:5px;right:-10px;z-index:1;
                          padding:0 5px;" >&nbsp;<span class="dis ui-badge" style="display:none;"></span></i>
                     </li>
                     {{/volist}}

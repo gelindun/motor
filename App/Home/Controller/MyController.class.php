@@ -8,6 +8,7 @@ class MyController extends HomeController {
     private $jump_url;
     public function _initialize() {
         parent::_initialize();
+        $this->jump_url = uDomain('www','/');
         if((!I('post.') && $this->_arr['ACT_NAME'] != 'snsCallBack' && $this->_arr['ACT_NAME'] != 'login') || (I('get.jump_url'))){
             $this->jump_url = I('get.jump_url') ? urldecode(I('get.jump_url')) : getenv("HTTP_REFERER");
             if(!strpos($this->jump_url,C('COOKIE_DOMAIN'))||!$this->jump_url){
@@ -21,9 +22,10 @@ class MyController extends HomeController {
                     ($this->_arr['ACT_NAME'] == 'login'|| 
                     $this->_arr['ACT_NAME'] == 'register' ||
                     $this->_arr['ACT_NAME'] == 'agreement'||
-                    $this->_arr['ACT_NAME'] == 'snsCallBack') ) {
+                    strtoupper($this->_arr['ACT_NAME']) == 'SNSCALLBACK') ) {
                
             } else {
+                //exit($this->_arr['ACT_NAME']);
                 $this->redirect('/My/login');
             }
         }
@@ -149,7 +151,7 @@ class MyController extends HomeController {
         if($this->_arr[self::FRONT_UID]&&I('get.action') !== 'bind'){
             redirect("/");
         }
-        $_weixinOnly = true;
+        $_weixinOnly = false;
         if(I('get.type') == 'weixin' || $_weixinOnly){
             vendor('Weixin.wechat', '', '.class.php');
             $options = array(
@@ -159,6 +161,7 @@ class MyController extends HomeController {
             );
             $_code = I('get.code')?I('get.code'):'';
             $_wechat = new \Wechat($options);
+            
             if($_code){
                 $_json = $_wechat->getOauthAccessToken();
                 $_jsonRes = $_wechat->getOauthUserinfo($_json['access_token'], $_json['openid']);
@@ -174,12 +177,14 @@ class MyController extends HomeController {
                 );
                 safeGetCookie('token',$_json['access_token']);
                 safeGetCookie('user_info',json_encode($_data));
+                //exit(uDomain('www','/My/snsCallBack',array('type'=>'weixin','action_from'=>'mobile')));
                 redirect(uDomain('www','/My/snsCallBack',array('type'=>'weixin','action_from'=>'mobile')));
             } else {
                $callback = uDomain('www','/My/login',array(
                    'type' => 'weixin'
                ));
                $_r = $_wechat->getOauthRedirect($callback);
+
                redirect($_r);
             }
             exit;
@@ -238,7 +243,7 @@ class MyController extends HomeController {
         safeGetCookie(self::FRONT_UID,null);
         safeGetCookie('token',null);
         safeGetCookie('user_info',null);
-        $this->redirect('/My/login');
+        $this->redirect('/');
         exit;
     }
     
