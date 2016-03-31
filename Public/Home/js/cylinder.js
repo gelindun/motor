@@ -27,6 +27,11 @@ cy_obj = {
                 },mobile: {
                     required: true,
                     mobile:true,
+                },plate_num:{
+                    required: true
+                },
+                car_series:{
+                    required: true
                 },
                 store_id:{
                     required: true
@@ -42,6 +47,10 @@ cy_obj = {
                     required: "请填写称呼，方便售后联系您"
                 },mobile: {
                     required: "请填写手机号，方便售后联系您"
+                },plate_num: {
+                    required: "请填写车牌号，方便售后联系您"
+                },car_series: {
+                    required: "请选择车型"
                 },store_id: {
                     required: "请选择门店"
                 },cylinder_id: {

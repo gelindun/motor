@@ -151,7 +151,7 @@ class MyController extends HomeController {
         if($this->_arr[self::FRONT_UID]&&I('get.action') !== 'bind'){
             redirect("/");
         }
-        $_weixinOnly = false;
+        $_weixinOnly = true;
         if(I('get.type') == 'weixin' || $_weixinOnly){
             vendor('Weixin.wechat', '', '.class.php');
             $options = array(
@@ -420,6 +420,62 @@ class MyController extends HomeController {
             $_tempStr = 'my:order';
         }
         $this->_showDisplay($_tempStr);
+    }
+    /*
+    * 我的爱车
+    */
+    public function car(){
+        $D_MemberCar = D('my\MemberCar');
+        $D_CarSeries = D('car\CarSeries');
+        $_do_action = $this->_arr['do_action'] = I('get.do_action');
+        if(I('post.action') === 'post_car'){
+            $_data = I('post.','','trim');
+         
+            if($_data['id']){
+                $_where = array(
+                    'id' => $_data['id'],
+                    'front_uid' => $this->_arr[self::FRONT_UID]
+                );
+                $_resPage = $D_MemberCar->where($_where)->find();
+                if(!$_resPage){
+                    $_rst['msg'] = "更新出错";
+                }
+            }
+            if(!$_rst['msg']){
+                if($_data['car_series']){
+                    $_data['sid'] = $_data['car_series'];
+                }
+                if($_data['car_brand']){
+                    $_data['bid'] = $_data['car_brand'];
+                }
+
+                $_data['front_uid'] = $this->_arr[self::FRONT_UID];
+                $_rst =  $D_MemberCar->write($_data,$_where);
+            }
+            if(!is_array($_rst)){
+                pushJson('更新成功',array(
+                        "url" => U('/My/car')
+                    ));
+            }else{
+                pushError ($_rst['msg']);
+            }
+           
+        }
+        $_where = array(
+                "front_uid" => $this->_arr[self::FRONT_UID]
+            );
+        $_order = array(
+                "id" => "DESC"
+            );
+        $_resList = $D_MemberCar->getAllPagesize($_where,$_order);
+        foreach($_resList['lists'] as $k=>$v){
+            $_where_s = array(
+                    "id" => $v['sid']
+                );
+            $_resList['lists'][$k]['car_series'] = $D_CarSeries->where($_where_s)->find();
+        }
+        $this->_arr['resList'] = $_resList;
+        $this->_showDisplay();
     }
     
     
