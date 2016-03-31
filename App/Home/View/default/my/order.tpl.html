@@ -45,7 +45,9 @@
             {{volist name="resList.lists" id="v"}}
             <div class="ticket-order-list">
                 <h4 style="font-weight: bold;line-height:30px;" class="ui-border-b">
-                    <P>订单号：{{$v['order_id']}} </P>
+                    <P><a href="{{:U('/My/order_detail',array(
+                            'order_id' => $v['order_id']
+                        ))}}">订单号：{{$v['order_id']}}</a> </P>
                 </h4>
                 {{notempty name="v.product_info"}}
                 {{eq name="v.order_type" value="$clean_type"}}

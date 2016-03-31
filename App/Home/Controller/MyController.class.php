@@ -421,6 +421,44 @@ class MyController extends HomeController {
         }
         $this->_showDisplay($_tempStr);
     }
+
+    public function order_detail(){
+
+        $D_Order = D('order\Order');
+        $_order_id = I('get.order_id');
+        $_where = array(
+            "order_id" => $_order_id
+        );
+        $_order = $D_Order->where($_where)->find();
+        if(!$_order_id || !$_order){
+            $this->_arr['error'] = "当前查询的订单不存在";
+        }
+        $_order['info_obj'] = json_decode($_order['product_info'],true);
+        if($_order['order_type'] == $this->_arr['CLEAN_PRO']['type']){
+            $_order['info'] = $_order['info_obj'][0]['product_detail'];
+            //car_str,store_str,cylinder_str
+            $_order['info']['cylinder_arr'] = 
+                D('car\CarCylinder')->cylinderList($_order['info']['cylinder_id']);
+            $_order['info']['cylinder_str'] = $_order['info']['cylinder_arr']['title'];
+            $_where_car = array(
+                    "id" => $_order['info']['car_series']
+                );
+            $_car = D('car\CarSeries')->where($_where_car)->find();
+            $_order['info']['car_str'] = $_car['title'];
+            $_where_store = array(
+                    "id" => $_order['info']['store_id']
+                );
+            $_store = D('site\Merchant')->where($_where_store)->find();
+            $_order['info']['store_str'] = $_store['store_name'];
+        }
+
+        $this->_arr['payType'] = $D_Order->payType();
+        $this->_arr['orderRes'] = $_order;
+
+        $this->_showDisplay("my:order_detail");
+    }
+
+
     /*
     * 我的爱车
     */
