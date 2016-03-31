@@ -124,7 +124,26 @@ class OrderController extends HomeController {
         }else if($_order['order_status']>1){
             $this->_arr['error'] = "当前查询的订单状态为".$D_Order->orderStatus($_order['order_status']);
         }
-        $this->_arr['orderType'] = $D_Order->payType();
+        $_order['info_obj'] = json_decode($_order['product_info'],true);
+        if($_order['order_type'] == $this->_arr['CLEAN_PRO']['type']){
+            $_order['info'] = $_order['info_obj'][0]['product_detail'];
+            //car_str,store_str,cylinder_str
+            $_order['info']['cylinder_arr'] = 
+                D('car\CarCylinder')->cylinderList($_order['info']['cylinder_id']);
+            $_order['info']['cylinder_str'] = $_order['info']['cylinder_arr']['title'];
+            $_where_car = array(
+                    "id" => $_order['info']['car_series']
+                );
+            $_car = D('car\CarSeries')->where($_where_car)->find();
+            $_order['info']['car_str'] = $_car['title'];
+            $_where_store = array(
+                    "id" => $_order['info']['store_id']
+                );
+            $_store = D('site\Merchant')->where($_where_store)->find();
+            $_order['info']['store_str'] = $_store['store_name'];
+        }
+
+        $this->_arr['payType'] = $D_Order->payType();
         $this->_arr['orderRes'] = $_order;
         $_data = I('post.');
         if($_data['do_action'] === 'sub_pay'){

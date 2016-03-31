@@ -9,7 +9,7 @@ namespace Common\Model\car;
  */
 class CarCylinderModel {
     
-    public function cylinderList(){
+    public function cylinderList($key = ""){
     	$_arr = array(
     			"4" => array(
     					"title" => "四缸",
@@ -32,6 +32,9 @@ class CarCylinderModel {
     					"key" => 12
     				)
     		);
+        if($_arr[$key]){
+            return $_arr[$key];
+        }
     	return $_arr;
 
     }

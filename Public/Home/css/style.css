@@ -197,11 +197,11 @@ i.error {
     white-space: nowrap;
 }
 .widget-order-body .table-con {
-    border: 1px solid #ccc;
+    border: 1px solid #ccc;border-width:1px 0;
     background: #fafafa;
     margin-top: 10px;
     padding: 12px;
-    margin:2px;
+    margin:2px 0;
 }
 
 .table-error {line-height:30px;margin:50px auto;font-size:22px;text-align: center;}
