@@ -475,7 +475,7 @@ class MyController extends HomeController {
             $_resList['lists'][$k]['car_series'] = $D_CarSeries->where($_where_s)->find();
         }
         $this->_arr['resList'] = $_resList;
-        $this->_showDisplay();
+        $this->_showDisplay('my:car');
     }
     
     
