@@ -1,10 +1,11 @@
 <style>
-#brand-pop {position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;overflow-y:auto;display:none;}
-.car-ui-list {min-height: 100%;}
+#brand-pop {position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;display:none;}
+.car-ui-list {height: 100%;overflow-y:scroll;-webkit-overflow-scrolling: touch;}
 .car-ui-list .ui-list-img span{border-radius:2px;}
 .car-ui-list .ui-list-img {height:55px;}
 .brand-mask {top:0;bottom:0;left:0;right:0;background-color:rgba(0,0,0,.8);position:fixed;z-index:2;display:none;}
-.car-ui-series {height:100%;width:0px;overflow-y:scroll;right:0;position:fixed;
+.car-ui-series {height:100%;width:0px;overflow-y:scroll;right:0;position:fixed;z-index:2;
+	-webkit-overflow-scrolling: touch;
 -moz-transition: all 0.3s cubic-bezier(0.31, 0.57, 0.68, 1.36);
     -o-transition: all 0.3s cubic-bezier(0.31, 0.57, 0.68, 1.36);
     -webkit-transition: all 0.3s cubic-bezier(0.31, 0.57, 0.68, 1.36); 

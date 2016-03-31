@@ -185,7 +185,7 @@ i.error {
 .order_menu_ul {float:right;}
 .status_warp a {margin-right:3px;font-size:13px;padding: 7px 0;}
 .status_warp a.curr {color: #3377aa;border-bottom: 3px solid #3377aa;padding-bottom: 15px;}
-.ticket-order-list {padding: 10px;border: 1px dashed #d9d9d9;margin: 5px;}
+.ticket-order-list {padding: 10px;background-color:#fff;margin: 5px;}
 
 .table-order .con {
     padding: 10px 0;

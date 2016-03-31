@@ -388,6 +388,11 @@ class MyController extends HomeController {
                 //[nickName] => ayoway [mobile] => 13800138000 [plate_num] => 粤 
                 //[car_brand] => 35 [car_series] => 6 
                 //[store_id] => 3 [cylinder_id] => 4 [amount] => 100
+                $_car_series = D('car\CarSeries')->where(
+                    array('id'=>$_proDetail['car_series'])
+                    )->find();
+                $_resList['lists'][$k]['car_series'] = $_car_series;
+                $_resList['lists'][$k]['plate_num'] = $_proDetail['plate_num'];
                 $_proInfo = "";
                 foreach($_proDetail as $kk => $vv){
                     if($kk == "nickName"||$kk == "mobile"){

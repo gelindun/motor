@@ -1,14 +1,20 @@
+var _click;
+if('touchstart' in window){
+   _click = "touchstart"
+}else{
+   _click = "click"
+}
 var car_brand = {
 	brand_pop : "#brand-pop",
 	brand_mask : ".brand-mask",
 	ui_series : ".car-ui-series",
 	init : function(callBack){
 		var _t = this;
-		$("body").on("click",_t.brand_mask,function(){
+		$("#brand-pop").on(_click,_t.brand_mask,function(){
 			_t.hide_series();
 			return false;
 		})
-		$("body").on("click",".car-series-li",function(){
+		$("#brand-pop").on(_click,".car-series-li",function(){
 			_t.hide_series();
 			var _obj = {
 				"brand" : $(_t.ui_series).attr("data-brand"),
@@ -22,7 +28,7 @@ var car_brand = {
 			},500)
 			return false;
 		})
-		$("body").on("click",".car-brand-li",function(){
+		$("#brand-pop").on(_click,".car-brand-li",function(){
 			var data_brand = $(this).attr("data-brand");
 			var title_brand = $(this).attr("data-brand-title");
 			_t.pop_series(data_brand,title_brand);
