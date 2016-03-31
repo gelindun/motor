@@ -16,3 +16,7 @@ $.validator.addMethod("mobile",
     function (value, element) {
          return this.optional(element) || /^1(3|4|5|6|7|8)[0-9]{9}$/.test(value);
     }, "请确认手机号格式正确");
+$.validator.addMethod("plateNum",
+    function (value, element) {
+         return this.optional(element) || /^[\u4e00-\u9fa5]{1}[a-zA-Z]{1}[a-zA-Z_0-9]{5}$/.test(value);
+    }, "请确认车牌号格式正确");

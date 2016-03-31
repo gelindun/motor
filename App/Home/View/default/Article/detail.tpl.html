@@ -1,27 +1,36 @@
 {{include file="Public:header" /}}
-{{include file="Public:header_detail_inc" /}}
+<style>
+.content-warper {padding:0;}
+.content-warper table{border-collapse: collapse;border: 1px solid #9CF;text-align:center;}   
+.content-warper table thead td,t.content-warper able th{font-weight:bold;background-color:White;}   
+.content-warper table tr:nth-child(even){background-color:#fefefe;}   
+.content-warper table td,.content-warper table th{border:1px solid #C3C3C3;text-align:center;}   
+</style>
+        <h3 class="ui-nowrap" style="text-align:center;line-height:45px;font-size:22px;">{{$resPage['title']}}</h3>
+        <div style="text-align:center;">
+            <i class="ui-icon-history"></i> {{$resPage['time_show']|date='Y/m/d',###}}
+            <i class="ui-icon-scan"></i> {{$resPage['view_count']}} 人气
+        </div>
         <section class="ui-container index-block">
            
             <section id="list">
                 <div>
                     <div >
                         
-                        <ul class="ui-list ui-list-pure mar-v-10">
+                        <ul class="ui-list ui-list-pure ">
+                            
                             {{notempty name="resPage['logo']"}}
-                            <li style="text-align:center;overflow:hidden;">
-                                    <img src="{{$resPage['logo']|showPic}}" style="max-height:150px;" />
+                            <li style="text-align:center;overflow:hidden;margin:0;padding:0;">
+                                    <img src="{{$resPage['logo']|showPic}}" style="width:100%;" />
                             </li>
                             {{/notempty}}
-                            <li>
-                                <i class="ui-icon-history"></i> {{$resPage['time_show']|date='Y/m/d',###}}
-                                <i class="ui-icon-scan"></i> {{$resPage['view_count']}} 人气
-                            </li>
+                            
                         </ul>
                     </div>
                 </div>
-                <div class="content-warper">
+                <section class="content-warper">
                     {{$resPage['content']}}
-                 </div>
+                 </section>
 
                 
             </section>

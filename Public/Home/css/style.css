@@ -63,7 +63,7 @@ li.index-article-li .ui-list-info p {font-size: 12px;}
 .fb-lt p span.discount{float:left;margin:.5rem;color:#f46b29}
 .fb-lt p span.num{float:right;margin:.5rem}
 #infscr-loading{text-align:center;clear:both;padding:10px 0;}
-.content-warper {padding:20px;border:1px solid #d9d9d9;border-radius:2px;margin:5px;box-sizing: border-box;overflow:hidden;}
+.content-warper {padding:10px;border-radius:2px;margin:5px;box-sizing: border-box;overflow:hidden;}
 
 .widget-head {margin:10px 0;line-height:30px;padding: 5px 10px;font-weight: bold;color:#fff;
              background-color:#009fc5;border:1px solid #009fc5;border-width:1px 0;overflow:hidden;}

@@ -72,7 +72,7 @@ class ArticleController extends HomeController {
         $this->_arr['resPage'] = $_rst;
         $this->D_AdminArticle->where($_where)->setInc('view_count');
         
-        $this->_arr['seo_title'] = $this->_arr['seo_keywords'] = $_rst['title'];
+        $this->_arr['seo_keywords'] = $_rst['title'];
         $this->_arr['seo_description'] = msubstr(strip_tags($_rst['content']),0,100);
         $this->_showDisplay('Article:detail');
     }

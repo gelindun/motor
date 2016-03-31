@@ -37,9 +37,11 @@ var car_brand = {
 
 	},pop_brand:function(){
 		var _t = this;
+		var el=$.loading({content:'loading...',})
 		$.get('/CarSeries/rtnBrand',{},function(data){
 			$(_t.brand_pop).html(data);
 			$(_t.brand_pop).show();
+			el.hide();
 		})
 		
 	},hide_brand:function(){
@@ -48,7 +50,9 @@ var car_brand = {
 		$(_t.brand_pop).hide();
 	},pop_series:function(data_brand,title_brand){
 		var _t = this,data_brand = data_brand||0;
+		var el=$.loading({content:'loading...',})
 		$.get('/CarSeries/rtnSeries',{brand:data_brand},function(data){
+			el.hide();
 			$(_t.brand_pop).append(data);
 			$(_t.brand_pop).find(_t.brand_mask).show();
 			setTimeout(function(){

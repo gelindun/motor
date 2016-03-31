@@ -3,15 +3,18 @@
     
 
         <section class="ui-container my-base-warp">
+            <h3 class="" style="padding:30px 0;text-align:center;height: 155px;position:relative;
+              border-bottom:1px solid #999;
+              background:url(__PUBLIC__/Home/img/banner.jpg) no-repeat center;background-size:cover;">
+                    <div class="ui-col t-center">
+                        <span class="ui-avatar-lg" style="display:inline-block;">
+                            <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" >
+                        </span>
+                        <h3 style="color:#fff;">{{$my_info.real_name}}</h3>
+                    </div>
+              </h3>
+
             
-            <ul class="ui-row my-base-info">
-                <li class="ui-col t-center">
-                    <span class="ui-avatar-lg">
-                        <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" >
-                    </span>
-                    <h3 style="color:#fff;">{{$my_info.real_name}}</h3>
-                </li>
-            </ul>
             
             <div class="my-index-list">
                 <div class="ui-border-t">

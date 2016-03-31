@@ -1,5 +1,4 @@
 {{include file="Public:header" /}}
-{{include file="Public:header_detail_inc" /}}
 <script >
 var _click;
 if('ontouchstart' in window){
@@ -46,6 +45,8 @@ $(function(){
 
 
 </script>
+        <h3 class="ui-nowrap" style="text-align:center;
+        line-height:45px;font-size:22px;">{{$resPage['store_name']}}</h3>
         <section class="ui-container index-block">
            
             <section id="list">
@@ -55,9 +56,8 @@ $(function(){
                         <ul class="ui-list ui-list-pure mar-v-10">
                             {{notempty name="resPage['logo']"}}
                             <li style="text-align:center;">
-                                <div class="ui-avatar-lg" style="display:inline-block;">
-                                    <span style="background-image:url({{$resPage['logo']|showPic}});
-                                    background-size:contain;"></span>
+                                <div  style="display:inline-block;">
+                                    <img src="{{$resPage['logo']|showPic}}" />
                                 </div>
                             </li>
                             {{/notempty}}
@@ -75,7 +75,7 @@ $(function(){
                         </ul>
                     </div>
                 </div>
-                <div class="content-warper" style="padding:10px;">
+                <div class="content-warper" style="padding:10px;border:1px solid #d9d9d9;">
                     <h1 style="font-size:18px;font-weight:bold;color:#0baae4;margin-bottom:10px;">门店描述：</h1>
                     <section style="text-indent:24px;">
                         {{$resPage['content']}}

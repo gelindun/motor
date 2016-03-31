@@ -1,4 +1,11 @@
 {{include file="Public:header" /}}
+<style>td.t-left,.t-left{text-align: left;padding:0 5px;}
+li.curr {position:relative;}
+li.curr:after { content: "\e601";color: #017bbe;position: absolute;font-weight: normal;
+    right: -5px;top: -5px;font-family: iconfont!important;font-size: 28px;
+    z-index: 9; width: 16px; height: 16px; border-radius: 13px;
+    line-height: 26px;text-indent: -3px;}
+</style>
 <script src="__STATIC__/common/js/qrcode.js"></script>
 <script src="__PUBLIC__/Home/js/order.js" type="text/javascript"></script>
 <dl class="row bg-gray">
@@ -15,21 +22,25 @@
                     <thead>
                         <tr>
                             <td style="width:100px;">订单号</td>
-                            <td>{{$orderRes['order_id']}}</td>
+                            <td class="t-left">{{$orderRes['order_id']}}</td>
                         </tr>
                         <tr>
                             <td>订单价格</td>
-                            <td> ￥{{$orderRes['price']}}</td>
+                            <td class="t-left"> ￥{{$orderRes['price']}}</td>
                         </tr>
                         <tr>
                             <td>支付方式</td>
                             <td>
                                 <ul class="ul_order_type">
                                 {{volist name="orderType" id="v"}}
-                                    <li _ext="{{$v['ext']}}">{{$v['title']}}</li>
+                                    {{eq name="key" value="1"}}
+                                    {{assign name="pay_type" value="$v['ext']" /}}
+                                    {{/eq}}
+                                    <li _ext="{{$v['ext']}}" 
+                                    {{eq name="key" value="1"}}class="curr"{{/eq}}>{{$v['title']}}</li>
                                 {{/volist}}
                                 </ul>
-                                <input type="hidden" name="pay_type" value="" />
+                                <input type="hidden" name="pay_type" value="{{$pay_type}}" />
                                 <ul class="ul_order_ext">
                                     <li ext="offline" style="">
                                         <div style="line-height:30px;text-align:left;text-indent:10px; ">付款备注:</div>

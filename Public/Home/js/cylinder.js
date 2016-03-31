@@ -28,7 +28,8 @@ cy_obj = {
                     required: true,
                     mobile:true,
                 },plate_num:{
-                    required: true
+                    required: true,
+                    plateNum:true
                 },
                 car_series:{
                     required: true
@@ -156,16 +157,21 @@ cy_obj = {
             })
             $('#stores option').remove();
             $('#stores').append($('#temp_div option'));
-            $("#stores option").eq(0).addClass('nearest').attr("selected","selected");
+            
             $("#temp_div").remove();
             var _msg = "最近的门店距离您"+$("#stores option").eq(0).attr("disf")+"请确认后手动选择门店";
-            _t.fetchAmount();
-            return false;//for test
-            var dia = $.dialog({
+            
+            if(store_dis > 300){
+                $("<option>请选择门店名称</option>").prependTo($('#stores'));
+                var dia = $.dialog({
                             title:'温馨提示',
                             content:_msg,
                             button:["确定"]
                         });
+            }else{
+                $("#stores option").eq(0).addClass('nearest').attr("selected","selected");
+            }
+            _t.fetchAmount();
         };
         
         renderReverse=function(response){

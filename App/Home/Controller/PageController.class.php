@@ -29,7 +29,7 @@ class PageController extends HomeController {
             exit;
         }
         $this->_arr['pageTitle'] = $this->_arr['keyArr'][$_key]['title'];
-        $this->_arr['seo_title'] = $this->_arr['seo_keywords'] = $this->_arr['pageTitle'];
+        $this->_arr['seo_keywords'] = $this->_arr['pageTitle'];
         $this->_arr['seo_description'] = msubstr(strip_tags($this->_arr['resPage']['content']),0,100);
         $this->_arr['s_key'] = $_key;
         $this->_showDisplay();
