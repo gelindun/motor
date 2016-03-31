@@ -1,0 +1,14 @@
+<div class="brand-mask car-ui-list">
+	<ul class="ui-list car-ui-series">
+		{{volist name="resList.lists" id="r"}}
+		<li class="ui-border-b car-series-li" data-series="{{$r.id}}" data-series-title="{{$r.title}}">
+	        <div class="ui-list-img">
+	            <span style="background-image:url({{$r['img_url']|showPic}})"></span>
+	        </div>
+	        <div class="ui-list-info">
+	            <h4 class="ui-nowrap">{{$r['title']}}</h4>
+	        </div>
+	    </li>
+	    {{/volist}}
+	</ul>
+</div>

@@ -84,7 +84,8 @@ i.error {
 .my-base-info .ui-avatar-lg {display:inline-block;}
 .my-base-info .ui-avatar-lg img {width:100%;height:100%;border-radius:50%;}
 .my-base-warp {color:#333;background-color:#f0efed;overflow: hidden;padding-bottom: 60px;}
-.my-base-warp .ui-form-item {font-size:14px;height: auto;line-height:35px;}
+.my-base-warp .ui-form-item {font-size:14px;height: auto;line-height:55px;}
+.my-base-warp .ui-form-item.ui-form-item-link>a {display: block;}
 .my-base-warp .ui-form-item .fa {width:24px;height:24px;text-align: center;line-height: 24px;margin-right:10px;color:#fff;border-radius:50%;}
 .ui-grp-my {margin:10px 0;}
 .ui-poptips-warn {color:#f00;}

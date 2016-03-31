@@ -65,9 +65,13 @@ $(function(){
                                 <i class="ui-icon-history"></i> {{$resPage['time_add']|date='Y/m/d',###}}
                                 <i class="ui-icon-scan"></i> {{$resPage['view_count']}} 人气
                             </li-->
-                            <li class="gps-map" style="padding-right:0;">
-                                <i class="fa fa-home" style="color:#f74c31;"></i>{{$resPage['address']}}
-                                 <button class="ui-btn-s ui-btn-primary" style="float:right;"><i class="fa fa-map-marker" ></i> 导航 </button>                           </li>
+                            <li class="gps-map" style="padding-right:0;position:relative;">
+                                
+                                <p style="padding-right:60px;">
+                                    <i class="fa fa-home" style="color:#f74c31;"></i>&nbsp;
+                                    {{$resPage['address']}}</p>
+                                 <button class="ui-btn-s ui-btn-primary"
+                                  style="position:absolute;right:0;top:0;"><i class="fa fa-map-marker" ></i> 导航 </button>                           </li>
                         </ul>
                     </div>
                 </div>

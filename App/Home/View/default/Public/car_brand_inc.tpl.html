@@ -1,0 +1,26 @@
+<style>
+#brand-pop {position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;overflow-y:auto;display:none;}
+.car-ui-list {min-height: 100%;}
+.car-ui-list .ui-list-img span{border-radius:2px;}
+.car-ui-list .ui-list-img {height:55px;}
+.brand-mask {top:0;bottom:0;left:0;right:0;background-color:rgba(0,0,0,.8);position:fixed;z-index:2;display:none;}
+.car-ui-series {height:100%;width:0px;overflow-y:scroll;right:0;position:fixed;
+-moz-transition: all 0.3s cubic-bezier(0.31, 0.57, 0.68, 1.36);
+    -o-transition: all 0.3s cubic-bezier(0.31, 0.57, 0.68, 1.36);
+    -webkit-transition: all 0.3s cubic-bezier(0.31, 0.57, 0.68, 1.36); 
+    transition: all 0.3s cubic-bezier(0.31, 0.57, 0.68, 1.36); }
+.car-ui-series.active {width:260px;}
+li.char-blk {text-indent:20px;line-height:30px;margin:0;padding:0;background-color:#F5F5F5;color:#828282}
+.fixed-nav-char { top: 30px;position:fixed;right:20px;bottom:30px;}
+.fixed-nav-char .rows-box {display: -webkit-box; -webkit-box-orient: vertical;height:100%;}
+.fixed-nav-char li { -webkit-box-flex: 1;
+    -ms-flex: 1;-moz-box-flex: 1;display: -webkit-box; display: -ms-flexbox;
+    -webkit-box-align: center;-webkit-box-pack: center;-ms-flex-align: center;
+    -ms-flex-pack: center;-moz-box-align: center;-moz-box-pack: center;
+    width: 1.6rem; font-size: 1.1rem;color: #999;}
+.fixed-nav-char li.active a{ color: #fa6f12;}
+</style>
+<script src="__PUBLIC__/Home/js/car_brand.js"></script>
+<div id="brand-pop">
+</div>
+

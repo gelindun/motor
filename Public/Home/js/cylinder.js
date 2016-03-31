@@ -151,6 +151,7 @@ cy_obj = {
             $("#temp_div").remove();
             var _msg = "最近的门店距离您"+$("#stores option").eq(0).attr("disf")+"请确认后手动选择门店";
             _t.fetchAmount();
+            return false;//for test
             var dia = $.dialog({
                             title:'温馨提示',
                             content:_msg,

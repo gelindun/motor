@@ -8,10 +8,8 @@
                         
                         <ul class="ui-list ui-list-pure mar-v-10">
                             {{notempty name="resPage['logo']"}}
-                            <li style="text-align:center;">
-                                <div class="ui-avatar-lg" style="display:inline-block;">
-                                    <span style="background-image:url({{$resPage['logo']|showPic}})"></span>
-                                </div>
+                            <li style="text-align:center;overflow:hidden;">
+                                    <img src="{{$resPage['logo']|showPic}}" style="max-height:150px;" />
                             </li>
                             {{/notempty}}
                             <li>

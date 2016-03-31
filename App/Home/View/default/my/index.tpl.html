@@ -9,7 +9,7 @@
                     <span class="ui-avatar-lg">
                         <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" >
                     </span>
-                    <!--h3>{{$my_info.real_name}}</h3-->
+                    <h3 style="color:#fff;">{{$my_info.real_name}}</h3>
                 </li>
             </ul>
             
@@ -30,6 +30,10 @@
                     <div class="ui-grp-my  ui-form">
                         <div class="ui-form-item ui-form-item-link ui-border-b">
                             <a href="/My/order"><i class="fa fa-bar-chart bg-eb6877"></i>&nbsp;我的订单</a>
+                        </div>
+                    
+                        <div class="ui-form-item ui-form-item-link ui-border-b">
+                            <a href="/My/car"><i class="fa fa-car bg-00b7ee"></i>&nbsp;我的爱车</a>
                         </div>
                         
                     </div>

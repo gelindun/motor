@@ -1,6 +1,6 @@
 {{include file="Public:header" /}}
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={{$map_baidu_key}}"></script>
-<script src="__PUBLIC__/Home/js/merchant.js" type="text/javascript"></script>
+<script src="__PUBLIC__/Home/js/merchant.js?r={{:mt_rand()}}" type="text/javascript"></script>
 <script>baidu_map_ak = "{{$map_baidu_key}}"</script>
 
         
@@ -11,6 +11,7 @@
             <section id="stores">
                
                 <ul class="ui-list   ui-list-article">
+                    
                     {{empty name="resList.lists"}}
                     <li class="ui-tips ui-tips-warn">
                         <i></i><span>暂时没有相关门店</span>

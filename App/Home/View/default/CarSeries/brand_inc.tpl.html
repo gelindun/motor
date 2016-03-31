@@ -1,0 +1,22 @@
+<ul class="ui-list car-ui-list">
+    {{volist name="resBrand" id="r" }}
+ 	<li class="char-blk" id="char_nav_{{$key|strtoupper}}">{{$key|strtoupper}}</li>
+    {{volist name="r" id="v"}}
+    <li class="ui-border-b car-brand-li" data-brand="{{$v['id']}}" data-brand-title="{{$v['title']}}">
+        <div class="ui-list-thumb">
+            <span style="background-image:url({{$v.img_url|showPic}})"></span>
+        </div>
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">{{$v.title}}</h4>
+        </div>
+    </li>
+    {{/volist}}
+    {{/volist}}
+</ul>
+<div class="fixed-nav-char" >
+	<ul class="rows-box">
+        {{volist name="resBrand" id="r" }}
+		<li ><a href="#char_nav_{{$key|strtoupper}}">{{$key}}</a></li>
+        {{/volist}}
+	</ul>
+</div>

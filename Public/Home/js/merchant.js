@@ -45,8 +45,9 @@ var merchant = {
 		
 		var geolocation = new BMap.Geolocation();
 		geolocation.getCurrentPosition(function(pos){
+			
 			showNearest(pos.point.lat, pos.point.lng);
-		});
+		},{enableHighAccuracy: true});
 	}
 }
 
