@@ -63,7 +63,27 @@ class CylinderController extends HomeController {
         $this->_arr['resCarBrand'] = $_carBrandList;
         //默认发动机缸数
         $this->_arr['cylinder_id'] = 0;
+        //最后一次订单
+        $D_Order = D('order\Order');
+        $D_Product = D('product\Product');
+        $_lastOrderRCD = array();
+        $_clean_form = $D_Product->clean_form();
+        $_where = array(
+                "front_uid" => $this->_arr[self::FRONT_UID],
+                "order_type" => $_clean_form['type']
+            );
+        $_lastOrderRCD = $D_Order->where($_where)->order(array('id'=>'DESC'))->find();
+        $_lastPro = json_decode($_lastOrderRCD['product_info'],true);
+        $_lastOrder = $_lastPro[0]['product_detail'];
+        if(!$_lastOrder['text_series']&&$_lastOrder['car_series']){
+            $_where_car = array(
+                    "id" => $_lastOrder['car_series']
+                );
+            $_car = D('car\CarSeries')->where($_where_car)->find();
+            $_lastOrder['text_series'] = $_car['title'];
+        }
 
+        $this->_arr['lastOrder'] = $_lastOrder;
         $this->_showDisplay();
     }
 

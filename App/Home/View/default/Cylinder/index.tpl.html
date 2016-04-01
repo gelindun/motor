@@ -27,14 +27,16 @@
                 <label class="ui-border-r">
                      车牌号码
                 </label>
-                <input type="text" name="plate_num" placeholder="您的车牌号码" value="">
+                <input type="text" name="plate_num" placeholder="您的车牌号码"
+                 value="{{$lastOrder['plate_num']}}">
                 <i class="fa fa-tag ui-fa-r"></i>
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
                      您的称呼
                 </label>
-                <input type="text" name="nickName" value="" placeholder="怎么称呼您">
+                <input type="text" name="nickName" 
+                value="{{$lastOrder['nickName']}}" placeholder="怎么称呼您">
                 <i class="fa fa-user ui-fa-r"></i>
             </div>
             
@@ -42,7 +44,8 @@
                 <label class="ui-border-r">
                      联系手机
                 </label>
-                <input type="text" name="mobile" placeholder="您的联系电话">
+                <input type="text" name="mobile" 
+                value="{{$lastOrder['mobile']}}" placeholder="您的联系电话">
                 <i class="fa fa-phone-square ui-fa-r"></i>
             </div>
             
@@ -51,9 +54,9 @@
                     <i class="fa fa-car bg-eb6100"></i> 选择爱车
                 </label>
                 <input type="text" name="text_series" readonly="true" class="pop-brand"
-                 value="" placeholder="请选择您的爱车">
-                 <input type="hidden" name="car_series" />
-                 <input type="hidden" name="car_brand" />
+                 value="{{$lastOrder['text_series']}}" placeholder="请选择您的爱车">
+                 <input type="hidden" name="car_series" value="{{$lastOrder['car_series']}}" />
+                 <input type="hidden" name="car_brand" value="{{$lastOrder['car_brand']}}" />
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label >
