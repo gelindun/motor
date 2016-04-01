@@ -111,6 +111,8 @@ cy_obj = {
                     $("input[name=amount]").val(parseFloat(data.result.amount));
                 }
             },'json');
+        }else{
+            $("input[name=amount]").val('')
         }
 
     },fetchSeries:function(){
