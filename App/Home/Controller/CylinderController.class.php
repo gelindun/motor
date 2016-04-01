@@ -61,7 +61,8 @@ class CylinderController extends HomeController {
         $_order = array("letter"=>'ASC');
         $_carBrandList = $D_CarBrand->getAllPagesize($_where,$_order);;
         $this->_arr['resCarBrand'] = $_carBrandList;
-        $this->_arr['cylinder_id'] = 4;
+        //默认发动机缸数
+        $this->_arr['cylinder_id'] = 0;
 
         $this->_showDisplay();
     }

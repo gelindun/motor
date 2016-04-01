@@ -71,7 +71,8 @@
             </div>
             <div class="ui-label-list ui-border-b cylinder_tag"
              style="padding:10px 0;text-align:center;">
-                {{assign name="ckey" value="0" /}}
+                <!--ckey 改为0则默认选中-->
+                {{assign name="ckey" value="1" /}}
                 {{volist name="resCarCylinder" id="r"}}
                 <label class="ui-label 
                 {{eq name='ckey' value='0'}}ui-tag-selected{{/eq}}"

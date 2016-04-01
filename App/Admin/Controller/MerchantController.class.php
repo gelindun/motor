@@ -23,7 +23,10 @@ class MerchantController extends AdminController {
                         'id' => $_data['id']
                     );
                 }
-                $D_Merchant->write($_data,$_where);
+                $_rcd = $D_Merchant->write($_data,$_where);
+                if(!$_data['id']){
+                    $this->initPrice($_rcd);
+                }
                 pushJson('更新成功',array('url'=>U('/Merchant/index')));
             }else{
                 pushError ($D_Merchant->getError());
@@ -77,6 +80,34 @@ class MerchantController extends AdminController {
         $this->_arr['keyword'] = $_key_word;
         $this->_arr['currPg']  = I('get.p');
         $this->_showDisplay();
+    }
+    /**
+    **  初始化门店价格
+    */
+    public function initPrice($_store_id){
+        $D_Merchant = D('site\Merchant');
+        $D_CarCylinder = D('car\CarCylinder');
+        $_cylinderList = $D_CarCylinder->cylinderList();
+        $D_Product = D('product\Product');
+        $_product = $D_Product ->clean_form();
+        $_pro_str = $_product['type'].','.$_product['pid'];
+        $D_Property = D('product\Property');
+        $D_PropertyPrice = D('product\PropertyPrice');
+        $_clean_form = $D_Property->clean_form();
+        foreach($_cylinderList as $k => $v){
+            $_data_p = array(
+                "pro_str" => $_pro_str,
+                "pro_key" => $_clean_form['store']['key'].'|'.$_store_id.
+                ','.$_clean_form['cylinder']['key'].'|'.$v['key'],
+                "price" => $v['price']
+            );
+            if($D_PropertyPrice->create()){
+                $D_PropertyPrice->write($_data_p);
+            }else{
+                $_msg = $D_PropertyPrice->getError();
+                break;
+            }
+        }
     }
 
 

@@ -104,7 +104,7 @@ cy_obj = {
     },fetchAmount:function(){
         var store_id = parseInt($("select[name=store_id]").val());
         var cylinder_id = parseInt($("input[name=cylinder_id]").val());
-        if(!isNaN(store_id)&&!isNaN(cylinder_id)){
+        if(!isNaN(store_id)&&!isNaN(cylinder_id) && cylinder_id > 0){
             var _obj = {store_id:store_id,cylinder_id:cylinder_id}
             $.post("/Cylinder/fetchAmount",_obj,function(data){
                 if(typeof(data.result.amount)!="undefined"){

@@ -51,7 +51,12 @@
                 </h4>
                 {{notempty name="v.product_info"}}
                 {{eq name="v.order_type" value="$clean_type"}}
-                <ul class="ui-list">
+                <?php
+                    $_url = U('/My/order_detail',array(
+                            'order_id' => $v['order_id']
+                        ));
+                ?>
+                <ul class="ui-list" onclick="window.location.href='{{$_url}}'">
                     <li >
                         <div class="ui-list-img" style="height:55px;">
                             <span style="background-image:url({{$v['car_series']['img_url']|showPic}});
