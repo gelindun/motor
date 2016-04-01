@@ -9,16 +9,9 @@
     })
 </script>
         <section class="ui-container my-base-warp">
-            <h3 class="" style="padding:30px 0;text-align:center;height: 165px;position:relative;
-              border-bottom:1px solid #999;
-              background:url(__PUBLIC__/Home/img/banner.jpg) no-repeat center;background-size:cover;">
-                    <div class="ui-col t-center">
-                        <span class="ui-avatar-lg" style="display:inline-block;">
-                            <img src="{{if condition="$my_info['head_img'] neq ''"}}{{$my_info.head_img|showPic}}{{else/}}__PUBLIC__/Home/img/head_img.png{{/if}}" >
-                        </span>
-                    </div>
-              </h3>
-            <form id="profileForm" action="?" method="POST">
+            
+             {{include file="my:my_header" /}}
+            <form id="profileForm" action="?" method="POST" style="margin-top:38px;">
             <div class="my-index-list">
                 <div class="ui-grp-my ui-form ui-border-t">
                     <div class="ui-form-item ui-border-b">

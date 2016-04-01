@@ -10,11 +10,7 @@
 .empty-blk {background-color:#fff;padding:15px 0;text-align:center;margin-top: 5px;font-size: 1.3em;}
 </style>
     <body ontouchstart style="background-color:#f9f9f9;">
-      <h3 class="" style="padding:30px 0;text-align:center;height: 155px;position:relative;
-      border-bottom:1px solid #999;
-      background:url(__PUBLIC__/Home/img/banner.jpg) no-repeat center;background-size:cover;">
-        
-      </h3>
+      {{include file="my:my_header" /}}
 
     {{eq name="do_action" value="edit"}}
     <div class="ui-form ui-border-t" style="margin-top:38px;">
@@ -46,7 +42,7 @@
         </form>
     {{else /}}
    {{notempty name="resList.lists"}}
-    <ul class="ui-list ul-member-car">
+    <ul class="ui-list ul-member-car" style="margin-top:38px;">
         {{volist name="resList.lists" id="v"}}
         <li >
             <?php
