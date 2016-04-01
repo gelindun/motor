@@ -63,7 +63,7 @@ var order_obj = {
                 if(typeof(data.result.url)!="undefined"){
                     if(_ext === 'wechat' && !isWeixin()){
                         tipAlert('扫描二维码进行支付');
-                        $("li[ext=wechat]").empty().append(qrCode(data.result.url));
+                        $("li[ext=wechat]").empty().append(qrCode(data.result.url)).show();
                     }else{
                         tipAlert('支付跳转中,请稍候');
                         window.location.href = data.result.url;

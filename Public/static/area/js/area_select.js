@@ -52,7 +52,7 @@ var area_obj = {
 			$(_t.cont).css({"display":"none"});
 			_cont.eq(index).css({"display":"block"})
 		})
-	},buildArea(data,index){
+	},buildArea:function(data,index){
 		var _t = this;
 		_cont = $(_t.cont);
 		curr = 0;

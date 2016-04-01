@@ -5,7 +5,7 @@ li.curr:after { content: "\e601";color: #017bbe;position: absolute;font-weight: 
     right: -5px;top: -5px;font-family: iconfont!important;font-size: 28px;
     z-index: 9; width: 16px; height: 16px; border-radius: 13px;
     line-height: 26px;text-indent: -3px;}
-body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}
+.ui-label{padding:0 10px;border-radius:2px;}
 .ui-form-item .fa {border-radius: 50%;background-color: #00b7ee;line-height: 22px;
     width: 22px;height: 22px; text-align: center;font-size: 14px;color: #fff;}
 .fa.bg-eb6100 {    background-color: #eb6100;} 
@@ -16,7 +16,7 @@ body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}
 <script src="__PUBLIC__/Home/js/order.js" type="text/javascript"></script>
 <dl class="row bg-gray">
     <dd class="col-xs-12">
-        <div class="widget-order-body" style="padding-top:10px;">
+        <div class="widget-order-body" style="padding-top:0px;">
 
             
                 {{notempty name="error"}}
@@ -62,7 +62,7 @@ body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}
                 </div>
                 {{/notempty}}
                 {{notempty name="orderRes['info']['store_id']"}}
-                <div class="ui-form-item ui-form-item-l ui-border-t">
+                <div class="ui-form-item ui-form-item-l ui-border-t ">
                     <label class="ui-border-r">
                         门店名称
                     </label>
@@ -79,52 +79,58 @@ body{padding-bottom:80px;}.ui-label{padding:0 10px;border-radius:2px;}
                 </div>
                 {{/notempty}}
 
-                <div class="table-con ">
-                <table class="ui-table " cellpadding="0" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <td style="width:100px;">订单号</td>
-                            <td class="t-left">{{$orderRes['order_id']}}</td>
-                        </tr>
-                        <tr>
-                            <td>订单价格</td>
-                            <td class="t-left"> ￥{{$orderRes['price']}}</td>
-                        </tr>
-                        <tr>
-                            <td>支付方式</td>
-                            <td>
-                                <ul class="ul_order_type">
-                                {{volist name="payType" id="v"}}
-                                    {{eq name="key" value="1"}}
-                                    {{assign name="pay_type" value="$v['title']" /}}
-                                    {{/eq}}
-                                    <li _ext="{{$v['ext']}}" 
-                                    {{eq name="key" value="1"}}class="curr"{{/eq}}>{{$v['title']}}</li>
-                                {{/volist}}
-                                </ul>
-                                <input type="hidden" name="pay_type" value="{{$pay_type}}" />
-                                <ul class="ul_order_ext">
-                                    <li ext="offline" style="">
-                                        <div style="line-height:30px;text-align:left;text-indent:10px; ">付款备注:</div>
-                                        <textarea name="pay_remark" placeholder="请注明转账账号,时间等"
-                                                  class="form-control" rows="3"></textarea>
-                                    </li>
-                                    <li ext="wechat">
-                                        
-                                    </li>
-                                </ul>
-                            </td>
-                        </tr>
-                    </thead>
-                </table>
+                
+                <div class="ui-form-item ui-form-item-l ui-border-t ">
+                    <label class="ui-border-r">
+                         订单号
+                    </label>
+                    <input type="text" readonly="true" value="{{$orderRes['order_id']}}">
+                    
                 </div>
+                <div class="ui-form-item ui-form-item-l ui-border-t ">
+                    <label class="ui-border-r">
+                         订单价格
+                    </label>
+                    <input type="text" readonly="true" value="￥{{$orderRes['price']}}">
+                    
+                </div>
+                <div class="ui-form-item ui-form-item-l ui-border-b" style="height:auto;
+                overflow:hidden;">
+                    <label >
+                         支付方式
+                    </label>
+                    <div style="margin-left:100px;">
+                        <ul class="ul_order_type">
+                            {{volist name="payType" id="v"}}
+                                {{eq name="key" value="1"}}
+                                {{assign name="pay_type" value="$v['title']" /}}
+                                {{/eq}}
+                                <li _ext="{{$v['ext']}}"  style="line-height:25px;"
+                                {{eq name="key" value="1"}}class="curr"{{/eq}}>{{$v['title']}}</li>
+                            {{/volist}}
+                            </ul>
+                            <input type="hidden" name="pay_type" value="{{$pay_type}}" />
+                            <ul class="ul_order_ext">
+                                <li ext="offline" style="">
+                                    <div style="line-height:30px;text-align:left;text-indent:10px; ">付款备注:</div>
+                                    <textarea name="pay_remark" placeholder="请注明转账账号,时间等"
+                                              class="form-control" rows="3"></textarea>
+                                </li>
+                                <li ext="wechat">
+                                    
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+
+          
 
                 {{/notempty}}
                 
             
             <div class="box-payStats">
                 {{empty name="error"}}
-                <div class="con-btn" style="margin:0 5px;">
+                <div class="con-btn" style="margin:0 10px;">
                     <span class="ui-btn ui-btn-primary" id="sub_to_pay">下一步</span>
                 </div>
                 {{else /}}
