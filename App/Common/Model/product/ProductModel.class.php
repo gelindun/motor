@@ -15,7 +15,8 @@ class ProductModel extends \Common\Model\BaseModel{
             'key' => C("CLEAN_FORM"),
             'type' => C("CLEAN_FORM"),
             'pid' => 0,
-            'title' => '发动机清洗'
+            'title' => '氢氧除碳',
+            'title_s' => '除碳'
          );
     }
     

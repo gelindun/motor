@@ -5,15 +5,20 @@
 <script src="__PUBLIC__/Home/js/index.js" type="text/javascript"></script>
     <body ontouchstart>
       <h3 style="position:relative;">
-        <div class="ui-slider" style="height:180px">
-            <ul class="ui-slider-content" style="width: 300%">
-                <li class="current"><span 
-                    style="background-image:url(__PUBLIC__/Home/img/banner.jpg);
-                    background-size:cover;background-position:center;"></span></li>
-                <li><span style="background-image:url(__PUBLIC__/Home/img/banner.jpg);
-                    background-size:cover;background-position:center;"></span></li>
-                <li><span style="background-image:url(__PUBLIC__/Home/img/banner.jpg);
-                    background-size:cover;background-position:center;"></span></li>
+        <div class="ui-slider" style="display:inline-block;
+        overflow:auto;padding-top:0;">
+        <?php
+            $_slideArr = array(
+                    "banner.jpg","banner_2.jpg"
+                );
+        ?>
+            <ul class="ui-slider-content" style="position:relative;">
+                {{volist name="_slideArr" id="r"}}
+                <li style="height:auto;overflow:hidden;"><span 
+                    style="background-image:url(__PUBLIC__/Home/img/{{$r}});height:auto;
+                    background-size:cover;background-position:center center;"><img 
+                    src="__PUBLIC__/Home/img/40_18.png" width="100%;float:left;"></span></li>
+                {{/volist}}
             </ul>
         </div>
         <div class="ui-badge" style="position:absolute;bottom:10px;

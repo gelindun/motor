@@ -11,7 +11,7 @@
     <h1>
          <a href="{{:U('/Order/index',array("order_type"=>$CLEAN_FORM))}}">
              <button class="btn 
-                {{eq name="order_type" value="$CLEAN_FORM"}}btn-primary{{else /}}btn-default{{/eq}} btn-xs"> 发动机清洗订单 </button></a>
+                {{eq name="order_type" value="$CLEAN_FORM"}}btn-primary{{else /}}btn-default{{/eq}} btn-xs"> {{$CLEAN_PRO['title']}}订单 </button></a>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 订单</a></li>
