@@ -151,7 +151,7 @@ class MyController extends HomeController {
         if($this->_arr[self::FRONT_UID]&&I('get.action') !== 'bind'){
             redirect("/");
         }
-        $_weixinOnly = true;
+        $_weixinOnly = false;
         if(I('get.type') == 'weixin' || $_weixinOnly){
             vendor('Weixin.wechat', '', '.class.php');
             $options = array(

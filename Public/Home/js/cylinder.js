@@ -31,8 +31,13 @@ cy_obj = {
                     required: true,
                     plateNum:true
                 },
+                text_series:{
+                    required: true
+                },
                 car_series:{
                     required: true
+                },car_brand:{
+                    required:true
                 },
                 store_id:{
                     required: true
@@ -50,8 +55,12 @@ cy_obj = {
                     required: "请填写手机号，方便售后联系您"
                 },plate_num: {
                     required: "请填写车牌号，方便售后联系您"
+                },text_series:{
+                    required: "请选择您的车型"
                 },car_series: {
                     required: "请选择车型"
+                },car_brand: {
+                    required: "请选择爱车品牌"
                 },store_id: {
                     required: "请选择门店"
                 },cylinder_id: {
@@ -162,7 +171,7 @@ cy_obj = {
             
             $("#temp_div").remove();
             var _msg = "最近的门店距离您"+$("#stores option").eq(0).attr("disf")+"请确认后手动选择门店";
-            
+            store_dis = $("#stores option").eq(0).attr("dis");
             if(store_dis > 300){
                 $("<option>请选择门店名称</option>").prependTo($('#stores'));
                 var dia = $.dialog({

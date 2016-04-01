@@ -93,7 +93,8 @@ class CarSeriesController extends HomeController {
         
 
         $_where = array(
-                "front_uid" => $this->_arr[self::FRONT_UID]
+                "front_uid" => $this->_arr[self::FRONT_UID],
+                "delete" => array("eq","0")
             );
         $_order = array(
             'id' => "DESC"
