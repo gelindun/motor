@@ -49,15 +49,19 @@
     <ul class="ui-list ul-member-car">
         {{volist name="resList.lists" id="v"}}
         <li >
-            <div class="ui-list-img" style="height:55px;">
+            <?php
+                $_url = U('/My/car',array('do_action'=>'edit','id'=>$v['id']));
+            ?>
+            <div class="ui-list-img" style="height:55px;" onclick="window.location.href='{{$_url}}'">
                 <span style="background-image:url({{$v['car_series']['img_url']|showPic}});
                 border-radius:5px;"></span>
             </div>
-            <div class="ui-list-info">
+            <div class="ui-list-info" onclick="window.location.href='{{$_url}}'">
                 <h4 class="ui-nowrap">{{$v['text_series']}}</h4>
                 <p>{{$v['plate_num']}}</p>
             </div>
-            <a href="#" class="ui-icon-close"></a>
+            <a href="javascript:;" style="font-size:35px;"
+             class="ui-icon-close delete-car" data-id="{{$v['id']}}"></a>
         </li>
         {{/volist}}
     </ul>

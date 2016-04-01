@@ -60,5 +60,26 @@ car_obj = {
                 }); 
             }
         });
+        $("body").on("click",".delete-car",function(){
+            var _id = $(this).attr("data-id");
+            if(_id){
+                var el=$.loading({content:'loading...',})
+                $.post('?',{action:'delete_car',id:_id},function(data){
+                    el.hide();
+                    if(typeof(data.msg)!="undefined"){
+                        var tip = $.tips({
+                            content:data.msg,
+                            stayTime:1000,
+                            type:"error"
+                        })
+                        tip.on("tips:hide",function(){
+                            if (data.result && data.result.url) {
+                                window.location.href = data.result.url
+                            }
+                        })
+                    }
+                },'json')
+            }
+        })
     }
 }

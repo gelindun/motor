@@ -498,21 +498,63 @@ class MyController extends HomeController {
                 pushError ($_rst['msg']);
             }
            
-        }
-        $_where = array(
-                "front_uid" => $this->_arr[self::FRONT_UID]
-            );
-        $_order = array(
-                "id" => "DESC"
-            );
-        $_resList = $D_MemberCar->getAllPagesize($_where,$_order);
-        foreach($_resList['lists'] as $k=>$v){
-            $_where_s = array(
-                    "id" => $v['sid']
+        }else if(I('post.action') == 'delete_car'){
+            if($_data['id']){
+                $_where = array(
+                    'id' => $_data['id'],
+                    'front_uid' => $this->_arr[self::FRONT_UID]
                 );
-            $_resList['lists'][$k]['car_series'] = $D_CarSeries->where($_where_s)->find();
+                $_resPage = $D_MemberCar->where($_where)->find();
+                if(!$_resPage){
+                    $_rst['msg'] = "更新出错";
+                }
+            }
+            if(!$_rst['msg']){
+                $_data = array(
+                        "delete" => "1"
+                    );
+                $_data['action'] = "delete_car";
+                $_where = array(
+                        'id' => I('post.id')
+                    );
+                $_rst =  $D_MemberCar->write($_data,$_where);
+
+            }
+            if(!is_array($_rst)){
+                pushJson('更新成功',array(
+                        "url" => U('/My/car')
+                    ));
+            }else{
+                pushError ($_rst['msg']);
+            }
         }
-        $this->_arr['resList'] = $_resList;
+        if($_do_action == "edit"){
+            $_id = I('get.id');
+            $_resPage = $D_MemberCar->where(array(
+                    "id" => $_id,
+                    "front_uid" => $this->_arr[self::FRONT_UID]
+                ))->find();
+            $this->_arr['resPage'] = $_resPage;
+        }else{
+            $_where = array(
+                "front_uid" => $this->_arr[self::FRONT_UID],
+                "delete" => array(
+                        "eq","0"
+                    )
+            );
+            $_order = array(
+                    "id" => "DESC"
+                );
+            $_resList = $D_MemberCar->getAllPagesize($_where,$_order);
+            foreach($_resList['lists'] as $k=>$v){
+                $_where_s = array(
+                        "id" => $v['sid']
+                    );
+                $_resList['lists'][$k]['car_series'] = $D_CarSeries->where($_where_s)->find();
+            }
+            $this->_arr['resList'] = $_resList;
+        }
+        
         $this->_arr['seo_title'] = $this->_arr['seo_keywords'] = '我的爱车'.$this->_arr['seo_title'];
         $this->_showDisplay('my:car');
     }
