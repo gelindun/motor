@@ -21,7 +21,10 @@
         </span>
       </h3>
 
-      <div class="ui-form ui-border-t" style="margin-top:38px;">
+      <div class="ui-form ui-border-t" style="margin-top:38px;position:relative;">
+        <div class="ui-badge btn-car-mine"
+         style="position:absolute;top:-27px;font-size:15px;background-color:#00b7ee;
+        right:0px;padding:5px 15px;height:auto;border-radius:0;">我的爱车</div>
         <form action="?" method="post" id="cylinderForm">
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
@@ -110,9 +113,21 @@ $(function(){
     $(".pop-brand").on("click",function(){
         car_brand.pop_brand();
     })
+    var _funcCar = function(_obj){
+        $("input[name=plate_num]").val(_obj.plateNum);
+        $("input[name=text_series]").val(_obj.seriesTitle);
+        $("input[name=car_brand]").val(_obj.brand);
+        $("input[name=car_series]").val(_obj.series);
+        car_mine.hide_car();
+    }
+    car_mine.init(_funcCar);
+    $(".btn-car-mine").on("click",function(){
+        car_mine.pop_car();
+    })
 })
 </script>
 {{include file="Public:car_brand_inc" /}}  
+{{include file="Public:car_mine_inc" /}} 
 {{include file="Public:footer" /}}
 
 

@@ -9,9 +9,10 @@ class CarSeriesController extends HomeController {
 
     public function _initialize() {
         parent::_initialize();
-        $this->D_CarBrand =D('car\CarBrand');
-        $this->D_CarSeries =D('car\CarSeries');
-        $this->D_CarFactory =D('car\CarFactory');
+        $this->D_CarBrand = D('car\CarBrand');
+        $this->D_CarSeries = D('car\CarSeries');
+        $this->D_CarFactory = D('car\CarFactory');
+        $this->D_MemberCar = D('my\MemberCar');
     }
     /**
     brand to carseries
@@ -85,5 +86,29 @@ class CarSeriesController extends HomeController {
         $this->_arr['resList'] = $_resList;
         print($this->_fetch('series_inc'));
     }
-    
+    /*
+    * 我的爱车
+    */
+    public function rtnMine(){
+        
+
+        $_where = array(
+                "front_uid" => $this->_arr[self::FRONT_UID]
+            );
+        $_order = array(
+            'id' => "DESC"
+        );
+        
+        $_resList = $this->D_MemberCar->getAllPagesize($_where,$_order);
+        foreach($_resList['lists'] as $k=>$v){
+            $_where_car = array(
+                    "id" => $v['sid']
+                );
+            $_car = $this->D_CarSeries->where($_where_car)->find();
+            $_resList['lists'][$k]['img_url'] = $_car['img_url'];
+        }
+        $this->_arr['resList'] = $_resList['lists'];
+        print($this->_fetch('mine_inc'));
+    }
+
 }

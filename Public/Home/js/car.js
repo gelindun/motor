@@ -23,7 +23,8 @@ car_obj = {
         $("#carForm").validate({
             rules: {
                 plate_num:{
-                    required: true
+                    required: true,
+                    plateNum:true
                 },
                 car_series:{
                     required: true

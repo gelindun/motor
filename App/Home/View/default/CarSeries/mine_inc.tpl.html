@@ -1,0 +1,24 @@
+<ul class="ui-list car-ui-list">
+    <li class="hide-car-pop" 
+    style="text-align:right;display:block;
+    padding:5px 10px;"><button class="ui-btn">返回</button></li>
+    
+    {{empty name="resList"}}
+    <li class="hide-car-pop" 
+    style="text-align:center;display:block;padding:5px 10px;">您尚未添加爱车 </li>
+    {{else /}}
+    {{volist name="resList" id="v" }}
+    <li class="ui-border-b car-mine-li"
+     data-bid = "{{$v['bid']}}" data-sid="{{$v['sid']}}"
+     data-plateNum = "{{$v['plate_num']}}" data-title="{{$v['text_series']}}">
+        <div class="ui-list-thumb" style="width:100px;height:55px;">
+            <span style="background-image:url({{$v.img_url|showPic}})"></span>
+        </div>
+        <div class="ui-list-info">
+            <h4 class="ui-nowrap">{{$v.text_series}}</h4>
+            <p class="ui-nowrap">{{$v['plate_num']}}</p>
+        </div>
+    </li>
+    {{/volist}}
+    {{/empty}}
+</ul>
