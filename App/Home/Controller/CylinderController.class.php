@@ -41,6 +41,19 @@ class CylinderController extends HomeController {
                     "price" => $_price,
                     "product_detail" => $_dataDetail
                 );
+            
+            if( $_dataDetail['mobile'] && !$this->_arr['my_info']['mobile']){
+                $_where_m = array(
+                        "id" => $this->_arr[self::FRONT_UID],
+                        "mobile" => array(
+                                "eq",""
+                            )
+                    );
+                $_data_m = array(
+                        "mobile" => $_dataDetail['mobile']
+                    );
+                D('my\Member')->where($_where_m)->data($_data_m)->save();
+            }
             $_dataPro["list"][] = $_product;
             $this->createOrder($_dataPro);
         }
