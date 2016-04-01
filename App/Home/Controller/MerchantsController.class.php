@@ -14,7 +14,9 @@ class MerchantsController extends HomeController {
     
     public function index(){
         $_key_word = $this->_arr['key_word'] = I('get.key');
-        $_where = array();
+        $_where = array(
+            "delete" => array("eq","0")
+            );
         $_order = array(
             'id' => "DESC"
         );

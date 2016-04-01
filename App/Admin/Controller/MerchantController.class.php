@@ -35,7 +35,9 @@ class MerchantController extends AdminController {
             $_id = (int)I('post.id');
             $_msg = '删除成功';
             if($_id){
-               $_rst =  $D_Merchant->where('id='.$_id)->delete();
+               $_rst =  $D_Merchant->where('id='.$_id)->data(array(
+                    "delete" => 1
+                ))->save();
                if(!$_rst){
                    $_msg = '删除失败';
                }else{
@@ -63,7 +65,8 @@ class MerchantController extends AdminController {
         }
         $_key_word = I('get.keyword');
         $_where = array(
-            "s_type" => $s_type
+            "s_type" => $s_type,
+            "delete" => array("eq","0")
         );
         if($_key_word){
             $_map["store_name"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
