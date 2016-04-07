@@ -9,14 +9,15 @@
             
             <section id="list">
                
-                <ul class="ui-list " style="background-color:transparent;margin-top:5px;">
+                <ul class="ui-list ui-article-index"
+                 style="background-color:transparent;margin-top:5px;">
                     {{empty name="resList.lists"}}
                     <li class="ui-tips ui-tips-warn">
                         <i></i><span>暂时没有资讯</span>
                     </li>
                     {{/empty}}
                     {{volist name="resList.lists" id="r"}}
-                    <li class="ui-border-b"  
+                    <li class="ui-border-b ui-article-item"  
                     style="line-height:35px;margin:0 5px;padding:0 5px;background-color:#fff;">
                         
                         <div class="ui-list-info">

@@ -42,7 +42,7 @@ class ArticleController extends HomeController {
         $_order = array(
             'time_show' => "DESC"
         );
-        $_resList = $this->D_AdminArticle->rtnList($_where,20,$_order);
+        $_resList = $this->D_AdminArticle->rtnList($_where,10,$_order);
         
         foreach($_resList['lists'] as $k=>$v){
             $_resList['lists'][$k]['content'] = htmlspecialchars_decode($v['content']);

@@ -109,7 +109,13 @@ var my = {
                 itemSelector:'.tb-ticket tbody tr'
             });
     },order:function(){
-       
+       if($(".profile-warp").length){
+            $(".profile-warp").infinitescroll({
+                navSelector:'.pagination',
+                nextSelector:'.pagination a.next',
+                itemSelector:'.ticket-order-list'
+            });
+        }
     },login: function () {
         $("#LoginForm").validate({
             rules: {
