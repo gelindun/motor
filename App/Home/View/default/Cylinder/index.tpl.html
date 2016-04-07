@@ -11,13 +11,13 @@
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak={{$map_baidu_key}}"></script>
 <script>baidu_map_ak = "{{$map_baidu_key}}"</script>
 <script src="__PUBLIC__/Home/js/cylinder.js?r={{:mt_rand()}}" type="text/javascript"></script>
-    <body ontouchstart style="background-color:#f9f9f9;">
+    <body ontouchstart >
        {{include file="my:my_header" /}}
 
       <div class="ui-form ui-border-t" style="margin-top:38px;position:relative;">
         <div class="ui-badge btn-car-mine"
          style="position:absolute;top:-27px;font-size:15px;background-color:#00b7ee;
-        right:0px;padding:5px 15px;height:auto;border-radius:0;"><i class="fa fa-hand-o-right"></i> 我的爱车</div>
+        right:0px;padding:5px 15px;height:auto;border-radius:5px 0 0;"><i class="fa fa-hand-o-right"></i> 我的爱车</div>
         <form action="?" method="post" id="cylinderForm">
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">

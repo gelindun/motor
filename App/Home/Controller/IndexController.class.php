@@ -19,5 +19,10 @@ class IndexController extends HomeController {
         $this->_arr['rstArticle'] = $_resList;
         $this->_showDisplay();
     }
+
+    public function v2(){
+        
+        $this->_showDisplay();
+    }
    
 }

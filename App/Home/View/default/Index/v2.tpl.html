@@ -1,0 +1,86 @@
+{{include file="Public:header" /}}
+{{assign name="hide_menu_bottom" value="true" /}}
+<style>
+.ui-slider-content span {background-size:cover;}
+</style>
+<script src="__PUBLIC__/Home/js/index.js" type="text/javascript"></script>
+    <body ontouchstart style="display:none;">
+      <h3 style="position:relative;">
+        <div class="ui-slider" style="display:inline-block;
+        overflow:auto;padding-top:0;">
+        <?php
+            $_slideArr = array(
+                    "banner_1.jpg?r=0.1","banner_2.jpg?r=0.1","banner_3.jpg?r=0.1"
+                );
+        ?>
+            <ul class="ui-slider-content" style="position:relative;">
+                {{volist name="_slideArr" id="r"}}
+                <li style="height:auto;overflow:hidden;"><span 
+                    style="background-image:url(__PUBLIC__/Home/img/{{$r}});height:auto;
+                    background-size:cover;background-position:center center;"><img 
+                    src="__PUBLIC__/Home/img/50_16.png" width="100%;float:left;"></span></li>
+                {{/volist}}
+            </ul>
+        </div>
+      </h3>
+    <section class="rotate-module"> 
+        <dl class="rotate-module-in">    
+            <dt class="rotate-img"><img src="__PUBLIC__/Home/img/rotate_module.png" /></dt>
+            
+            
+            <dd id="rotate-blk">
+                <img src="__PUBLIC__/Home/img/rotate_warp.png" />
+                <div class="link-i-com abs-rotate"><a 
+                    href="{{:U('/Page/index/key/company')}}">&nbsp;</a></div>
+                <div class="link-i-store abs-rotate"><a href="{{:U('/Merchants')}}">&nbsp;</a></div>
+                <div class="link-i-product abs-rotate"><a 
+                    href="{{:U('/Page/index/key/product')}}">&nbsp;</a></div>
+                <div class="link-i-contact abs-rotate"><a 
+                    href="{{:U('/Page/index/key/contact')}}">&nbsp;</a></div>
+                <div class="link-i-help abs-rotate"><a href="{{:U('/Page/index/key/help')}}">&nbsp;</a></div>
+                <div class="link-i-article abs-rotate"><a href="{{:U('/Article')}}">&nbsp;</a></div>
+                <div class="link-i-form abs-rotate"><a href="{{:U('/Cylinder')}}">&nbsp;</a></div>
+            </dd>
+        </dl>
+    </section><!-- /.ui-container-->
+<script src="__STATIC__/jquery/touch.js"></script>
+<script>
+$(function(){
+    $("body").show();
+    setTimeout(function(){
+        $("#rotate-blk").addClass('ani-start');
+    },300)
+    var angle = 0,startY,startX;
+    touch.on('#rotate-blk', 'touchstart', function(ev){
+        ev.startRotate();
+        ev.preventDefault();
+        startY = ev.targetTouches[0].pageY;
+        startX = ev.targetTouches[0].pageX;
+    });
+    touch.on('#rotate-blk','touchend',function(ev){
+        if ((Math.abs(ev.changedTouches[0].pageY - startY) < 5)&&
+            (Math.abs(ev.changedTouches[0].pageX - startX) < 5)) {
+            ev.target.click();
+        }
+        ev.preventDefault();
+    })
+
+    touch.on('#rotate-blk', 'rotate', function(ev){
+        var totalAngle = angle ;
+        if(ev.fingerStatus === 'move'){
+            angle = angle + ev.rotation ;
+        }
+        $("#rotate-blk").css({"webkitTransform":"rotate(" + totalAngle * 1.5 + "deg)"});
+
+        //this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
+    });
+    $(".link-i-form").on("click",function(){
+        $(".rotate-img").addClass("click_down");
+    })
+})
+</script>   
+{{include file="Public:footer" /}}
+
+
+
+
