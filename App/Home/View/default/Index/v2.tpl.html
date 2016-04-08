@@ -4,18 +4,17 @@
 .ui-slider-content span {background-size:cover;}
 </style>
 <script src="__PUBLIC__/Home/js/index.js" type="text/javascript"></script>
-    <body ontouchstart style="display:none;">
+    <body ontouchstart style="visibility:hidden;">
       <h3 style="position:relative;">
-        <div class="ui-slider" style="display:inline-block;
-        overflow:auto;padding-top:0;">
+        <div class="ui-slider" style="">
         <?php
             $_slideArr = array(
-                    "banner_1.jpg?r=0.1","banner_2.jpg?r=0.1","banner_3.jpg?r=0.1"
+                    "banner_1.jpg?r=0.2","banner_2.jpg?r=0.2","banner_3.jpg?r=0.2"
                 );
         ?>
-            <ul class="ui-slider-content" style="position:relative;">
+            <ul class="ui-slider-content" >
                 {{volist name="_slideArr" id="r"}}
-                <li style="height:auto;overflow:hidden;"><span 
+                <li><span 
                     style="background-image:url(__PUBLIC__/Home/img/{{$r}});height:auto;
                     background-size:cover;background-position:center center;"><img 
                     src="__PUBLIC__/Home/img/50_16.png" width="100%;float:left;"></span></li>
@@ -43,10 +42,12 @@
             </dd>
         </dl>
     </section><!-- /.ui-container-->
+
+{{include file="Public:footer" /}}
 <script src="__STATIC__/jquery/touch.js"></script>
 <script>
 $(function(){
-    $("body").show();
+    $("body").css({"visibility":"visible"});
     setTimeout(function(){
         $("#rotate-blk").addClass('ani-start');
     },300)
@@ -70,7 +71,7 @@ $(function(){
         if(ev.fingerStatus === 'move'){
             angle = angle + ev.rotation ;
         }
-        $("#rotate-blk").css({"webkitTransform":"rotate(" + totalAngle * 1.5 + "deg)"});
+        $("#rotate-blk").css({"webkitTransform":"rotate(" + totalAngle * 1.1 + "deg)"});
 
         //this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
     });
@@ -79,7 +80,6 @@ $(function(){
     })
 })
 </script>   
-{{include file="Public:footer" /}}
 
 
 
