@@ -238,7 +238,8 @@ figure{position:relative;}
 .btn-block {display:block;position:relative;text-align:center;line-height:30px;}
 .ui-container .ui-list {background-color:transparent;}
 
-.rotate-module-in {position:relative;margin:15px;}
+.rotate-module {text-align: center;}
+.rotate-module-in {position:relative;margin:15px;display:inline-block;}
 .rotate-img {
     transition:All 0.1s ease-in-out;
 -webkit-transition:All 0.1s ease-in-out;
@@ -246,9 +247,6 @@ figure{position:relative;}
 -o-transition:All 0.1s ease-in-out;
 transform:rotate(0deg) scale(1);
 -webkit-transform:rotate(0deg) scale(1);
--moz-transform:rotate(0deg) scale(1);
--o-transform:rotate(0deg) scale(1);
--ms-transform:rotate(0deg) scale(1);
 }
 .rotate-img.click_down {
     transform:rotate(30deg) scale(0.8);
@@ -257,27 +255,22 @@ transform:rotate(0deg) scale(1);
 -o-transform:rotate(30deg) scale(0.8);
 -ms-transform:rotate(30deg) scale(0.8);
 }
-#rotate-link {position: absolute;top:0;left:0;width:100%;height:100%;}
-#rotate-blk {
+
+.rotate-blk {
+    width:100%; height:100%;
+    -webkit-user-drag: none;
+display:inline-block;
 position:absolute;top:0;left:0;overflow:hidden;
-transition:All 0.4s ease-in-out;
--webkit-transition:All 0.4s ease-in-out;
--moz-transition:All 0.4s ease-in-out;
--o-transition:All 0.4s ease-in-out;
-transform:rotate(0deg) scale(0.8);
--webkit-transform:rotate(0deg) scale(0.8);
--moz-transform:rotate(0deg) scale(0.8);
--o-transform:rotate(0deg) scale(0.8);
--ms-transform:rotate(0deg) scale(0.8);
+transition:All 0.6s ease;
+-webkit-transition:All 0.6s ease;
+transform:rotate(0deg) ;
+-webkit-transform:rotate(0deg);
 }
-#rotate-blk.ani-start {
-    transform:rotate(360deg) scale(1);
-    -webkit-transform:rotate(360deg) scale(1);
-    -moz-transform:rotate(360deg) scale(1);
-    -o-transform:rotate(360deg) scale(1);
-    -ms-transform:rotate(360deg) scale(1);
+.rotate-blk.ani-start {
+    transform:rotate(360deg);
+    -webkit-transform:rotate(360deg);
 }
-#rotate-blk dt.rotate-img img{float:left;width:100%;}
+.rotate-blk  img{float:left;width:100%;}
 .abs-rotate {position:absolute;width:30%;height:30%;}
 .link-i-com {top:18%;}
 .link-i-store {left:33%;top:0;}
@@ -287,5 +280,10 @@ transform:rotate(0deg) scale(0.8);
 .link-i-article {bottom:18%;}
 .link-i-form {top:35%;left:35%;}
 .rotate-module-in div a {display: block;width:100%;height:100%;z-index:10;}
+.rotate-id-img {position: absolute;top:0;left:0;}
+.rotate-id-img img {float:left;}
+
+
+
 
 
