@@ -7,9 +7,11 @@ html {
 .ui-slider-content {float:left;}
 .ui-slider-content span {background-size:cover;}
 .ui-slider {}
+.body-warp {visibility:hidden;}
 </style>
 <script src="__PUBLIC__/Home/js/index.js" type="text/javascript"></script>
-    <body ontouchstart style="visibility:hidden;background-color:#F0FDD4;">
+<body ontouchstart style="background-color:#F0FDD4;">
+<div class="body-warp">
     <div class="ui-slider" style="" onclick="window.location.reload()">
         <?php
             $_slideArr = buildPicPos("index");
@@ -44,17 +46,18 @@ html {
             width="100%" id="rotate-img" /></dd>
         </dl>
     </section><!-- /.ui-container-->
-    
+</div> 
 
 {{include file="Public:footer" /}}
 <script src="__STATIC__/jquery/touch.js"></script>
 <script>
 $(function(){
-    
+    var el=$.loading({content:'loading...',})
     setTimeout(function(){
-        $("body").css({"visibility":"visible"});
+        el.hide();
+        $(".body-warp").css({"visibility":"visible"});
         $("#rotate-img").css({"webkitTransition":"All 0.4s ease-in-out"});
-    },300)
+    },1000)
     
 
     var angle = 0,startY,startX,startRot = true;
@@ -86,10 +89,11 @@ $(function(){
                 if(_x <= _px && (_x + _w) > _px && _y <= _py && (_y + _h) > _py){
                     if($(n).parent().hasClass("link-i-form")){
                         $(".rotate-img").addClass("click_down");
-                        
                         setTimeout(function(){
-                            $(".rotate-img").removeClass("click_down");
-                            window.location.href = $(n).attr("href");
+                            $(".rotate-img").removeClass("click_down").addClass("click_up");
+                            setTimeout(function(){
+                                window.location.href = $(n).attr("href");
+                            },100);
                         },500);
                     }else{
                         window.location.href = $(n).attr("href");
