@@ -8,7 +8,7 @@
 </script>
 <section class="content-header">
     <h1>
-        <a href="/Picetra/index"> <button class="btn btn-primary btn-xs"> < 返回图片列表</button></a>
+        <a href="/Picextra/index"> <button class="btn btn-primary btn-xs"> < 返回图片列表</button></a>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 幻灯片/图片</a></li>
@@ -35,8 +35,15 @@
                                   <i class="fa fa-remove act-remove"></i>
                                 </a>
                             </section>
-                            {{notempty name="resPage.head_img" }}
-                            <img src="{{$resPage.head_img|showPic}}" />
+                            {{notempty name="resPage.pic_arr" }}
+                            {{volist name="resPage.pic_arr" id="v"}}
+                            <section class="multi-section" style="width:auto;">
+                                <a href="javascript:void(0)" class="thumbnail" target="_blank">
+                                  <img src="{{$v|showPic}}"  style="width:auto"/>
+                                  <i class="fa fa-remove act-remove"></i>
+                                </a>
+                            </section>
+                            {{/volist}}
                             {{/notempty}}
                         </div>
                         <div id="logo" class="files w-500"></div>
@@ -56,7 +63,7 @@
                 
             </div><!-- /.box-body -->
             <input type="hidden" name='action' value='edit_pic' />
-            <input type="hidden" name='id' value='{{$resPage["id"]}}' />
+            <input type="hidden" name='key' value='{{$resPage["key"]}}' />
             <div class="box-footer text-center">
                 <button type="submit" class="btn btn-primary">提交</button>
                 <button type="reset" class="btn btn-info">重置</button>

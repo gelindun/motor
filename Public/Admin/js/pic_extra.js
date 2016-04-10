@@ -1,7 +1,22 @@
 var pic_extra = {
 	index:function(){
-
+		$(".list-delete").css({"cursor":"pointer"}).on("click",function(){
+            if(!confirm("确定删除?")){
+                return false;
+            }
+            var _id = $(this).attr("_id");
+            if(_id){
+                btsalert.loading();
+                $.post("?",{"action":"delete_pic","id":_id},function(data){
+                    btsalert.loading(1);
+                    btsalert.alert(data.msg,function(){
+                        window.location.reload();
+                    });
+                },"json");
+            }
+        });
 	},extra:function(){
+		var _this = this;
         wzsImgUpload.initUpload = function () {
             var _t = this;
             if (_t.config) {
@@ -26,7 +41,6 @@ var pic_extra = {
             });
             im.find(".img_box li").unbind("click");
             im.on("click",".modal-footer .btn",function(){
-            	console.log("im")
                 _li = im.find(".img_box li.active");
                 if(_li.length){
                     _t.callBack(_li);
@@ -47,13 +61,43 @@ var pic_extra = {
                    _clone.removeClass("clone");
                    _clone.prependTo(_warp);
                })
+               _this.buildPicStr();
             }
+            
             wzsImgUpload.rtnFileModal();
         });
         $("#image-warp").on("click",".act-remove",function(){
             var _t = $(this)
             _t.parent().parent().remove();
-            
+            _this.buildPicStr();
         });
+
+        $("#wikiForm").validate({
+            submitHandler:function(form){
+                btsalert.loading();
+                $(form).ajaxSubmit({
+                    success: function (data) {
+                        btsalert.loading(1);
+                        btsalert.alert(data.msg);
+                        if(parseInt(data.status)){
+                            window.location.reload();
+                        }
+                    }, dataType: 'json'
+                }); 
+            }
+        });
+
+        
+    },buildPicStr:function(){
+    	var _str = "";
+    	$.each($("#image-warp .multi-section"),function(i,n){
+    		if(!$(n).hasClass("clone")){
+    			if(i > 0){
+    				_str += ",";
+    			}
+    			_str += $(n).find("img").attr("src");
+    		}
+    	})
+    	$("input[name=pic_str]").val(_str);
     }
 }

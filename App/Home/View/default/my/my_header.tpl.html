@@ -1,6 +1,9 @@
+<?php
+    $_slideArr = buildPicPos('myLogo');
+?>
 <h3 class="" style="text-align:center;position:relative;
               border-bottom:1px solid #999;display:inline-block;width:100%;
-              background:url(__PUBLIC__/Home/img/banner_1.jpg?r=0.1) no-repeat center;background-size:cover;">
+              background:url({{$_slideArr[0]|showPic}}) no-repeat center;background-size:cover;">
                 <img src="__PUBLIC__/Home/img/50_16.png" style="width:100%;float:left;">
                 <span class="ui-avatar-lg" 
                 style="display:inline-block;position:absolute;bottom:-35px;left:50%;margin-left:-35px;">

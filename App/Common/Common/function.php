@@ -1238,5 +1238,18 @@ function uDomain($_key,$_path ='',$_params = array()){
     }
     return $_url;
 }
+/**
+生成幻灯片
+*/
+function buildPicPos($_key){
+  $D_PicPos = D('site\PicPos');
+  $_where = array(
+      "key" => $_key
+    );
+  $_res = $D_PicPos->where($_where)->getField('pic_json');
+  $_pic_arr = json_decode($_res,true);
+  return $_pic_arr;
+
+}
 
 

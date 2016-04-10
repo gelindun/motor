@@ -10,15 +10,23 @@ namespace Common\Model\site;
 class PicPosModel extends \Common\Model\BaseModel{
     
     protected $trueTableName = 'ton_pic_pos';
+
+    public function rtnKeyArr(){
+        return array(
+                "index" => array(
+                        "key" => "index",
+                        "title" => "首页幻灯片"
+                    ),
+                "myLogo" => array(
+                        "key" => "myLogo",
+                        "title" => "个人中心头图"
+                    )
+            );
+    }
     
     public function write($_data,$_where = array()){
         
-        
-        if($_data['action'] == "add_user"){
-            $_data['status'] = 1;
-        }else{
-            //$_data['status'] = (int)$_data['status']?1:0;
-        }
+      
         $rules = $this->vRule();
         if($_where){
             if($_data['action'] == "delete_pic"){
@@ -26,7 +34,7 @@ class PicPosModel extends \Common\Model\BaseModel{
                 if(!$rst){
                     $_msg = "删除失败";
                 }
-            }else{//注册
+            }else{
                 if($this->validate($rules)->create($_data)){
                     $rst = $this->where($_where)->data($_data)->save();
                 }else{

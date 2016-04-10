@@ -9,7 +9,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <a href="/Picextra/pic_edit"><button class="btn btn-primary btn-xs"> + 添加幻灯片/图片</button></a>
+        <a href="javascript:;"><button class="btn btn-primary btn-xs"> 幻灯片/图片</button></a>
     </h1>
     <ol class="breadcrumb">
         <li class="active">列表</li>
@@ -36,26 +36,27 @@
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
                 <tbody><tr>
-                        <th>ID</th>
+                        <th>KEY</th>
                         <th>标题</th>
                         <th>图片</th>
                         <th>操作</th>
                     </tr>
                     {{volist name="resList.lists" id="r"}}
                     <tr>
-                        <td>{{$r.id}}</td>
+                        <td>{{$r.key}}</td>
                         <td>{{$r.title}}</td>
-                        <td></td>
-                        <td><a class='fa fa-pencil' data-toggle="tooltip" title="编辑" href="{{:U('/Picextra/pic_edit/',array('id'=>$r['id']))}}"></a>
-                            &nbsp;&nbsp;<span data-toggle="tooltip" title="删除" class='fa fa-remove list-delete' _id='{{$r.id}}'></span></td>
+                        <td>
+                            {{volist name="r.pic_arr" id="v"}}
+                            <img src="{{$v|showPic}}" style="height:50px;border-radius:3px;margin:0 2px;" />
+                            {{/volist}}
+                        </td>
+                        <td><a class='fa fa-pencil' data-toggle="tooltip" title="编辑" href="{{:U('/Picextra/pic_edit/',array('key'=>$r['key']))}}"></a>
+                            &nbsp;&nbsp;<!--span data-toggle="tooltip" title="删除" class='fa fa-remove list-delete' _id='{{$r.id}}'></span--></td>
                         
                     </tr>
                     {{/volist}}
                 </tbody></table>
         </div><!-- /.box-body -->
-        <div class="box-footer clearfix">
-            {{$resList.show}}
-        </div>
     </div>
 
 
