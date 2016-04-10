@@ -5,10 +5,11 @@ html {
     -webkit-text-size-adjust: 100%; /* 2 */
 }
 .ui-slider-content span {background-size:cover;}
+.body-warp {visibility:hidden;}
 </style>
 <script src="__PUBLIC__/Home/js/index.js" type="text/javascript"></script>
-    <body ontouchstart style="visibility:hidden;background-color:#F0FDD4;">
-      
+    <body ontouchstart style="background-color:#F0FDD4;">
+<div class="body-warp">    
     <section class="rotate-module"> 
         <dl class="rotate-module-in">    
             <dt class="rotate-img"><img draggable="false"
@@ -31,18 +32,19 @@ html {
         </dl>
     </section><!-- /.ui-container-->
     
-
+</div>
 {{include file="Public:footer" /}}
 <script src="__STATIC__/jquery/touch.js"></script>
 <script>
 $(function(){
-    
+    var el=$.loading({content:'loading...',})
     setTimeout(function(){
+        el.hide();
         _h = parseFloat($(window).height()),_hrote = parseFloat($('.rotate-module').height());
         $('.rotate-module').css({"margin-top":(_h - _hrote)/2});
-        $("body").css({"visibility":"visible"});
+        $(".body-warp").css({"visibility":"visible"});
         $("#rotate-img").css({"webkitTransition":"All 0.4s ease-in-out"});
-    },300)
+    },1000)
     
     var angle = 0,startY,startX,startRot = true;
     touch.on('#rotate-img', 'touchstart', function(ev){
