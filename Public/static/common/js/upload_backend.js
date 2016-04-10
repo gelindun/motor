@@ -1,5 +1,6 @@
 var wzsImgUpload = {
     uid: 0,
+    init:false,
     formData: {"do_action": "action.file_upload","fileType":1},
     rootPath:"/Uploadfiles/",
     publicPath:"/Public/",
@@ -86,7 +87,9 @@ var wzsImgUpload = {
         return uploadObj;
     }, rtnFileModal: function () {
         var _t = this;
-        _t.initUpload();
+        if(!_t.init){
+            _t.init = _t.initUpload();
+        }
         var options = 'show';
         $('.image-modal').modal(options);
         _t.rtnList();

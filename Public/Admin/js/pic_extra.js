@@ -18,12 +18,15 @@ var pic_extra = {
                 uploadObj.cancelAll();
                 return false;
             });
+            im.find(".img_box li").unbind("click");
             im.on("click",".img_box li",function(){
                 if($(this).hasClass('active'))
                     $(this).removeClass('active');
                 $(this).addClass('active');
             });
+            im.find(".img_box li").unbind("click");
             im.on("click",".modal-footer .btn",function(){
+            	console.log("im")
                 _li = im.find(".img_box li.active");
                 if(_li.length){
                     _t.callBack(_li);
@@ -42,35 +45,15 @@ var pic_extra = {
                    //_clone.find("a").attr("href",_path);
                    _clone.find("img").attr("src",_path);
                    _clone.removeClass("clone");
-                   var url = "?"
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        data: {'img_path':_path,'do_action':'add_image'},
-                        success: function(data){
-                            clone.find(".act-remove").attr("_id",data.result._id);
-                        },
-                        dataType: "json"
-                    });
-                   _clone.appendTo(_warp);
+                   _clone.prependTo(_warp);
                })
             }
             wzsImgUpload.rtnFileModal();
         });
         $("#image-warp").on("click",".act-remove",function(){
             var _t = $(this)
-            var _id = _t.attr("_id");
-            var url = "?"
-			$.ajax({
-				type: 'POST',
-				url: url,
-				data: {'do_action':'delete_image','id':_id},
-				success: function(data){
-                    if(data.status)
-                        _t.parent().parent().remove();
-				},
-				dataType: "json"
-			});
+            _t.parent().parent().remove();
+            
         });
     }
 }
