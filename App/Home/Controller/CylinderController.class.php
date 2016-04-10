@@ -63,7 +63,11 @@ class CylinderController extends HomeController {
         $D_CarBrand = D('car\CarBrand');
         $_clean_form = $D_Property->clean_form();
         //门店
-        $_where = array();
+        $_where = array(
+                "delete" => array(
+                        "eq","0"
+                    )
+            );
         $_order = array("time_add"=>'DESC');
         $_resStoreList = $D_Merchant->getAllPagesize($_where,$_order);
         $this->_arr['resStore'] = $_resStoreList;

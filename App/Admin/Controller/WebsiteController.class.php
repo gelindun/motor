@@ -41,9 +41,9 @@ class WebsiteController extends AdminController {
         $D_AdminArticle = D('site\AdminArticle');
         $this->article_rules = $D_AdminArticle->vRule();
         if(I('post.action') === 'edit_article'){
-            $_data = I('post.','','trim');;
+            $_data = I('post.','','trim');
             $_data['time_show'] = strtotime($_data['time_show']);
-           
+            $_data['hide_logo'] = $_data['hide_logo']?1:0;
             unset($_data['action']);
             $rules = $this->article_rules;
             if ($D_AdminArticle->validate($rules)->create($_data)){

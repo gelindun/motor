@@ -17,6 +17,7 @@ class PageController extends AdminController {
         $this->note_rules = $D_Page->vRule();
         if(I('post.action') === 'edit_page'){
             $_data = I('post.');
+            $_data['hide_logo'] = $_data['hide_logo']?1:0;
             $_data['time_show'] = time();
             unset($_data['action']);
             $rules = $this->note_rules;

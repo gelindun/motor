@@ -47,6 +47,13 @@
                         <input type="hidden" name="logo"
                                value="{{notempty name='resPage.logo' }}{{$resPage.logo}}{{/notempty}}" style="width:100%;height:100%;"  />
                     </div>
+                    <div class="form-group">
+                        <label for="hide_logo">隐藏详细页LOGO
+                        <input type="checkbox" class=""
+                               value="1"
+                               {{notempty name="resPage.hide_logo"}}checked="checked"{{/notempty}}
+                               name="hide_logo" id="hide_logo" ></label>
+                    </div>
                    <div class="form-group">
                         <label for="title">选择分类</label>
                         <select name="tid" class="form-control w-200" >

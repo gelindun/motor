@@ -293,4 +293,13 @@ var web_site = {
         });
     }
 };
+$(function(){
+   $(".img_div_warp img").on("click",function(){
+        var _src = $(this).attr("src");
+        window.open(_src);
+    }) 
+})
+
+
+
 

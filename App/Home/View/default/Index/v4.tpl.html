@@ -4,11 +4,28 @@ html {
     -webkit-font-smoothing: antialiased; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
 }
+.ui-slider-content {float:left;}
 .ui-slider-content span {background-size:cover;}
+.ui-slider {}
 </style>
 <script src="__PUBLIC__/Home/js/index.js" type="text/javascript"></script>
-    <body ontouchstart style="visibility:hidden;background-color:#F0FDD4;">
-      
+    <body ontouchstart style="visibility:hidden;background-color:#F0FDD4;width:100%;">
+    <div class="ui-slider" style="width:100%;" onclick="window.location.reload()">
+    <?php
+        $_slideArr = array(
+                "banner_1.jpg","banner_2.jpg","banner_3.jpg"
+            );
+    ?>
+        <ul class="ui-slider-content" style="width:100%;">
+            {{volist name="_slideArr" id="r"}}
+            <li style="width:100%;"><span 
+                style="background-image:url(__PUBLIC__/Home/img/{{$r}});height:auto;
+                background-size:cover;background-position:center center;overflow:hidden;"
+                ><img src="__PUBLIC__/Home/img/50_16.png?r=1"
+                 width="100%;" style="float:left;"></span></li>
+            {{/volist}}
+        </ul>
+    </div>
     <section class="rotate-module"> 
         <dl class="rotate-module-in">    
             <dt class="rotate-img"><img draggable="false"
@@ -38,37 +55,25 @@ html {
 $(function(){
     
     setTimeout(function(){
-        _h = parseFloat($(window).height()),_hrote = parseFloat($('.rotate-module').height());
-        $('.rotate-module').css({"margin-top":(_h - _hrote)/2});
         $("body").css({"visibility":"visible"});
         $("#rotate-img").css({"webkitTransition":"All 0.4s ease-in-out"});
     },300)
     
+
     var angle = 0,startY,startX,startRot = true;
     touch.on('#rotate-img', 'touchstart', function(ev){
         ev.startRotate();
         ev.preventDefault();
-        if(typeof(ev.changedTouches)!='undefined'){
-            startY = ev.changedTouches[0].pageY;
-            startX = ev.changedTouches[0].pageX;
-        }else{
-            startY = ev.pageY;
-            startX = ev.pageX;
-        }
-        
+        startY = ev.targetTouches[0].pageY;
+        startX = ev.targetTouches[0].pageX;
     });
     touch.on('#rotate-img','touchend',function(ev){
-        if(typeof(ev.changedTouches)!='undefined'){
-            _touches = ev.changedTouches[0];
-        }else{
-            _touches = ev;
-        }
-        if ((Math.abs(_touches.pageY - startY) < 5)&&
-            (Math.abs(_touches.pageX - startX) < 5)) {
+        if ((Math.abs(ev.changedTouches[0].pageY - startY) < 5)&&
+            (Math.abs(ev.changedTouches[0].pageX - startX) < 5)) {
             $.each($(".abs-rotate a"),function(i,n){
                 var _h = parseFloat($(n).height()),_w = parseFloat($(n).width()),
                 _x = $(n).offset().left,_y = $(n).offset().top;
-                var _py = _touches.pageY,_px = _touches.pageX;
+                var _py = ev.changedTouches[0].pageY,_px = ev.changedTouches[0].pageX;
                 //console.log("h:"+_h + "w:"+_w + "x:"+_x + "y:"+_y + "py:"+_py + "px:"+_px)
                 if(_x <= _px && (_x + _w) > _px && _y <= _py && (_y + _h) > _py){
                     if($(n).parent().hasClass("link-i-form")){
@@ -92,7 +97,7 @@ $(function(){
     touch.on('#rotate-img', 'rotate', function(ev){
         _rotate = Math.abs(ev.rotation);
         _rotate = _rotate > 360?_rotate:_rotate*2;
-        //console.log(ev.rotation + "_rotate:" + _rotate)
+        console.log(ev.rotation + "_rotate:" + _rotate)
         if(ev.direction === 'left'){
             _rotate = -_rotate;
         }

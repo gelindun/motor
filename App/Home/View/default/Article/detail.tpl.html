@@ -20,9 +20,11 @@
                         <ul class="ui-list ui-list-pure ">
                             
                             {{notempty name="resPage['logo']"}}
+                            {{empty name="resPage['hide_logo']"}}
                             <li style="text-align:center;overflow:hidden;margin:0;padding:0;">
                                     <img src="{{$resPage['logo']|showPic}}" style="width:100%;" />
                             </li>
+                            {{/empty}}
                             {{/notempty}}
                             
                         </ul>

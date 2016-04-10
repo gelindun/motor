@@ -8,9 +8,11 @@
                         
                         <ul class="ui-list ui-list-pure mar-v-10">
                             {{notempty name="resPage['pic_url']"}}
+                            {{empty name="resPage['hide_logo']"}}
                             <li style="text-align:center;overflow:hidden;margin:0;padding:0;">
                                     <img src="{{$resPage['pic_url']|showPic}}" style="width:100%;" />
                             </li>
+                            {{/empty}}
                             {{/notempty}}
                             {{notempty name="resPage['time_show']"}}
                             <!--li>

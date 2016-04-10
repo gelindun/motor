@@ -196,7 +196,8 @@ cy_obj = {
         var geolocation = new BMap.Geolocation();
         geolocation.getCurrentPosition(function(pos){
             showNearest(pos.point.lat, pos.point.lng);
-        });
+            console.log(pos)
+        },{enableHighAccuracy: true});
 
     }
 }
