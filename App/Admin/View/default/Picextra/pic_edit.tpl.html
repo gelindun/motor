@@ -6,6 +6,11 @@
         
     })
 </script>
+<style>
+.btn-move-next {position:absolute;right:5px;bottom:5px;padding:5px;display:none;
+    background-color:#f4f4f4;border:1px solid #333;border-radius:5px;cursor:pointer;}
+.multi-section:hover .btn-move-next {display:block;}
+</style>
 <section class="content-header">
     <h1>
         <a href="/Picextra/index"> <button class="btn btn-primary btn-xs"> < 返回图片列表</button></a>
@@ -34,6 +39,7 @@
                                   <img src=""  style="width:auto"/>
                                   <i class="fa fa-remove act-remove"></i>
                                 </a>
+                                <i class="fa fa-chevron-right btn-move-next">向后移</i>
                             </section>
                             {{notempty name="resPage.pic_arr" }}
                             {{volist name="resPage.pic_arr" id="v"}}
@@ -42,6 +48,7 @@
                                   <img src="{{$v|showPic}}"  style="width:auto"/>
                                   <i class="fa fa-remove act-remove"></i>
                                 </a>
+                                <i class="fa fa-chevron-right btn-move-next">向后移</i>
                             </section>
                             {{/volist}}
                             {{/notempty}}

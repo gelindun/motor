@@ -72,6 +72,14 @@ var pic_extra = {
             _this.buildPicStr();
         });
 
+        $("#image-warp").on("click",".btn-move-next",function(){
+            var _t = $(this).parent()
+            if(_t.next(".multi-section").length > 0){
+                _t.insertAfter(_t.next(".multi-section"));
+                _this.buildPicStr();
+            }
+        });
+
         $("#wikiForm").validate({
             submitHandler:function(form){
                 btsalert.loading();
@@ -92,7 +100,7 @@ var pic_extra = {
     	var _str = "";
     	$.each($("#image-warp .multi-section"),function(i,n){
     		if(!$(n).hasClass("clone")){
-    			if(i > 0){
+    			if(_str){
     				_str += ",";
     			}
     			_str += $(n).find("img").attr("src");
