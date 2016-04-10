@@ -8,18 +8,16 @@
         <div class="ui-slider" style="display:inline-block;
         overflow:auto;padding-top:0;">
         <?php
-            $_slideArr = array(
-                    "banner_1.jpg?r=0.1","banner_2.jpg?r=0.1","banner_3.jpg?r=0.1"
-                );
+            $_slideArr = buildPicPos("index");
         ?>
-            <ul class="ui-slider-content" style="position:relative;">
-                {{volist name="_slideArr" id="r"}}
-                <li style="height:auto;overflow:hidden;"><span 
-                    style="background-image:url(__PUBLIC__/Home/img/{{$r}});height:auto;
-                    background-size:cover;background-position:center center;"><img 
-                    src="__PUBLIC__/Home/img/50_16.png" width="100%;float:left;"></span></li>
-                {{/volist}}
-            </ul>
+        <ul class="ui-slider-content" >
+            {{volist name="_slideArr" id="r"}}
+            <li><span 
+                style="background-image:url({{$r|showPic}});height:auto;
+                background-size:cover;background-position:center center;"><img 
+                src="__PUBLIC__/Home/img/50_16.png" width="100%;float:left;"></span></li>
+            {{/volist}}
+        </ul>
         </div>
         <div class="ui-badge" style="position:absolute;bottom:10px;
         left:10px;padding:5px 15px;height:auto;border-radius:2px;"><a 
