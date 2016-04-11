@@ -38,7 +38,16 @@ select {-webkit-appearance: none;-webkit-border-radius: 0px;}
 .img_div_warp img {width:auto;background-color:#d9d9d9;padding:5px;margin:5px;}
 section.multi-section  {display: inline-block;margin:3px;position:relative;}
 section.multi-section .thumbnail {margin:0;}
-
+.select_block {margin:5px 0;padding:0 5px;height:auto;display:inline-block;}
+.select_block span{
+    cursor: pointer;
+    float: left;
+    font-size: 14px;
+    padding: 2px 10px;
+    margin: 0 2px;
+    border: 1px solid #d9d9d9;
+}
+.select_block span:hover,.select_block span.curr {border-color:#3377aa;color: #3377aa;}
 
 
 

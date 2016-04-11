@@ -10,6 +10,10 @@ class OrderController extends AdminController {
     }
     
     public function index(){
+        $D_Merchant = D('site\Merchant');
+        $_merchant_arr = $D_Merchant->where(array())->select();
+        $this->_arr['merchant_arr'] = $_merchant_arr;
+
         $_orderType = I('get.order_type')?I('get.order_type'):$this->_arr['CLEAN_FORM'];
         $_orderStatus   =   (int)I('get.order_status');
         $_keyword = I('get.keyword');
@@ -35,6 +39,7 @@ class OrderController extends AdminController {
             $_resList['lists'][$k]['user'] = $_user;
             $_resList['lists'][$k]["child"] = $D_Order->rtnOrderdetail($v);
         }
+        //dump($_resList['lists']);
         $this->_arr['resList'] = $_resList;
         //dump($_resList);
         $this->_arr['order_type'] = $_orderType;

@@ -1,4 +1,8 @@
 {{layout name="Public/layout" /}}
+<style>
+.order-line-info label,.order-line-info span {padding:0 5px;margin:1px 5px;margin-left:0;}
+.order-line-info span {color:#3377aa;}
+</style>
 <script type="text/javascript" src="__PUBLIC__/Admin/js/order.js"></script>
 <script type="text/javascript">
     $(function(){
@@ -36,11 +40,13 @@
                 <a  class='{{eq name="order_status" value="4"}}curr{{/eq}}'
                     href="{{:U('/Order/index',array("order_type"=>$order_type,"order_status" => 4))}}">已完成</a>
                 {{/neq}}
+
             </h3>
             <div class="box-tools">
                 <div class="input-group">
                     <form action="{{:U('/Order')}}" method="get">
-                    <input type="text" name="keyword" value='{{$keyword}}'
+                    <input type="text"
+                    name="keyword" value='{{$keyword}}'
                            class="form-control input-sm " style="width: 150px;" placeholder="输入订单号">
                     <div class="input-group-btn ">
                         <i class="fa fa-search"></i><input type='submit' class="btn btn-sm btn-default" />
@@ -51,14 +57,28 @@
         </div><!-- /.box-header -->
         <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
-                <tbody><tr>
+                <thead style="border-top:1px solid #d9d9d9;">
+                    <tr>
+                        <td colspan="6" style="padding:0;" >
+                            <div class="select_block store_blk">
+                                <span data-id="0">全部门店</span>
+                                {{volist name="merchant_arr" id="r"}}
+                                <span>{{$r['store_name']}}</span>
+                                {{/volist}}
+                            </div>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
                         <th>ID</th>
                         <th>订单号</th>
                         <th>用户</th>
                         <th>下单时间</th>
                         <th>订单状态</th>
-                        <th>操作</th>
+                        <th width="80">金额</th>
                     </tr>
+                    
                     {{volist name="resList.lists" id="v"}}
                     <tr>
                         <td>{{$v.id}}</td>
@@ -68,26 +88,42 @@
                         <td>{{$v.time_add|date='Y-m-d H:i', ###}}</td>
                         <td>{{$v['status_title']}}</td>
                         <td>
-                            <span class='fa fa-pencil show_detail' data-toggle="tooltip" title="订单详情" ></span>
+                            <i class="fa fa-rmb">{{$v['price']}}</i>
+                            <!--span class='fa fa-chevron-down show_detail'
+                             data-toggle="tooltip" title="订单详情" ></span-->
                         </td>
                     </tr>
-                    <tr class='order_detail'>
-                        <td colspan="5" >
-                            {{volist name="v.child.lists" id="r"}}
+                    <tr class='order_detail' style="background-color:#fafafa;">
+                        <td colspan="6" >
+                            
                             {{eq name="v.order_type" value="$CLEAN_FORM"}}
                             <dl class='order-info'>
-                                <dd class="metting-info">
-                                    <p class="title">{{$r['title']}}
-                                    &nbsp;
-                                    <span class="attr">
-                                            <span class="ticket">{{$r['title']}} x {{$r['count']}}</span>
-                                        <span class="amount">总金额: <b class="money">¥ {{$r['priceTotal']}}</b></span>
-                                    </span>
-                                    </p>
+                                <dd class="order-line-info">
+                                    {{notempty name="v['child']['plate_num']"}}
+                                    <label>车牌号码:</label><span>{{$v['child']['plate_num']}}</span>
+                                    {{/notempty}}
+                                    {{notempty name="v['child']['nickName']"}}
+                                    <label>称呼:</label><span>{{$v['child']['nickName']}}</span>
+                                    {{/notempty}}
+                                    {{notempty name="v['child']['mobile']"}}
+                                    <label>联系手机:</label><span>{{$v['child']['mobile']}}</span>
+                                    {{/notempty}}
+                                    {{notempty name="v['child']['car_series']"}}
+                                    <label>爱车:</label><span>{{$v['child']['car_str']}}</span>
+                                    {{/notempty}}
+                                    {{notempty name="v['child']['store_id']"}}
+                                    <label>门店名称:</label><span>{{$v['child']['store_str']}}</span>
+                                    {{/notempty}}
+                                    {{notempty name="v['child']['cylinder_id']"}}
+                                    <label>发动机:</label><span>{{$v['child']['cylinder_str']}}缸</span>
+                                    {{/notempty}}
                                 </dd>
                             </dl>
-                            {{/eq}}
+                            {{else /}}
+                            {{volist name="v.child.lists" id="r"}}
                             {{/volist}}
+                            {{/eq}}
+                            
                         </td>
                     </tr>
                     {{/volist}}
