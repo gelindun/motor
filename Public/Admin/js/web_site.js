@@ -258,7 +258,7 @@ var web_site = {
         var markersCallback = function(posi){
             $('#locBtn').attr('disabled', false);
             if(posi.length==0){
-                alert('定位失败，请重新输入详细地址或直接点击地图选择地点！');
+                btsalert.alert('定位失败，请重新输入详细地址或直接点击地图选择地点！');
                 return false;
             }
             for(var i=0; i<posi.length; i++){
