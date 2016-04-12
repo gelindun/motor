@@ -284,11 +284,15 @@ var web_site = {
         });
         
         $('#locBtn').click(function(){
-            if(!$('input[name=address]').val()){return false};
+            if(!$('input[name=address]').val()&&!$('input[name=city_str]').val()){return false};
             $(this).attr('disabled', true);
             local = new BMap.LocalSearch(map, {renderOptions:{map: map}}); //智能搜索
             local.setMarkersSetCallback(markersCallback);
-            local.search($('input[name=address]').val());
+            var _address = $('input[name=address]').val();
+            if($("input[name=city_str]").val() && $("input[name=city_str]").val() != 'undefined'){
+                _address = $("input[name=city_str]").val() + _address;
+            }
+            local.search(_address);
             return false;
         });
     }

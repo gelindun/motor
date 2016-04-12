@@ -2,6 +2,7 @@ var area_obj = {
 	tabs : ".area-content .tabs .tab",
 	cont : ".area-content .mc",
 	layer : 3,
+	city_str :"input[name=city_str]",
 	area_str :"input[name=area_str]",
 	area_arr : [],
 	loadArea : function(pid,index){
@@ -33,11 +34,21 @@ var area_obj = {
 			index = $(this).parents(".mc").attr("data-area");
 			$(_t.tabs).find("li").eq(index).find("em").html(area);
 			index++;
-			_str = '';
+			_str = '',city_str = '';
 			$.each($(_t.cont).find("li.curr a"),function(i,n){
-				if(i > 0)_str += ',';
+				if(i > 0){
+					_str += ',';
+					city_str += ',';
+				};
 				_str += $(n).attr("data-value");
+				city_str += $(n).attr("data-city");
 			})
+			if($(_t.city_str).length > 0){
+				$(_t.city_str).val(city_str);
+				if($('#locBtn').length > 0){
+					$('#locBtn').trigger("click");
+				}
+			}
 			$(_t.area_str).val(_str);
 			if(index < _t.layer){
 				$(_t.tabs).find("li").removeClass("curr");
@@ -66,7 +77,7 @@ var area_obj = {
 				if(i == 0){
 					$(_t.tabs).find("li").eq(index).find("em").html(n.area);
 				}
-				_area_list += '<li><a href="javascript:void(0)" data-value="'+n.id+'">'+n.area+'</a></li>'
+				_area_list += '<li><a href="javascript:void(0)" data-city="'+n.area+'" data-value="'+n.id+'">'+n.area+'</a></li>'
 			})
 		_area_list += '</ul>'
 		_cont.css({"display":"none"});
