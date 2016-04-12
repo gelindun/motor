@@ -2,11 +2,25 @@
 <style>
 .order-line-info label,.order-line-info span {padding:0 5px;margin:1px 5px;margin-left:0;}
 .order-line-info span {color:#3377aa;}
+.store_blk {height:28px;overflow:hidden;}
+.act-block {text-align:center;margin-bottom:5px;}
+.store-act {line-height:20px;}
 </style>
 <script type="text/javascript" src="__PUBLIC__/Admin/js/order.js"></script>
 <script type="text/javascript">
     $(function(){
         order.index();
+        $("table").on("click",".store-act",function(){
+            if($(this).hasClass("fa-chevron-down")){
+                $(this).addClass("fa-chevron-up").removeClass("fa-chevron-down");
+                $(".store_blk").css({"height":"auto"});
+                $(this).find("span").html("收起");
+            }else{
+                $(this).addClass("fa-chevron-down").removeClass("fa-chevron-up");
+                $(".store_blk").css({"height":"28px"});
+                $(this).find("span").html("展开");
+            }
+        })
     })
     
 </script>
@@ -61,11 +75,21 @@
                     <tr>
                         <td colspan="6" style="padding:0;" >
                             <div class="select_block store_blk">
-                                <span data-id="0">全部门店</span>
+                                <a href="{{:U('/Order/index',array(
+                                    'order_type' => $order_type,
+                                    'order_status' => $order_status
+                                ))}}">全部门店</a>
                                 {{volist name="merchant_arr" id="r"}}
-                                <span>{{$r['store_name']}}</span>
+                                <a href="{{:U('/Order/index',array(
+                                    'order_type' => $order_type,
+                                    'store_id' => $r['id'],
+                                    'order_status' => $order_status
+                                ))}}" 
+                                {{eq name="r.id" value="$store_id"}}class="curr"{{/eq}}
+                                >{{$r['store_name']}}</a>
                                 {{/volist}}
                             </div>
+                            <div class="act-block"><i class="fa fa-chevron-down store-act">&nbsp;<span>展开</span>门店</i></div>
                         </td>
                     </tr>
                 </thead>

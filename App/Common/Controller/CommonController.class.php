@@ -21,6 +21,7 @@ class CommonController extends Controller {
         $this->_arr['SITE_BASE'] = D('site\SiteBase')->readBase();
         $this->_arr['CLEAN_FORM'] = C("CLEAN_FORM");
         $this->_arr['CLEAN_PRO'] = D('product\Product')->clean_form();
+        $this->_arr['s_domain'] = $_SERVER['SERVER_NAME'];
 
         $this->_arr['WX_BASE'] = array(
             'wx_token' => '267b78c8276e323c69d267a155e14f86',//token ,md5('wx92517b64ec9c35b0')

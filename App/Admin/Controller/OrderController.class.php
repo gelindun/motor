@@ -25,6 +25,10 @@ class OrderController extends AdminController {
         if($_keyword){
             $_where['order_id'] = array('EXP','REGEXP \'^.*'.$_keyword.'.*$\'');
         }
+        $this->_arr['store_id'] = I('get.store_id');
+        if($this->_arr['store_id']){
+            $_where['product_info'] = array('EXP','REGEXP \'^.*"store_id":"'.$this->_arr['store_id'].'".*$\'');
+        }
         $_order = array(
             'id' => 'DESC'
         );
