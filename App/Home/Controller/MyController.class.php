@@ -9,14 +9,13 @@ class MyController extends HomeController {
     public function _initialize() {
         parent::_initialize();
         $this->jump_url = uDomain('www','/');
-        dump(I('get.jump_url'));
         if((!I('post.') && $this->_arr['ACT_NAME'] != 'snsCallBack' && $this->_arr['ACT_NAME'] != 'login') || (I('get.jump_url'))){
             $this->jump_url = I('get.jump_url') ? urldecode(I('get.jump_url')) : getenv("HTTP_REFERER");
-            dump($this->jump_url);
+            //dump($this->jump_url);
             if(!strpos($this->jump_url,C('COOKIE_DOMAIN'))||!$this->jump_url){
                 $this->jump_url = uDomain('www','/My');
             }
-            dump($this->jump_url);
+            //dump($this->jump_url);
             safeGetCookie('jumpUrl',$this->jump_url);
         }
         $this->jump_url = $this->_arr['jump_url'] = (safeGetCookie('jumpUrl')?safeGetCookie('jumpUrl'):"/");
