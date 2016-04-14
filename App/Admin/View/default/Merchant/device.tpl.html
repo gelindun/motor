@@ -2,17 +2,19 @@
 <script type="text/javascript" src="__PUBLIC__/Admin/js/web_site.js"></script>
 <script type="text/javascript">
     $(function(){
-        web_site.note_list();
+        web_site.device_list();
     })
     
 </script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <a href="/Merchant/index?act=edit"><button class="btn btn-primary btn-xs"> + 添加</button></a>
+        <a href="{{:U('/Merchant/device',array('act'=>'edit','mid'=>I('get.mid')))}}"><button
+         class="btn btn-primary btn-xs"> + 添加设备</button></a>
+        <a href="/Merchant/index"><button class="btn btn-primary btn-xs"> > 返回门店列表</button></a>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> {{$store_title}}</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> {{$store_name}}</a></li>
         <li class="active">列表</li>
     </ol>
 </section>
@@ -21,10 +23,10 @@
 <section class="content">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">{{$store_title}}列表</h3>
+            <h3 class="box-title">{{$store_name}} 设备列表</h3>
             <div class="box-tools">
                 <div class="input-group">
-                    <form action="{{:U('/Merchant/index')}}" method="get">
+                    <form action="{{:U('/Merchant/device')}}" method="get">
                     <input type="text" name="keyword" value='{{$keyword}}'
                            class="form-control input-sm " style="width: 150px;" placeholder="Search">
                     <div class="input-group-btn ">
@@ -38,22 +40,22 @@
             <table class="table table-hover">
                 <tbody><tr>
                         <th>ID</th>
-                        <th>{{$store_title}}名称</th>
+                        <th>名称</th>
+                        <th>SN</th>
                         <th>添加时间</th>
-                        <th>地址</th>
                         <th>操作</th>
                     </tr>
                     {{volist name="resList.lists" id="r"}}
                     <tr>
                         <td>{{$r.id}}</td>
-                        <td>{{:msubstr($r['store_name'],0,30)}}</td>
+                        <td>{{:msubstr($r['device_name'],0,30)}}</td>
+                        <td>{{$r.device_sn}}</td>
                         <td>{{$r.time_add|date='Y-m-d H:i', ###}}</td>
-                        <td>{{$r['address']}}</td>
-                        <td>
-                            <a class='fa fa-cog' href="{{:U('/Merchant/device',array('mid'=>$r['id']))}}">&nbsp;设备</a>
-                            &nbsp;&nbsp;
-                            <a class='fa fa-pencil' href="{{:U('/Merchant/index',array('act'=>'edit','id'=>$r['id']))}}">&nbsp;编辑</a>
-                            &nbsp;&nbsp;<span class='fa fa-remove note-delete' _id='{{$r.id}}'>&nbsp;删除</span></td>
+                        <td><a class='fa fa-pencil' href="{{:U('/Merchant/device',
+                            array('act'=>'edit',
+                            'mid'=>$r['mid'],
+                            'id'=>$r['id']))}}"></a>
+                            &nbsp;&nbsp;<span class='fa fa-remove note-delete' _id='{{$r.id}}'></span></td>
                         
                     </tr>
                     {{/volist}}

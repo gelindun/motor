@@ -112,7 +112,90 @@ class MerchantController extends AdminController {
             }
         }
     }
-
+    /**
+    * 设备
+    */
+    public function device(){
+        $D_Device= D('site\Device');
+        $D_Merchant = D('site\Merchant');
+        $this->_arr['mid'] = $_mid = I('get.mid');
+        $_store_name = $D_Merchant->where(array('id'=>$_mid))->getField('store_name');
+        if(!$_store_name)exit;
+        $this->_arr['store_name'] = $_store_name;
+        $this->device_rules = $D_Device->vRule();
+        if(I('post.action') === 'edit_note'){
+            $_data = I('post.');
+            unset($_data['action']);
+            $rules = $this->device_rules;
+            if ($D_Device->validate($rules)->create($_data)){
+                if($_data['id']){
+                    $_where = array(
+                        'id' => $_data['id']
+                    );
+                }
+                $_rcd = $D_Device->write($_data,$_where);
+                pushJson('更新成功',array('url'=>U('/Merchant/device',array('mid'=>$_mid))));
+            }else{
+                pushError ($D_Device->getError());
+            }
+        }else if(I('post.action') === 'delete_note'){
+            $_id = (int)I('post.id');
+            $_msg = '删除成功';
+            if($_id){
+               $_rst =  $D_Device->where('id='.$_id)->data(array(
+                    "delete" => 1
+                ))->save();
+               if(!$_rst){
+                   $_msg = '删除失败';
+               }else{
+                   pushJson($_msg);
+               }
+            }else{
+                $_msg = '无效参数';
+            }
+            pushError($_msg);
+        }
+        $_action = I('get.act');
+        if($_action === 'edit'){
+            $_tem_str = 'device_edit';
+            
+            $_id = (int)I('get.id');
+            $_mid = (int)I('get.mid');
+            if($_id){
+                $_where = array(
+                    'id'=>$_id,
+                    'mid' => $_mid
+                    );
+                $_resNote = $D_Device->where($_where)->find();
+                if(!$_resNote)exit;
+                $this->_arr['resWiki'] = $_resNote;
+             }
+            $this->_showDisplay($_tem_str);
+            exit;
+        }
+        $_key_word = I('get.keyword');
+        $_where = array(
+            "mid" => $_mid,
+            "delete" => array("eq","0")
+        );
+        if($_key_word){
+            $_map["device_name"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map["remark"] = array('EXP','REGEXP \'^.*'.$_key_word.'.*$\'');
+            $_map['_logic'] = 'or';
+            $_where['_complex'] = $_map;
+        }
+        $_order = array("time_add"=>'DESC');
+        $resList = $D_Device->getPagesize($_where,$this->pgSize,$_order);
+        foreach($resList['lists'] as $k=>$v){
+            $resList['lists'][$k]['store_name'] = $D_Merchant->where(
+                    array('id' => $v['mid'])
+                )->getField('store_name');
+        }
+        $this->_arr['resList'] = $resList;
+        $this->_arr['keyword'] = $_key_word;
+        $this->_arr['currPg']  = I('get.p');
+        $this->_showDisplay();
+    }
 
     
     
