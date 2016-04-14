@@ -2,7 +2,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <small>控制面板</small>
+        <small>设备控制面板</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 微助手管理后台</a></li>
@@ -13,9 +13,57 @@
 
 <!-- Main content -->
 <section class="content">
-    <!-- Small boxes (Stat box) -->
-    <div class="row">
-        
-    </div><!-- /.row (main row) -->
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">&nbsp;</h3>
+            <div class="box-tools">
+                <div class="input-group">
+                    <form action="{{:U('/Index/index')}}" method="get">
+                    <input type="text" name="keyword" value='{{$keyword}}'
+                           class="form-control input-sm " style="width: 150px;" placeholder="Search">
+                    <div class="input-group-btn ">
+                        <i class="fa fa-search"></i><input type='submit' class="btn btn-sm btn-default" />
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive price-store" style="min-height:300px;padding:20px 0;">
+            {{volist name="resList['lists']" id="r"}}
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <dl class="col-data-dl">
+                    <dt>{{:msubstr($r['device_name'],0,30)}}[id:{{$r.id}}]</dt>
+                    <dd class="dd-desc">添加日期： {{$r.time_add|date='Y-m-d H:i', ###}}</dd>
+                    <dd class="dd-desc">{{$r['store_name']}}</dd>
+                    <dd class="price-table">
+                    <table class="table table-bordered table-hover price-data" >
+                    <thead>
+                        <tr>
+                            <th>命令</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody class="vote-tbody" style="border-width:1px;">
+                        <tr class="tr-vote">
+                            <td >{{$v['title']}}</td>
+                            <td >{{$v['status']}}</td>
+                            <td ><button class="btn btn-sm
+                             btn-primary">开</button></td>
+                        </tr>
+                    </tbody>
+                    
+                    </table>
+                    </dd>
+                </dl>
+            </div>
+            {{/volist}}
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            {{$resList.show}}
+        </div>
+    </div>
+
 
 </section><!-- /.content -->
