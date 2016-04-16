@@ -119,8 +119,19 @@ cy_obj = {
                 if(typeof(data.result.amount)!="undefined"){
                     $("input[name=amount]").val(parseFloat(data.result.amount));
                 }
+                $("#device").empty();
+                $("#device_blk").hide();
+                if(typeof(data.result.device) != "undefined" && data.result.device.length > 0){
+                    $("#device_blk").show();
+                    $.each(data.result.device,function(i,n){
+                        $("#device").append("<option value='"+n.id+"'>"+n.device_name+"</option>");
+                    })
+                }else{
+                    $("#device_blk").hide();
+                }
             },'json');
         }else{
+            $("#device").empty().append("<option>请选择设备</option>");
             $("input[name=amount]").val('')
         }
 

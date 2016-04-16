@@ -112,8 +112,14 @@ class CylinderController extends HomeController {
                 "cylinder_id" => $_cylinder_id
             );
         $_price = $this->orderAmount($_obj);
+        $D_Device = D('site\Device');
+        $_where = array(
+                'mid' => $_store_id
+            );
+        $_rstDevice = $D_Device->where($_where)->field('id,device_name')->select();
         pushJson('ok',array(
-                "amount" => floatval($_price)
+                "amount" => floatval($_price),
+                "device" => $_rstDevice
             ));
     }
 

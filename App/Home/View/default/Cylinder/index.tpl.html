@@ -68,6 +68,7 @@
                         </select>
                 </div>
             </div>
+            
             <div class="ui-label-list ui-border-b cylinder_tag"
              style="padding:10px 0;text-align:center;">
                 <!--ckey 改为0则默认选中-->
@@ -79,6 +80,16 @@
                  <?php $ckey++;?>
                 {{/volist}}
                 <input type="hidden" name="cylinder_id" value="{{$cylinder_id}}"> 
+            </div>
+            <div class="ui-form-item ui-form-item-l ui-border-b" id="device_blk" style="display:none">
+                <label  class="ui-border-r">
+                    <i class="fa fa-dashboard bg-eb6100"></i> 选择设备
+                </label>
+                <div class="ui-select" style="margin-left:110px;">
+                        <select name="device_id" id="device">
+                            <option >请选择设备名称</option>
+                        </select>
+                </div>
             </div>
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label class="ui-border-r">
