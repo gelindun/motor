@@ -32,7 +32,8 @@
             {{volist name="resList['lists']" id="r"}}
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <dl class="col-data-dl" style="line-height:30px;white-space:nowrap;overflow:hidden;">
-                    <dt>{{:msubstr($r['device_name'],0,30)}}[id:{{$r.id}}]</dt>
+                    <dt>{{:msubstr($r['device_name'],0,30)}}[id:{{$r.id}}]
+                        <br />序列号:{{$r['device_sn']}}</dt>
                     <dd 
                     style="border:1px solid #d9d9d9;border-width:1px 0;
                     padding:5px 0;margin:2px 0;">{{$r['store_name']}}</dd>
