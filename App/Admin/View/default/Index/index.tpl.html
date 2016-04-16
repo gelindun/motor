@@ -2,9 +2,9 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <small>设备控制面板</small>
+        <small><button class="btn btn-primary btn-xs">设备控制面板</button></small>
     </h1>
-    <ol class="breadcrumb">
+    <ol class="breadcrumb hidden-xs">
         <li><a href="#"><i class="fa fa-dashboard"></i> 微助手管理后台</a></li>
         <li class="active">首页面板</li>
     </ol>
@@ -31,31 +31,17 @@
         <div class="box-body table-responsive price-store" style="min-height:300px;padding:20px 0;">
             {{volist name="resList['lists']" id="r"}}
             <div class="col-md-4 col-sm-6 col-xs-12">
-                <dl class="col-data-dl">
+                <dl class="col-data-dl" style="line-height:30px;white-space:nowrap;overflow:hidden;">
                     <dt>{{:msubstr($r['device_name'],0,30)}}[id:{{$r.id}}]</dt>
-                    <dd class="dd-desc">添加日期： {{$r.time_add|date='Y-m-d H:i', ###}}</dd>
-                    <dd class="dd-desc">{{$r['store_name']}}</dd>
-                    <dd class="price-table">
-                    <table class="table table-bordered table-hover price-data" >
-                    <thead>
-                        <tr>
-                            <th>命令</th>
-                            <th>状态</th>
-                            <th>操作</th>
-                        </tr>
-                    </thead>
+                    <dd 
+                    style="border:1px solid #d9d9d9;border-width:1px 0;
+                    padding:5px 0;margin:2px 0;">{{$r['store_name']}}</dd>
+                    <dd style="text-align:center;padding:2px 0;"> <a 
+                    href="{{:U('/Index/device',array(
+                        'id' => $r['id']
+                    ))}}" class="btn btn-sm
+                             btn-primary">操作</a></dd>
                     
-                    <tbody class="vote-tbody" style="border-width:1px;">
-                        <tr class="tr-vote">
-                            <td >{{$v['title']}}</td>
-                            <td >{{$v['status']}}</td>
-                            <td ><button class="btn btn-sm
-                             btn-primary">开</button></td>
-                        </tr>
-                    </tbody>
-                    
-                    </table>
-                    </dd>
                 </dl>
             </div>
             {{/volist}}
