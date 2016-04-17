@@ -13,6 +13,8 @@ class HomeController extends \Common\Controller\CommonController {
             $_rst = $D_User->loginInfo($this->_arr[self::FRONT_UID]);
             $this->_arr['my_info'] = $_rst;
         }
+        $_data['url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+        D('log\LogBrowser')->write_logs($_data);
     }
     /**
     * 生成订单
