@@ -36,10 +36,18 @@ class PaywxController extends HomeController {
         $_grpPrice = $D_Order->rtnOrderprice($_order['id']);
         $this->_arr['order'] = array(
             'oid' => $_order['id'],
+            'front_uid' => $_order['front_uid'],
             'order_id' => $_order['order_id'],
             'ori_price' => $_grpPrice?$_grpPrice:$_order['price'],
             'price' => ($_grpPrice?$_grpPrice:$_order['price']) * 100
         );
+        if($_order['type'] == $this->_arr['CLEAN_PRO']['type']){
+            $_pro_info = json_decode($_order['product_info'],true);
+            $_pro_detail = $_pro_info[0];
+            if($_pro_detail['device_id']){
+                $this->_arr['order']['device_id'] = $_pro_detail['device_id'];
+            }
+        }
         
     }
     /**
@@ -151,6 +159,17 @@ class PaywxController extends HomeController {
                 );
                 $_where = array( "order_id" => $out_trade_no );
                 $D_Order->saveData($_data_order,$_where);
+                //异步为机器解锁
+                if($this->_arr['order']['device_id']){
+                    Vendor('asynHandle.asynHandle','','.class.php');
+                    $obj    = new \Verdor\asynHandle\asynHandle();
+                    $_url = uDomain('www','/asyn/unlock',array(
+                        'front_uid' => $this->_arr['order']['front_uid'],
+                        'role' => 'member',
+                        'device_id' => $this->_arr['order']['device_id']));
+                    $obj->Request($_url);
+                    //提交设备数据log
+                }
                 //$this->log_result($log_name,"pay test:".M()->_sql());
                 exit("success");
             }

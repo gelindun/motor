@@ -6,7 +6,7 @@
  *  $obj->Request('http://google.com');
  *  $obj->Get('http://google.com');
  */
- 
+namespace Verdor\asynHandle;
 class asynHandle {
     public      $url        = '';       //传入的完整请求url,包括"http://"或"https://"
     public      $cookie     = array();  //传入的cookie数组,须是键值对
