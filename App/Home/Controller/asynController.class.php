@@ -4,7 +4,7 @@ namespace Home\Controller;
 use Think\Controller;
 Vendor('yunplc.Yunplc','','.class.php');
 //远程操作类
-class asynController extends HomeController {
+class AsynController extends HomeController {
 
     public function _initialize() {
         parent::_initialize();
@@ -39,7 +39,7 @@ class asynController extends HomeController {
                 'message' => 'sn,密码错误'
             );
             $_rtn = $D_LogUnlock->data($_data)->add();
-            exit();
+            exit("ok");
         }
         //查询锁定状态
         $_remote = new \Verdor\yunplc\Yunplc($_resNote['device_sn'],$_resNote['device_pass']);
@@ -60,7 +60,7 @@ class asynController extends HomeController {
                 'message' => $_rtn[2]
             );
             $_rtn = $D_LogUnlock->data($_data)->add();
-            exit;
+            exit("ok");
         }
         //解锁，插入一条记录 time_start，并锁定设备
         
@@ -85,7 +85,7 @@ class asynController extends HomeController {
                     'message' => $_rtn[2]
                 );
             $D_LogUnlock->where($_where)->data($_data)->save();
-            exit;
+            exit("ok");
         }
         //每隔10秒更新time_end并查询是否停止
         $_time_s = time();
@@ -110,7 +110,7 @@ class asynController extends HomeController {
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
                 //如已停止或断电则更新time_end，并退出
-                exit();
+                exit("ok");
             }
             if(time() - $_time_s > 600){
                 $_data = array(
@@ -127,6 +127,7 @@ class asynController extends HomeController {
     }
 
     public function unlock_admin(){
+        set_time_limit(0);
         $_update_id = I('get.update_id');
         $_device_sn = I('get.device_sn');
         $_device_pass = I('get.device_pass');
@@ -159,7 +160,7 @@ class asynController extends HomeController {
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
                 //如已停止或断电则更新time_end，并退出
-                exit();
+                exit("ok");
             }
             if(time() - $_time_s > 600){
                 $_data = array(
@@ -168,7 +169,7 @@ class asynController extends HomeController {
                         'message' => '超时退出'
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
-                exit();
+                exit("ok");
             }
             sleep(10);
         }

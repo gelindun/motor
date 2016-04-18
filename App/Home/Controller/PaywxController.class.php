@@ -163,7 +163,7 @@ class PaywxController extends HomeController {
                 if($this->_arr['order']['device_id']){
                     Vendor('asynHandle.asynHandle','','.class.php');
                     $obj    = new \Verdor\asynHandle\asynHandle();
-                    $_url = uDomain('www','/asyn/unlock',array(
+                    $_url = uDomain('www','/Asyn/unlock',array(
                         'front_uid' => $this->_arr['order']['front_uid'],
                         'role' => 'member',
                         'device_id' => $this->_arr['order']['device_id']));

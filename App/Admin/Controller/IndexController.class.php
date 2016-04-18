@@ -105,7 +105,7 @@ class IndexController extends AdminController {
                     )->add();
                     Vendor('asynHandle.asynHandle','','.class.php');
                     $obj    = new \Verdor\asynHandle\asynHandle();
-                    $_url = uDomain('www','/asyn/unlock_admin',array(
+                    $_url = uDomain('www','/Asyn/unlock_admin',array(
                         'update_id' => $_update_id,
                         'device_sn' => $_resNote['device_sn'],
                         'device_pass' => $_resNote['device_pass']
