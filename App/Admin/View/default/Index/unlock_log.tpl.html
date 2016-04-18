@@ -15,15 +15,42 @@
 .col-data-dl {line-height:30px;white-space:nowrap;overflow:hidden;}
 .col-data-dl dd {padding:2px; border-top:1px solid #d9d9d9;}
 .col-data-dl dd label {margin-right:5px;}
+.box-date div{float:left;}
+@media screen and (max-width: 400px){
+    .split-line {width:100%;}
+}
 </style>
+<script>
+$(function(){
+    $('.datetime').datetimepicker({format: "YYYY-MM-DD HH:mm"});
+})
+</script>
 <!-- Main content -->
 <section class="content">
     <div class="box">
-        <div class="box-header">
-            <h3 class="box-title">&nbsp;</h3>
-            <div class="box-tools">
-                
-            </div>
+        <div class="box-header box-date">
+            <form action="?" method="GET" style="float:right;">
+                <div class="input-group datetime  w-200" >
+                    <input class="form-control" name='time_start'
+                           value="{{notempty name='time_start'}}{{$time_start|date='Y-m-d h:m:s',###}}{{/notempty}}"
+                           data-format="dd/MM/yyyy hh:mm:ss" type="text"  />
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                    </span>
+                </div>
+                <div style="line-height:30px;" class="split-line">&nbsp; -- &nbsp;</div>
+                <div  class="input-group datetime  w-200">
+                    <input class="form-control" name='time_end'
+                           value="{{notempty name='time_end'}}{{$time_start|date='Y-m-d h:m:s',###}}{{/notempty}}"
+                           data-format="dd/MM/yyyy hh:mm:ss" type="text"  />
+                    <span class="input-group-addon">
+                        <i class="fa fa-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+                    </span>
+                </div>
+                <div style="margin:0 5px;" class="search-box">
+                    <input type="submit" class="btn btn-primary" value="搜索" />
+                </div>
+            </form>
         </div><!-- /.box-header -->
         <div class="box-body table-responsive price-store" style="min-height:300px;padding:20px 0;">
             {{volist name="resList['lists']" id="r"}}

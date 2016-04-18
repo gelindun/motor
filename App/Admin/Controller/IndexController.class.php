@@ -135,9 +135,30 @@ class IndexController extends AdminController {
         if(!$_resNote)exit('设备不存在');
         $D_LogUnlock = D('log\LogUnlock');
         $_key_word = I('get.keyword');
+        $_time_start = I('get.time_start');
+        $this->_arr['time_end'] = $_time_end = I('get.time_end');
         $_where = array(
             "device_id" => array("eq",$_id)
         );
+        if($_time_start && $_time_end){
+            $_where['time_add'] = array(
+                    "between",array(strtotime($_time_start),strtotime($_time_end))
+                );
+        }else if($_time_start && !$_time_end){
+            $_where['time_add'] = array(
+                    "egt",strtotime($_time_start)
+                );
+        }else if(!$_time_start && $_time_end){
+            $_where['time_add'] = array(
+                    "elt",strtotime($_time_end)
+                );
+        }
+        if($_time_start){
+            $this->_arr['time_start'] = strtotime($_time_start);
+        }
+        if($_time_start){
+            $this->_arr['time_end'] = strtotime($_time_end);
+        }
         $_order = array("id"=>'DESC');
         $resList = $D_LogUnlock->getPagesize($_where,$this->pgSize,$_order);
         foreach($resList['lists'] as $k=>$v){
