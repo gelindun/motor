@@ -1,0 +1,51 @@
+{{layout name="Public/layout" /}}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <a href="javascript:window.history.back()"><button 
+            class="btn btn-primary btn-xs"> > 返回设备列表 </button></a>
+    </h1>
+    <ol class="breadcrumb hidden-xs">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 微助手管理后台</a></li>
+        <li class="active">设备日志</li>
+    </ol>
+</section>
+
+<style>
+.col-data-dl {line-height:30px;white-space:nowrap;overflow:hidden;}
+.col-data-dl dd {padding:2px; border-top:1px solid #d9d9d9;}
+.col-data-dl dd label {margin-right:5px;}
+</style>
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">&nbsp;</h3>
+            <div class="box-tools">
+                
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body table-responsive price-store" style="min-height:300px;padding:20px 0;">
+            {{volist name="resList['lists']" id="r"}}
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <dl class="col-data-dl" >
+                    <dt>{{:msubstr($r['device_name'],0,30)}}</dt>
+                    <dd ><label class="label label-info">身份</label>
+                        {{$r['member']}}</dd>
+                    <dd ><label class="label label-info">开始时间</label>
+                        {{$r['time_add']|date='Y-m-d H:i',###}}</dd>
+                    <dd ><label class="label label-info">结束时间</label>
+                        {{$r['time_end']|date='Y-m-d H:i',###}}</dd>
+                    <dd ><label class="label label-info">当前状态</label>{{$r['status']}}</dd>
+                    <dd ><label class="label label-info">退出提示</label>{{$r['message']}}</dd>
+                </dl>
+            </div>
+            {{/volist}}
+        </div><!-- /.box-body -->
+        <div class="box-footer clearfix">
+            {{$resList.show}}
+        </div>
+    </div>
+
+
+</section><!-- /.content -->

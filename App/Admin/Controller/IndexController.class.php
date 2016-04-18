@@ -124,6 +124,31 @@ class IndexController extends AdminController {
         $this->_showDisplay($_tem_str);
 
     }
+
+    public function unlock_log(){
+        $D_Device = D('site\Device');
+        $_id = $_device_id = (int)I('get.id');
+        $_where = array(
+            'id'=>$_id
+            );
+        $_resNote = $D_Device->where($_where)->find();
+        if(!$_resNote)exit('设备不存在');
+        $D_LogUnlock = D('log\LogUnlock');
+        $_key_word = I('get.keyword');
+        $_where = array(
+            "device_id" => array("eq",$_id)
+        );
+        $_order = array("id"=>'DESC');
+        $resList = $D_LogUnlock->getPagesize($_where,$this->pgSize,$_order);
+        foreach($resList['lists'] as $k=>$v){
+            $resList['lists'][$k]['device_name'] = $_resNote['device_name'];
+            $resList['lists'][$k]['member'] = ($v['role'] == 'admin')?'管理员':
+            (D('my\Member')->where(array('id'=>$v['front_uid']))->getField('real_name'));
+        }
+        $this->_arr['resList'] = $resList;
+        $this->_showDisplay();
+
+    }
     
     
 }
