@@ -41,7 +41,7 @@ $(function(){
                 <div style="line-height:30px;" class="split-line">&nbsp; -- &nbsp;</div>
                 <div  class="input-group datetime  w-200">
                     <input class="form-control" name='time_end'
-                           value="{{notempty name='time_end'}}{{$time_start|date='Y-m-d h:m:s',###}}{{/notempty}}"
+                           value="{{notempty name='time_end'}}{{$time_end|date='Y-m-d h:m:s',###}}{{/notempty}}"
                            data-format="dd/MM/yyyy hh:mm:ss" type="text"  />
                     <span class="input-group-addon">
                         <i class="fa fa-calendar" data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
