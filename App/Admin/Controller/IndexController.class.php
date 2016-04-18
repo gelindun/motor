@@ -41,7 +41,7 @@ class IndexController extends AdminController {
         $D_Device = D('site\Device');
         Vendor('yunplc.Yunplc','','.class.php');
         
-        $_id = (int)I('get.id');
+        $_id = $_device_id = (int)I('get.id');
         $_action = I('post.do_action');
         if($_id){
             $_where = array(
@@ -68,13 +68,51 @@ class IndexController extends AdminController {
                 $_act_str = I('post.act_str');
                 $_act_arr = explode('|', $_act_str);
                 array_unshift($_act_arr, 1);
+                //写记录之前应先查询当前操作是否与当前状态一致，若一致则返回无需操作
+                $_act_read = array('1',$_act_arr[1]);
+                $_rtn_read = $_remote->remote_read($_act_read);
+                foreach($_rtn_read as $k=>$v){
+                    $_rtn_read[$k] = trim($v);
+                }
+                if(trim($_rtn_read[0]) == 'ERROR'){
+                    pushError(trim($_rtn_read[2]));
+                }
+                if($_rtn_read[2] == $_act_arr[2]){
+                    pushError('本次操作未更新状态');
+                }
+
                 $_rtn = $_remote->remote_write($_act_arr);
+
                 foreach($_rtn as $k=>$v){
                     $_rtn[$k] = trim($v);
                 }
                 if(trim($_rtn[0]) == 'ERROR'){
                     pushError(trim($_rtn[2]));
                 }
+
+                //挂远程操作
+                if(($_act_arr[1] == '开机' && $_act_arr[2] == '1') || 
+                    ($_act_arr[1] == '锁机' && $_act_arr[2] == '0')){
+                    $_update_id = D('log\LogUnlock')->data(
+                        array(
+                                'device_id' => $_device_id,
+                                'front_uid' => 0,
+                                'role'  => 'admin',
+                                'time_add' => time(),
+                                'time_end' => time(),
+                                'status' => 'unlock'
+                            )
+                    )->add();
+                    Vendor('asynHandle.asynHandle','','.class.php');
+                    $obj    = new \Verdor\asynHandle\asynHandle();
+                    $_url = uDomain('www','/asyn/unlock_admin',array(
+                        'update_id' => $_update_id,
+                        'device_sn' => $_resNote['device_sn'],
+                        'device_pass' => $_resNote['device_pass']
+                        ));
+
+                    $obj->Request($_url);
+                }//远程 end
                 pushJson('操作成功',$_rtn);
             }
             if(!$_resNote)exit;

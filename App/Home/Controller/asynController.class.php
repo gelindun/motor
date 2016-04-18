@@ -2,6 +2,7 @@
 
 namespace Home\Controller;
 use Think\Controller;
+Vendor('yunplc.Yunplc','','.class.php');
 //远程操作类
 class asynController extends HomeController {
 
@@ -123,6 +124,54 @@ class asynController extends HomeController {
             sleep(10);
         }
         //end
+    }
+
+    public function unlock_admin(){
+        $_update_id = I('get.update_id');
+        $_device_sn = I('get.device_sn');
+        $_device_pass = I('get.device_pass');
+
+        $_time_s = time();
+        $_remote = new \Verdor\yunplc\Yunplc($_device_sn,$_device_pass);
+        $D_LogUnlock = D('log\LogUnlock');
+        while(true){
+            // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
+            // fwrite($fp, time().',');
+            // fclose($fp);
+
+            $_arr = array('1','停止');
+            $_rst = $_remote->remote_read($_arr);
+            $_where = array(
+                    'id' => $_update_id
+                );
+            $_data = array(
+                    'time_end' => time()
+                );
+            $D_LogUnlock->where($_where)->data($_data)->save();
+            foreach($_rtn as $k=>$v){
+                $_rtn[$k] = trim($v);
+            }
+            if(trim($_rtn[0]) == 'ERROR'||$_rtn[3] == '0'){
+                $_data = array(
+                        'status' => 'end',
+                        'time_end' => time(),
+                        'message' => $_rtn[2]
+                    );
+                $D_LogUnlock->where($_where)->data($_data)->save();
+                //如已停止或断电则更新time_end，并退出
+                exit();
+            }
+            if(time() - $_time_s > 600){
+                $_data = array(
+                        'status' => 'timeout',
+                        'time_end' => time(),
+                        'message' => '超时退出'
+                    );
+                $D_LogUnlock->where($_where)->data($_data)->save();
+                exit();
+            }
+            sleep(10);
+        }
     }
     
 }
