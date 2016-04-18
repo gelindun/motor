@@ -2,7 +2,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <a href="javascript:window.history.back()"><button 
+        <a href="{{:U('/Index')}}"><button 
             class="btn btn-primary btn-xs"> > 返回设备列表 </button></a>
     </h1>
     <ol class="breadcrumb hidden-xs">
@@ -16,7 +16,8 @@
 .col-data-dl dd {padding:2px; border-top:1px solid #d9d9d9;}
 .col-data-dl dd label {margin-right:5px;}
 .box-date div{float:left;}
-@media screen and (max-width: 470px){
+.w-170 {max-width: 170px;}
+@media screen and (max-width: 480px){
     .split-line {width:100%;}
 }
 </style>
@@ -30,7 +31,7 @@ $(function(){
     <div class="box">
         <div class="box-header box-date">
             <form action="?" method="GET" style="float:right;">
-                <div class="input-group datetime  w-200" >
+                <div class="input-group datetime  w-170" >
                     <input class="form-control" name='time_start'
                            value="{{notempty name='time_start'}}{{$time_start|date='Y-m-d h:m:s',###}}{{/notempty}}"
                            data-format="dd/MM/yyyy hh:mm:ss" type="text"  />
@@ -39,7 +40,7 @@ $(function(){
                     </span>
                 </div>
                 <div style="line-height:30px;" class="split-line">&nbsp; -- &nbsp;</div>
-                <div  class="input-group datetime  w-200">
+                <div  class="input-group datetime  w-170">
                     <input class="form-control" name='time_end'
                            value="{{notempty name='time_end'}}{{$time_end|date='Y-m-d h:m:s',###}}{{/notempty}}"
                            data-format="dd/MM/yyyy hh:mm:ss" type="text"  />
