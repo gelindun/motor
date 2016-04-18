@@ -5,6 +5,13 @@ use Think\Controller;
 Vendor('yunplc.Yunplc','','.class.php');
 //远程操作类
 class AsynController extends HomeController {
+    public static $errorread = "errorread";
+    public static $unlock = "unlock";
+    public static $unlocked = "unlocked";
+    public static $error = "error";
+    public static $timeout = "timeout";
+    public static $errorsn = "errorsn";
+
 
     public function _initialize() {
         parent::_initialize();
@@ -35,7 +42,7 @@ class AsynController extends HomeController {
                 'role'  => $_role,
                 'time_add' => time(),
                 'time_end' => time(),
-                'status' => 'errorsn',
+                'status' => self::$errorsn,
                 'message' => 'sn,密码错误'
             );
             $_rtn = $D_LogUnlock->data($_data)->add();
@@ -62,7 +69,7 @@ class AsynController extends HomeController {
                 'role'  => $_role,
                 'time_add' => time(),
                 'time_end' => time(),
-                'status' => 'errorread',
+                'status' => self::$errorread,
                 'message' => $_rtn[2]?$_rtn[2]:"未通电源"
             );
             $_rtn_add = $D_LogUnlock->data($_data)->add();
@@ -74,7 +81,7 @@ class AsynController extends HomeController {
                 'role'  => $_role,
                 'time_add' => time(),
                 'time_end' => time(),
-                'status' => 'unlocked',
+                'status' => self::$unlocked,
                 'message' => '机器已解锁'
             );
             $_rtn_add = $D_LogUnlock->data($_data)->add();
@@ -90,7 +97,7 @@ class AsynController extends HomeController {
                 'role'  => $_role,
                 'time_add' => time(),
                 'time_end' => time(),
-                'status' => 'unlock'
+                'status' => self::$unlock
             );
         $_rtn_a = $D_LogUnlock->data($_data)->add();
         $_arr = array('1','开机','1');
@@ -105,7 +112,7 @@ class AsynController extends HomeController {
                 );
             $_data = array(
                     'time_end' => time(),
-                    'status' => 'error',
+                    'status' => self::$error,
                     'message' => trim($_rtn[2])
                 );
             $D_LogUnlock->where($_where)->data($_data)->save();
@@ -129,7 +136,7 @@ class AsynController extends HomeController {
             }
             if(trim($_rtn[0]) == 'ERROR'||trim($_rtn[2]) == '0'){
                 $_data = array(
-                        'status' => 'end',
+                        'status' => self::$end,
                         'time_end' => time(),
                         'message' => trim($_rtn[2])
                     );
@@ -142,7 +149,7 @@ class AsynController extends HomeController {
             }
             if(time() - $_time_s > 600){
                 $_data = array(
-                        'status' => 'timeout',
+                        'status' => self::$timeout,
                         'time_end' => time(),
                         'message' => '超时退出'
                     );
@@ -187,7 +194,7 @@ class AsynController extends HomeController {
             }
             if(trim($_rtn[0]) == 'ERROR'||trim($_rtn[2]) == '0'){
                 $_data = array(
-                        'status' => 'end',
+                        'status' => self::$end,
                         'time_end' => time(),
                         'message' => trim($_rtn[2])
                     );
@@ -199,7 +206,7 @@ class AsynController extends HomeController {
             }
             if(time() - $_time_s > 600){
                 $_data = array(
-                        'status' => 'timeout',
+                        'status' => self::$timeout,
                         'time_end' => time(),
                         'message' => '超时退出'
                     );

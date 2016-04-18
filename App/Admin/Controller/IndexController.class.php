@@ -144,6 +144,7 @@ class IndexController extends AdminController {
             $resList['lists'][$k]['device_name'] = $_resNote['device_name'];
             $resList['lists'][$k]['member'] = ($v['role'] == 'admin')?'管理员':
             (D('my\Member')->where(array('id'=>$v['front_uid']))->getField('real_name'));
+            $resList['lists'][$k]['status_name'] = $D_LogUnlock->status_arr($v['status']);
         }
         $this->_arr['resList'] = $resList;
         $this->_showDisplay();
