@@ -41,9 +41,10 @@ class PaywxController extends HomeController {
             'ori_price' => $_grpPrice?$_grpPrice:$_order['price'],
             'price' => ($_grpPrice?$_grpPrice:$_order['price']) * 100
         );
+        $this->log_result($log_name,"order_type:".$_order['type']."###".$this->_arr['CLEAN_PRO']['type']);
         if($_order['type'] == $this->_arr['CLEAN_PRO']['type']){
             $_pro_info = json_decode($_order['product_info'],true);
-            $_pro_detail = $_pro_info[0];
+            $_pro_detail = $_pro_info[0]['product_detail'];
             if($_pro_detail['device_id']){
                 $this->_arr['order']['device_id'] = $_pro_detail['device_id'];
             }
@@ -160,6 +161,15 @@ class PaywxController extends HomeController {
                 $_where = array( "order_id" => $out_trade_no );
                 $D_Order->saveData($_data_order,$_where);
                 //异步为机器解锁
+                if(!$this->_arr['order']['device_id']){
+                    $this->_arr['order'] = $D_Order->where($_where)->find();
+                    $_pro_info = json_decode($this->_arr['order']['product_info'],true);
+                    $_pro_detail = $_pro_info[0]['product_detail'];
+                    if($_pro_detail['device_id']){
+                        $this->_arr['order']['device_id'] = $_pro_detail['device_id'];
+                    }
+                }
+                $this->log_result($log_name,"###order####:".json_encode($this->_arr['order']));
                 if($this->_arr['order']['device_id']){
                     Vendor('asynHandle.asynHandle','','.class.php');
                     $obj    = new \Verdor\asynHandle\asynHandle();
@@ -167,10 +177,11 @@ class PaywxController extends HomeController {
                         'front_uid' => $this->_arr['order']['front_uid'],
                         'role' => 'member',
                         'device_id' => $this->_arr['order']['device_id']));
+                    $this->log_result($log_name,"url:".$_url);
                     $obj->Request($_url);
                     //提交设备数据log
                 }
-                //$this->log_result($log_name,"pay test:".M()->_sql());
+                $this->log_result($log_name,"pay test:".M()->_sql());
                 exit("success");
             }
             //商户自行增加处理流程,更新订单状态,数据库操作,推送支付完成信息

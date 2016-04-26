@@ -11,6 +11,7 @@ class AsynController extends HomeController {
     public static $error = "error";
     public static $timeout = "timeout";
     public static $errorsn = "errorsn";
+    public static $end = "end";
 
 
     public function _initialize() {
