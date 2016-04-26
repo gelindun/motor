@@ -197,6 +197,7 @@ class PaywxController extends HomeController {
     }
     
     private  function  log_result($path,$word) {
+        exit;
         $path = $path?$path:C('DATA_CACHE_PATH')."log_tenpay.txt";
         $fp = fopen($path,"a");
         flock($fp, LOCK_EX) ;

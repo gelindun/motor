@@ -9,6 +9,7 @@ class AsynController extends HomeController {
     public static $unlock = "unlock";
     public static $unlocked = "unlocked";
     public static $error = "error";
+    public static $working = "working";
     public static $timeout = "timeout";
     public static $errorsn = "errorsn";
     public static $end = "end";
@@ -119,11 +120,21 @@ class AsynController extends HomeController {
             $D_LogUnlock->where($_where)->data($_data)->save();
             exit("ok");
         }
+
+
         //每隔10秒更新time_end并查询是否停止
         $_time_s = time();
+        $_has_start = 0;
         while(true){
-            $_arr = array('1','停止');
-            $_rst_stop = $_remote->remote_read($_arr);
+            if(!$_has_start){
+                $_arr_work = array('1','启动');
+                $_rst_work = $_remote->remote_read($_arr_work);
+            }else{
+                $_arr_work = array('1','停止');
+                $_rst_work = $_remote->remote_read($_arr_work);
+            }
+
+           
             $_where = array(
                     'id' => $_rtn_a
                 );
@@ -132,34 +143,52 @@ class AsynController extends HomeController {
                 );
             $D_LogUnlock->where($_where)->data($_data)->save();
             $_rtn = array();
-            foreach($_rst_stop as $k=>$v){
+            foreach($_rst_work as $k=>$v){
                 $_rtn[$k] = trim($v);
             }
-            if(trim($_rtn[0]) == 'ERROR'||trim($_rtn[2]) == '0'){
+            if(trim($_rtn[0]) == 'ERROR'){
                 $_data = array(
                         'status' => self::$end,
                         'time_end' => time(),
                         'message' => trim($_rtn[2])
                     );
-                if(trim($_rtn[2]) == '0')
-                    $_data['message'] = '已停止';
                 $D_LogUnlock->where($_where)->data($_data)->save();
                 //如已停止或断电则更新time_end，并退出
-                break;
                 exit("ok");
             }
-            if(time() - $_time_s > 600){
+
+            if($_arr_work[1] == '启动' && trim($_rtn[2]) == '1'){
+                $_has_start = 1;
+                $_data = array(
+                        'status' => self::$working,
+                        'time_end' => time(),
+                        'message' => '工作中'
+                    );
+                $D_LogUnlock->where($_where)->data($_data)->save();
+            }
+            //如已停止或断电则更新time_end，并退出
+            if($_arr_work[1] == '停止' && trim($_rtn[2]) == '1'){
+                $_data = array(
+                        'status' => self::$end,
+                        'time_end' => time(),
+                        'message' => '已停止'
+                    );
+                $D_LogUnlock->where($_where)->data($_data)->save();
+                exit("ok");
+            }
+
+            if(time() - $_time_s > 1200){
                 $_data = array(
                         'status' => self::$timeout,
                         'time_end' => time(),
                         'message' => '超时退出'
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
-                break;
                 exit("ok");
             }
             sleep(10);
         }
+
         //end
         exit('stop');
     }
@@ -173,13 +202,18 @@ class AsynController extends HomeController {
         $_time_s = time();
         $_remote = new \Verdor\yunplc\Yunplc($_device_sn,$_device_pass);
         $D_LogUnlock = D('log\LogUnlock');
+        $_has_start = 0;
         while(true){
             // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
             // fwrite($fp, time().',');
             // fclose($fp);
-
-            $_arr = array('1','停止');
-            $_rst = $_remote->remote_read($_arr);
+            if(!$_has_start){
+                $_arr = array('1','启动');
+                $_rst = $_remote->remote_read($_arr);
+            }else{
+                $_arr = array('1','停止');
+                $_rst = $_remote->remote_read($_arr);
+            }
             if(trim($_rst) == ''){
                 exit("错误");
             }
@@ -193,26 +227,41 @@ class AsynController extends HomeController {
             foreach($_rst as $k=>$v){
                 $_rtn[$k] = trim($v);
             }
-            if(trim($_rtn[0]) == 'ERROR'||trim($_rtn[2]) == '0'){
+            if(trim($_rtn[0]) == 'ERROR'){
                 $_data = array(
                         'status' => self::$end,
                         'time_end' => time(),
                         'message' => trim($_rtn[2])
                     );
-                if(trim($_rtn[2]) == '0')
-                    $_data['message'] = '已停止';
                 $D_LogUnlock->where($_where)->data($_data)->save();
-                //如已停止或断电则更新time_end，并退出
+            }
+            if($_arr[1] == '启动' && trim($_rtn[2]) == '1'){
+                $_has_start = 1;
+                $_data = array(
+                        'status' => self::$working,
+                        'time_end' => time(),
+                        'message' => '工作中'
+                    );
+                $D_LogUnlock->where($_where)->data($_data)->save();
+            }
+            //如已停止或断电则更新time_end，并退出
+            if($_arr[1] == '停止' && trim($_rtn[2]) == '1'){
+                $_data = array(
+                        'status' => self::$end,
+                        'time_end' => time(),
+                        'message' => '已停止'
+                    );
+                $D_LogUnlock->where($_where)->data($_data)->save();
                 exit("ok");
             }
-            if(time() - $_time_s > 600){
+            //超时退出设置
+            if(time() - $_time_s > 1200){
                 $_data = array(
                         'status' => self::$timeout,
                         'time_end' => time(),
                         'message' => '超时退出'
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
-                break;
                 exit("ok");
             }
             sleep(10);
