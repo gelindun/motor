@@ -203,9 +203,10 @@ class AsynController extends HomeController {
         $_remote = new \Verdor\yunplc\Yunplc($_device_sn,$_device_pass);
         $D_LogUnlock = D('log\LogUnlock');
         $_has_start = 0;
+        
         while(true){
             // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
-            // fwrite($fp, time().',');
+            // fwrite($fp, date('Y-m-d h:i:s',time()).'###');
             // fclose($fp);
             if(!$_has_start){
                 $_arr = array('1','启动');
@@ -214,7 +215,7 @@ class AsynController extends HomeController {
                 $_arr = array('1','停止');
                 $_rst = $_remote->remote_read($_arr);
             }
-            if(trim($_rst) == ''){
+            if(!is_array($_rst) && trim($_rst) == ''){
                 exit("错误");
             }
             $_where = array(
@@ -234,6 +235,7 @@ class AsynController extends HomeController {
                         'message' => trim($_rtn[2])
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
+                exit('ok');
             }
             if($_arr[1] == '启动' && trim($_rtn[2]) == '1'){
                 $_has_start = 1;
