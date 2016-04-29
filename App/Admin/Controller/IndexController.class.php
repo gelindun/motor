@@ -108,7 +108,8 @@ class IndexController extends AdminController {
                     $_url = uDomain('www','/Asyn/unlock_admin',array(
                         'update_id' => $_update_id,
                         'device_sn' => $_resNote['device_sn'],
-                        'device_pass' => $_resNote['device_pass']
+                        'device_pass' => $_resNote['device_pass'],
+                        'auto_lock' => $_resNote['auto_lock']
                         ));
 
                     $obj->Request($_url);

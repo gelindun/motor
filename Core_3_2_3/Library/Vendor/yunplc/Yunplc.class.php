@@ -59,7 +59,7 @@ class yunplc {
         if($_rst){
           $_rtn = explode(PHP_EOL, $_rst);
           if(trim($_rtn[0]) == 'ERROR'&&trim($_rtn[1]) == 8){
-            $this->login();
+            $_rtn = $this->login();
             $this->remote_write($_data);
             exit;
           }
@@ -85,7 +85,7 @@ class yunplc {
         if($_rst){
           $_rtn = explode(PHP_EOL, $_rst);
           if(trim($_rtn[0]) == 'ERROR'&&trim($_rtn[1]) == 8){
-            $this->login();
+            $_rtn = $this->login();
             $this->remote_read($_data);
             exit;
           }
