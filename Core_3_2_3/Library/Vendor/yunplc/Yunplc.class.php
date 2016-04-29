@@ -17,7 +17,7 @@ class yunplc {
     $_remote = $this->read_cache();
     if($_remote){
       $this->_sid = $_remote['SID'];
-      $this->_acthost = "http://".$_remote['ADDR'];
+      $this->_acthost = $_remote['ADDR'];
     }
   }
 
@@ -40,6 +40,7 @@ class yunplc {
       }
     }
 
+    $_rtn['ADDR'] = "http://".$_rtn['ADDR'];
     $this->write_cache($_rtn);
     $this->_sid = $_rtn['SID'];
     $this->_acthost = $_rtn['ADDR'];
@@ -48,10 +49,10 @@ class yunplc {
 
   public function remote_write($_data = array("1","开机","0")){
         if(!$this->_sid || !$this->_acthost){
-          $this->login();
+          $_rtn = $this->login();
         }
-        $_sid = $this->_sid;
-        $_host = $this->_acthost;
+        $_sid = $_rtn['SID']?$_rtn['SID']:$this->_sid;
+        $_host = $_rtn['ADDR']?$_rtn['ADDR']:$this->_acthost;
         $_url = $_host."/exdata?SID=".$_sid."&OP=W";
         $_post_str = $_data;
         $_rst = $this->file_get_contents_post($_url,$_post_str);
@@ -60,6 +61,7 @@ class yunplc {
           if(trim($_rtn[0]) == 'ERROR'&&trim($_rtn[1]) == 8){
             $this->login();
             $this->remote_write($_data);
+            exit;
           }
         }
         return $_rtn;
@@ -69,13 +71,17 @@ class yunplc {
   //该设备没有登录信息，请确认您的设备是否已经开机并连接到网络
   public function remote_read($_data = array("1","开机")){
         if(!$this->_sid || !$this->_acthost){
-          $this->login();
+          $_rtn = $this->login();
         }
-        $_sid = $this->_sid;
-        $_host = $this->_acthost;
+        $_sid = $_rtn['SID']?$_rtn['SID']:$this->_sid;
+        $_host = $_rtn['ADDR']?$_rtn['ADDR']:$this->_acthost;
         $_url = $_host."/exdata?SID=".$_sid."&OP=R";
+
+
         $_post_str = $_data;
         $_rst = $this->file_get_contents_post($_url,$_post_str);
+        //dump($_url);
+
         if($_rst){
           $_rtn = explode(PHP_EOL, $_rst);
           if(trim($_rtn[0]) == 'ERROR'&&trim($_rtn[1]) == 8){

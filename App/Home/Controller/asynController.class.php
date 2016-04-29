@@ -26,17 +26,22 @@ class AsynController extends HomeController {
      */
     public function unlock(){
         set_time_limit(0);
+
         $_front_uid = I('get.front_uid');
         $_role = I('get.role')?I('get.role'):'member';
         $_device_id = I('get.device_id');
         //for test
-  
+        // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
+        // fwrite($fp, "解锁开始！".',134'.date('Y-m-d H:i'));
+        // fclose($fp);
+     
         //test end
         $D_LogUnlock = D('log\LogUnlock');
         $D_Device = D('site\Device');
         $_device = $D_Device->where(
                 array('id' => $_device_id)
             )->find();
+        $_auto_lock = $_device['auto_lock'];
         if(!$_device['device_sn'] || !$_device['device_pass']){
             $_data = array(
                 'device_id' => $_device_id,
@@ -48,22 +53,26 @@ class AsynController extends HomeController {
                 'message' => 'sn,密码错误'
             );
             $_rtn = $D_LogUnlock->data($_data)->add();
-            exit("ok");
+            exit("56");
         }
+
         //查询锁定状态
         $_remote = new \Verdor\yunplc\Yunplc($_device['device_sn'],$_device['device_pass']);
-        
+        //exit("ooooooo".$_device['device_sn']."___".$_device['device_pass']);
         $_arr = array('1','锁机');
         $_rtn_lock = $_remote->remote_read($_arr);
-
+  
         $_rtn = array();
         foreach($_rtn_lock as $k=>$v){
             $_rtn[$k] = trim($v);
         }
         
-        // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
-        // fwrite($fp, time().','.json_encode($_rtn));
-        // fclose($fp);
+        $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
+        fwrite($fp, time().','.json_encode($_rtn));
+        fclose($fp);
+
+        // dump($_rtn);
+        // dump($_rtn_lock);
         if(trim($_rtn[0]) == 'ERROR'||count($_rtn) < 1){
             $_data = array(
                 'device_id' => $_device_id,
@@ -75,7 +84,7 @@ class AsynController extends HomeController {
                 'message' => $_rtn[2]?$_rtn[2]:"未通电源"
             );
             $_rtn_add = $D_LogUnlock->data($_data)->add();
-            exit("ok");
+            exit("86");
         }else if(trim($_rtn[2]) == '0'){
             $_data = array(
                 'device_id' => $_device_id,
@@ -93,6 +102,7 @@ class AsynController extends HomeController {
         // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
         // fwrite($fp, time().',83');
         // fclose($fp);
+
         $_data = array(
                 'device_id' => $_device_id,
                 'front_uid' => $_front_uid,
@@ -118,16 +128,20 @@ class AsynController extends HomeController {
                     'message' => trim($_rtn[2])
                 );
             $D_LogUnlock->where($_where)->data($_data)->save();
-            exit("ok");
+            exit("131");
         }
-
+        // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
+        // fwrite($fp, "开机".',128'.date('Y-m-d H:i'));
+        // fclose($fp);
 
         //每隔10秒更新time_end并查询是否停止
         $_time_s = time();
-        $_has_start = 0;
+        $_has_start = false;
+        $_act_count = 0;
+        $_locked = false;
         while(true){
             if(!$_has_start){
-                $_arr_work = array('1','启动');
+                $_arr_work = array('2','启动','操作计数');
                 $_rst_work = $_remote->remote_read($_arr_work);
             }else{
                 $_arr_work = array('1','停止');
@@ -154,11 +168,14 @@ class AsynController extends HomeController {
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
                 //如已停止或断电则更新time_end，并退出
-                exit("ok");
+                exit("171");
             }
 
             if($_arr_work[1] == '启动' && trim($_rtn[2]) == '1'){
-                $_has_start = 1;
+                $_has_start = true;
+                $_act_count = trim($_rtn[3]);
+
+
                 $_data = array(
                         'status' => self::$working,
                         'time_end' => time(),
@@ -166,6 +183,27 @@ class AsynController extends HomeController {
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
             }
+
+            if($_has_start && !$_locked && $_auto_lock){
+                $_arr_count = array('1','操作计数');
+                $_rst_count = $_remote->remote_read($_arr_count);
+                $_rtn = array();
+                foreach($_rst_count as $k=>$v){
+                    $_rtn[$k] = trim($v);
+                }
+
+                // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
+                // fwrite($fp, "返回：".$_rtn[2]."##".$_act_count.',184');
+                // fclose($fp);
+
+                if(trim($_rtn[2]) > $_act_count){
+                    $_arr = array('1','锁机','1');
+                    $_rtn_lock = $_remote->remote_write($_arr);
+                    $_locked = true;
+                }
+                
+            }
+
             //如已停止或断电则更新time_end，并退出
             if($_arr_work[1] == '停止' && trim($_rtn[2]) == '1'){
                 $_data = array(
@@ -174,7 +212,7 @@ class AsynController extends HomeController {
                         'message' => '已停止'
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
-                exit("ok");
+                exit("215");
             }
 
             if(time() - $_time_s > 1200){
@@ -184,7 +222,7 @@ class AsynController extends HomeController {
                         'message' => '超时退出'
                     );
                 $D_LogUnlock->where($_where)->data($_data)->save();
-                exit("ok");
+                exit("225");
             }
             sleep(10);
         }

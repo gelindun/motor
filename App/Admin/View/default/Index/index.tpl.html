@@ -37,7 +37,13 @@
                     <dd 
                     style="border:1px solid #d9d9d9;border-width:1px 0;
                     padding:5px 0;margin:2px 0;">{{$r['store_name']}}</dd>
-                    <dd style="text-align:center;padding:2px 0;"> <a 
+                    <dd style="text-align:center;padding:2px 0;"><a 
+                    href="{{:U('/Merchant/device',array(
+                        'act' => 'edit',
+                        'mid' => $r['mid'],
+                        'id' => $r['id']
+                    ))}}" class="btn btn-sm
+                             btn-primary">编辑</a>&nbsp; <a 
                     href="{{:U('/Index/device',array(
                         'id' => $r['id']
                     ))}}" class="btn btn-sm

@@ -38,6 +38,13 @@
                                readonly="readonly">
                     </div>
                     <div class="form-group">
+                        <label for="auto_lock">支付后自动锁机
+                        <input type="checkbox" class=""
+                               value="1"
+                               {{notempty name="resWiki.auto_lock"}}checked="checked"{{/notempty}}
+                               name="auto_lock" id="auto_lock" ></label>
+                    </div>
+                    <div class="form-group">
                         <label for="device_sn">序列号</label>
                         <input type="text" class="form-control w-500"
                                value="{{$resWiki.device_sn}}"

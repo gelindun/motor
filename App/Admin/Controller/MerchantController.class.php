@@ -133,6 +133,7 @@ class MerchantController extends AdminController {
                         'id' => $_data['id']
                     );
                 }
+                $_data['auto_lock'] = $_data['auto_lock']?1:0;
                 $_rcd = $D_Device->write($_data,$_where);
                 pushJson('更新成功',array('url'=>U('/Merchant/device',array('mid'=>$_mid))));
             }else{
