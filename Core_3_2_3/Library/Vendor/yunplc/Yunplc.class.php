@@ -61,12 +61,12 @@ class yunplc {
           if(trim($_rtn_rst[0]) == 'ERROR'&&trim($_rtn_rst[1]) == 8){
             $this->login();
             return $this->remote_write($_data);
-            exit;
+          }else{
+            return $_rtn_rst;
           }
-          return $_rtn_rst;
+          
         }else{
            return $this->remote_write($_data);
-           exit;
         }
     }
   //ERROR
@@ -89,12 +89,11 @@ class yunplc {
           if(trim($_rtn_rst[0]) == 'ERROR' && trim($_rtn_rst[1]) == 8){
             $this->login();
             return $this->remote_read($_data);
-            exit;
+          }else{
+            return $_rtn_rst;
           }
-          return $_rtn_rst;
         }else{
           return $this->remote_read($_data);
-          exit;
         }
     }
 

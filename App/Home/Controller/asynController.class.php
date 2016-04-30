@@ -36,6 +36,7 @@ class AsynController extends HomeController {
                 "act" => "unlock start 36",
                 "date" => date('Y-m-d H:i')
             ));
+        usleep(500000);
 
         //test end
         $D_LogUnlock = D('log\LogUnlock');
@@ -55,7 +56,7 @@ class AsynController extends HomeController {
                 'message' => 'sn,密码错误'
             );
             $_rtn = $D_LogUnlock->data($_data)->add();
-            exit("56");
+            if($_rtn)exit("56");
         }
 
         //查询锁定状态
@@ -93,7 +94,12 @@ class AsynController extends HomeController {
                 'message' => $_rtn[2]?$_rtn[2]:"未通电源"
             );
             $_rtn_add = $D_LogUnlock->data($_data)->add();
-            exit("86");
+            $this->write_cache(array(
+                "act" => "lock start 99",
+                "date" => date('Y-m-d H:i'),
+                "rtn" => json_encode($_rtn)
+            ));
+            if($_rtn_add)exit("86");
         }else if(trim($_rtn[2]) == '0'){
             $_data = array(
                 'device_id' => $_device_id,
@@ -105,7 +111,7 @@ class AsynController extends HomeController {
                 'message' => '机器已解锁'
             );
             $_rtn_add = $D_LogUnlock->data($_data)->add();
-            exit("无需解锁");
+            if($_rtn_add)exit("无需解锁");
         }
 
 
@@ -133,8 +139,8 @@ class AsynController extends HomeController {
                     'status' => self::$error,
                     'message' => trim($_rtn[2])
                 );
-            $D_LogUnlock->where($_where)->data($_data)->save();
-            exit("131");
+            $r = $D_LogUnlock->where($_where)->data($_data)->save();
+            if($r)exit("131");
         }
         // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
         // fwrite($fp, "开机".',128'.date('Y-m-d H:i'));
@@ -172,9 +178,9 @@ class AsynController extends HomeController {
                         'time_end' => time(),
                         'message' => trim($_rtn[2])
                     );
-                $D_LogUnlock->where($_where)->data($_data)->save();
+                $_r = $D_LogUnlock->where($_where)->data($_data)->save();
                 //如已停止或断电则更新time_end，并退出
-                exit("171");
+                if($_r)exit("171");
             }
 
             if($_arr_work[1] == '启动' && trim($_rtn[2]) == '1'){
@@ -217,8 +223,8 @@ class AsynController extends HomeController {
                         'time_end' => time(),
                         'message' => '已停止'
                     );
-                $D_LogUnlock->where($_where)->data($_data)->save();
-                exit("215");
+                $_r = $D_LogUnlock->where($_where)->data($_data)->save();
+                if($_r)exit("215");
             }
 
             if(time() - $_time_s > 1200){
@@ -227,8 +233,8 @@ class AsynController extends HomeController {
                         'time_end' => time(),
                         'message' => '超时退出'
                     );
-                $D_LogUnlock->where($_where)->data($_data)->save();
-                exit("225");
+                $_r = $D_LogUnlock->where($_where)->data($_data)->save();
+                if($_r)exit("225");
             }
             sleep(10);
         }
@@ -339,7 +345,7 @@ class AsynController extends HomeController {
     protected function write_cache($_data){
         if(true){
             $fp = fopen($this->_cache_path .  'log.txt', "a+");
-            fwrite($fp, json_encode($_data));
+            fwrite($fp, json_encode($_data).'###\n\r');
             fclose($fp);
         }
     }
