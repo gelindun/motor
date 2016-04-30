@@ -176,7 +176,11 @@ class PaywxController extends HomeController {
                     $_url = uDomain('www','/Asyn/unlock',array(
                         'front_uid' => $this->_arr['order']['front_uid'],
                         'role' => 'member',
-                        'device_id' => $this->_arr['order']['device_id']));
+                        'device_id' => $this->_arr['order']['device_id'],
+                        'r' => mt_rand('999','9999')
+                        )
+                        
+                        );
                     $this->log_result($log_name,"url:".$_url);
                     $obj->Request($_url);
                     //提交设备数据log

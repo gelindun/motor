@@ -21,7 +21,7 @@ class yunplc {
     }
   }
 
-  public function login(){
+  public function login($func = "",$param = array()){
     $_url_login = $this->_login_host."/exlog";
     $_data_login = array(
             "GRM" => $this->sn,
@@ -44,53 +44,58 @@ class yunplc {
     $this->write_cache($_rtn);
     $this->_sid = $_rtn['SID'];
     $this->_acthost = $_rtn['ADDR'];
-    return $_rtn;
+    
   }
 
   public function remote_write($_data = array("1","开机","0")){
         if(!$this->_sid || !$this->_acthost){
-          $_rtn = $this->login();
+          $this->login();
         }
-        $_sid = $_rtn['SID']?$_rtn['SID']:$this->_sid;
-        $_host = $_rtn['ADDR']?$_rtn['ADDR']:$this->_acthost;
+        $_sid = $this->_sid;
+        $_host = $this->_acthost;
         $_url = $_host."/exdata?SID=".$_sid."&OP=W";
         $_post_str = $_data;
         $_rst = $this->file_get_contents_post($_url,$_post_str);
         if($_rst){
-          $_rtn = explode(PHP_EOL, $_rst);
-          if(trim($_rtn[0]) == 'ERROR'&&trim($_rtn[1]) == 8){
-            $_rtn = $this->login();
-            $this->remote_write($_data);
+          $_rtn_rst = explode(PHP_EOL, $_rst);
+          if(trim($_rtn_rst[0]) == 'ERROR'&&trim($_rtn_rst[1]) == 8){
+            $this->login();
+            return $this->remote_write($_data);
             exit;
           }
+          return $_rtn_rst;
+        }else{
+           return $this->remote_write($_data);
+           exit;
         }
-        return $_rtn;
     }
   //ERROR
   //9
   //该设备没有登录信息，请确认您的设备是否已经开机并连接到网络
   public function remote_read($_data = array("1","开机")){
         if(!$this->_sid || !$this->_acthost){
-          $_rtn = $this->login();
+          $this->login();
         }
-        $_sid = $_rtn['SID']?$_rtn['SID']:$this->_sid;
-        $_host = $_rtn['ADDR']?$_rtn['ADDR']:$this->_acthost;
+        $_sid = $this->_sid;
+        $_host = $this->_acthost;
         $_url = $_host."/exdata?SID=".$_sid."&OP=R";
 
 
         $_post_str = $_data;
         $_rst = $this->file_get_contents_post($_url,$_post_str);
-        //dump($_url);
 
         if($_rst){
-          $_rtn = explode(PHP_EOL, $_rst);
-          if(trim($_rtn[0]) == 'ERROR'&&trim($_rtn[1]) == 8){
-            $_rtn = $this->login();
-            $this->remote_read($_data);
+          $_rtn_rst = explode(PHP_EOL, $_rst);
+          if(trim($_rtn_rst[0]) == 'ERROR' && trim($_rtn_rst[1]) == 8){
+            $this->login();
+            return $this->remote_read($_data);
             exit;
           }
+          return $_rtn_rst;
+        }else{
+          return $this->remote_read($_data);
+          exit;
         }
-        return $_rtn;
     }
 
   /**

@@ -17,7 +17,7 @@ class AsynController extends HomeController {
 
     public function _initialize() {
         parent::_initialize();
-        
+        $this->_cache_path = C('DATA_CACHE_PATH') . 'async/';
         
     }
     /**
@@ -30,11 +30,13 @@ class AsynController extends HomeController {
         $_front_uid = I('get.front_uid');
         $_role = I('get.role')?I('get.role'):'member';
         $_device_id = I('get.device_id');
-        //for test
-        // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
-        // fwrite($fp, "解锁开始！".',134'.date('Y-m-d H:i'));
-        // fclose($fp);
-     
+
+
+        $this->write_cache(array(
+                "act" => "unlock start 36",
+                "date" => date('Y-m-d H:i')
+            ));
+
         //test end
         $D_LogUnlock = D('log\LogUnlock');
         $D_Device = D('site\Device');
@@ -58,21 +60,28 @@ class AsynController extends HomeController {
 
         //查询锁定状态
         $_remote = new \Verdor\yunplc\Yunplc($_device['device_sn'],$_device['device_pass']);
-        //exit("ooooooo".$_device['device_sn']."___".$_device['device_pass']);
+        
         $_arr = array('1','锁机');
         $_rtn_lock = $_remote->remote_read($_arr);
-  
+ 
+        $this->write_cache(array(
+                "act" => "return lock 67",
+                "date" => date('Y-m-d H:i'),
+                "rtn" => json_encode($_rtn_lock)
+            ));
+ 
         $_rtn = array();
         foreach($_rtn_lock as $k=>$v){
             $_rtn[$k] = trim($v);
         }
         
-        $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
-        fwrite($fp, time().','.json_encode($_rtn));
-        fclose($fp);
+        $this->write_cache(array(
+                "act" => "lock start 74",
+                "date" => date('Y-m-d H:i'),
+                "rtn" => json_encode($_rtn)
+            ));
 
-        // dump($_rtn);
-        // dump($_rtn_lock);
+        
         if(trim($_rtn[0]) == 'ERROR'||count($_rtn) < 1){
             $_data = array(
                 'device_id' => $_device_id,
@@ -98,10 +107,7 @@ class AsynController extends HomeController {
             $_rtn_add = $D_LogUnlock->data($_data)->add();
             exit("无需解锁");
         }
-        //解锁，插入一条记录 time_start，并锁定设备
-        // $fp = fopen(C('DATA_CACHE_PATH') . 'yunplc/' . 'test.txt', "a+");
-        // fwrite($fp, time().',83');
-        // fclose($fp);
+
 
         $_data = array(
                 'device_id' => $_device_id,
@@ -236,7 +242,7 @@ class AsynController extends HomeController {
         $_update_id = I('get.update_id');
         $_device_sn = I('get.device_sn');
         $_device_pass = I('get.device_pass');
-        $_auto_lock = (int)I('get.auto_lock')?true:false;
+        $_auto_lock = I('get.auto_lock')?true:false;
 
         $_time_s = time();
         $_remote = new \Verdor\yunplc\Yunplc($_device_sn,$_device_pass);
@@ -256,7 +262,7 @@ class AsynController extends HomeController {
                 $_arr_work = array('1','停止');
                 $_rst_work = $_remote->remote_read($_arr_work);
             }
-            if(!is_array($_rst) && trim($_rst) == ''){
+            if(!is_array($_rst_work) && trim($_rst_work) == ''){
                 exit("错误");
             }
             $_where = array(
@@ -266,7 +272,7 @@ class AsynController extends HomeController {
                     'time_end' => time()
                 );
             $D_LogUnlock->where($_where)->data($_data)->save();
-            foreach($_rst as $k=>$v){
+            foreach($_rst_work as $k=>$v){
                 $_rtn[$k] = trim($v);
             }
             if(trim($_rtn[0]) == 'ERROR'){
@@ -328,6 +334,14 @@ class AsynController extends HomeController {
             sleep(10);
         }
         exit("stop");
+    }
+
+    protected function write_cache($_data){
+        if(true){
+            $fp = fopen($this->_cache_path .  'log.txt', "a+");
+            fwrite($fp, json_encode($_data));
+            fclose($fp);
+        }
     }
     
 }
