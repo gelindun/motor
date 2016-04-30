@@ -26,6 +26,7 @@ class AsynController extends HomeController {
      */
     public function unlock(){
         set_time_limit(0);
+        $_unlock_action_start = time();
 
         $_front_uid = I('get.front_uid');
         $_role = I('get.role')?I('get.role'):'member';
@@ -50,7 +51,7 @@ class AsynController extends HomeController {
                 'device_id' => $_device_id,
                 'front_uid' => $_front_uid,
                 'role'  => $_role,
-                'time_add' => time(),
+                'time_add' => $_unlock_action_start,
                 'time_end' => time(),
                 'status' => self::$errorsn,
                 'message' => 'sn,密码错误'
@@ -88,7 +89,7 @@ class AsynController extends HomeController {
                 'device_id' => $_device_id,
                 'front_uid' => $_front_uid,
                 'role'  => $_role,
-                'time_add' => time(),
+                'time_add' => $_unlock_action_start,
                 'time_end' => time(),
                 'status' => self::$errorread,
                 'message' => $_rtn[2]?$_rtn[2]:"未通电源"
@@ -105,7 +106,7 @@ class AsynController extends HomeController {
                 'device_id' => $_device_id,
                 'front_uid' => $_front_uid,
                 'role'  => $_role,
-                'time_add' => time(),
+                'time_add' => $_unlock_action_start,
                 'time_end' => time(),
                 'status' => self::$unlocked,
                 'message' => '机器已解锁'
@@ -119,7 +120,7 @@ class AsynController extends HomeController {
                 'device_id' => $_device_id,
                 'front_uid' => $_front_uid,
                 'role'  => $_role,
-                'time_add' => time(),
+                'time_add' => $_unlock_action_start,
                 'time_end' => time(),
                 'status' => self::$unlock
             );
