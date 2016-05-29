@@ -116,6 +116,14 @@ var my = {
                 itemSelector:'.ticket-order-list'
             });
         }
+    },coupon:function(){
+       if($(".profile-warp").length){
+            $(".profile-warp").infinitescroll({
+                navSelector:'.pagination',
+                nextSelector:'.pagination a.next',
+                itemSelector:'.ticket-order-list'
+            });
+        }
     },login: function () {
         $("#LoginForm").validate({
             rules: {

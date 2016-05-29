@@ -7,6 +7,7 @@ class IndexController extends HomeController {
 
     public function _initialize() {
         parent::_initialize();
+        \Think\Hook::add('share_success','Behavior\ShareSuccessBehavior');
     }
     
     public function index(){
@@ -32,6 +33,15 @@ class IndexController extends HomeController {
 
     public function v4(){
         $this->_showDisplay();
+    }
+
+    public function share_success(){
+        $_param = array();
+        $_rst = \Think\Hook::exec('Behavior\ShareSuccessBehavior', 'share_success',$_param);
+        //$_rst = \Think\Hook::listen('share_success',$_param);
+        pushJson($_rst['msg'],array(
+                "url" => $_rst['url']
+            ));
     }
    
 }

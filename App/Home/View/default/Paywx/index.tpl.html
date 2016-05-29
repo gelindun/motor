@@ -36,7 +36,7 @@
                             signType: signType, // 签名方式，默认为'SHA1'，使用新版支付需传入'MD5'
                             paySign: paySign, // 支付签名
                             complete: function (res) {
-                                location.href = '/My/order';
+                                location.href = '/My/order/order_status/2';
                             }
                         });
                     });
@@ -53,7 +53,7 @@
     </head>
     <body onload="pay()">
         <h3>{{$order['desc']}}</h3>
-        <h1>¥ {{$order['ori_price']}}</h1>
+        <h1> ¥ {{$order['ori_price']}}</h1>
         <p class="order_id">订单号: {{$order['order_id']}}</p>
     </body>
 </html>

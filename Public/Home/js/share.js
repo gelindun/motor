@@ -22,13 +22,25 @@ function success_callback(res, shareType) {
     data_post = 'url=' + window.location.href + '&share_type=' + shareType;
     $(document).trigger('wx_sendmessage_confirm');
     $.ajax({
-        url: '',
+        url: '/Index/share_success',
         type: 'post',
         dataType: 'json',
         data: data_post,
-        success: function (result) {
-            if (result.ret == 0 && result.data > 0) {
-                
+        success: function (data) {
+            if(typeof(data.msg)!='undefined'){
+                var dia=$.dialog({
+                    title:'温馨提示',
+                    content:data.msg,
+                    button:["确认"]
+                });
+
+                dia.on("dialog:action",function(e){
+                    if(e.index == 1){
+                        if (data.result && data.result.url) {
+                            window.location.href = data.result.url
+                        }
+                    }
+                });
             }
         }
     });

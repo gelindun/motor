@@ -298,6 +298,18 @@ var web_site = {
     },device_edit:function(){
         //$('.datetime').datetimepicker({format: "YYYY-MM-DD HH:mm"});
         $("#wikiForm").validate({
+            rules: {
+                mobile: {
+                    required: true,
+                    mobile: true
+                }
+            },
+            messages: {
+                mobile: {
+                    required: "请输入手机号码",
+                    mobile: "手机号码格式错误,请检查"
+                }
+            },
             submitHandler:function(form){
                 btsalert.loading();
                 $(form).ajaxSubmit({

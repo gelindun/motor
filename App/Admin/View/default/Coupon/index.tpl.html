@@ -1,20 +1,17 @@
 {{layout name="Public/layout" /}}
-<script type="text/javascript" src="__PUBLIC__/Admin/js/web_site.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/coupon.js"></script>
 <script type="text/javascript">
     $(function(){
-        web_site.device_list();
+        coupon.index();
     })
     
 </script>
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        <a href="{{:U('/Merchant/device',array('act'=>'edit','mid'=>I('get.mid')))}}"><button
-         class="btn btn-primary btn-xs"> + 添加设备</button></a>
-        <a href="/Merchant/index"><button class="btn btn-primary btn-xs"> > 返回门店列表</button></a>
+        <a href="/Coupon/coupon_edit"><button class="btn btn-primary btn-xs"> + 添加优惠券</button></a>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> {{$store_name}}</a></li>
         <li class="active">列表</li>
     </ol>
 </section>
@@ -23,10 +20,10 @@
 <section class="content">
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">{{$store_name}} 设备列表</h3>
+            <h3 class="box-title">列表</h3>
             <div class="box-tools">
                 <div class="input-group">
-                    <form action="{{:U('/Merchant/device')}}" method="get">
+                    <form action="{{:U('/Member/index')}}" method="get">
                     <input type="text" name="keyword" value='{{$keyword}}'
                            class="form-control input-sm " style="width: 150px;" placeholder="Search">
                     <div class="input-group-btn ">
@@ -40,24 +37,27 @@
             <table class="table table-hover">
                 <tbody><tr>
                         <th>ID</th>
-                        <th>名称</th>
-                        <th>流量号码</th>
-                        <th>SN</th>
-                        <th>添加时间</th>
+                        <th>名称/类型</th>
+                        <th>状态</th>
+                        <th>发放时间</th>
+                        <th>可用时间</th>
+                        <th>备注</th>
                         <th>操作</th>
                     </tr>
                     {{volist name="resList.lists" id="r"}}
                     <tr>
                         <td>{{$r.id}}</td>
-                        <td>{{:msubstr($r['device_name'],0,30)}}</td>
-                        <th>{{$r.mobile}}</th>
-                        <td>{{$r.device_sn}}</td>
-                        <td>{{$r.time_add|date='Y-m-d H:i', ###}}</td>
-                        <td><a class='fa fa-pencil' href="{{:U('/Merchant/device',
-                            array('act'=>'edit',
-                            'mid'=>$r['mid'],
-                            'id'=>$r['id']))}}"></a>
-                            &nbsp;&nbsp;<span class='fa fa-remove note-delete' _id='{{$r.id}}'></span></td>
+                        <td>{{$r.title}}/{{$r.type}}</td>
+                        <td>{{notempty name="r.status"}}已启用{{else /}}已禁用{{/notempty}}</td>
+                        <td>{{$r.time_start|date='Y-m-d H:i', ###}}<br />
+                            {{$r.time_end|date='Y-m-d H:i', ###}}
+                        </td>
+                        <td>{{$r.time_valid_start|date='Y-m-d H:i', ###}}<br />
+                            {{$r.time_valid_end|date='Y-m-d H:i', ###}}
+                        </td>
+                        <td style="max-width:300px;">{{$r['remark']}}</td>
+                        <td><a class='fa fa-pencil' data-toggle="tooltip" title="编辑" href="{{:U('/Coupon/coupon_edit/',array('id'=>$r['id']))}}"></a>
+                            &nbsp;&nbsp;<span data-toggle="tooltip" title="删除" class='fa fa-remove list-delete' _id='{{$r.id}}'></span></td>
                         
                     </tr>
                     {{/volist}}

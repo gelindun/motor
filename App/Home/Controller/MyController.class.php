@@ -560,6 +560,36 @@ class MyController extends HomeController {
         $this->_arr['seo_title'] = $this->_arr['seo_keywords'] = '我的爱车'.$this->_arr['seo_title'];
         $this->_showDisplay('my:car');
     }
+
+    /**
+     * 优惠券
+     */
+    public function coupon(){
+        $D_Coupon = D('coupon\Coupon');
+        $_where['delete'] = 0;
+        $_cStatus   =   (int)I('get.c_status');
+        $_where['front_uid'] = $this->_arr[self::FRONT_UID];
+        $_where_over = $_where;
+        $_where_over['status'] = array(
+                "lt",1
+            );
+        $_data_over = array(
+                "status" => 2
+            );
+        
+        //更新过期券
+        $D_Coupon->saveData($_data_over,$_where_over);
+        $_where['c_status'] = $_cStatus;
+        $_order = array("time_add"=>'DESC',"id"=>'DESC');
+        $_resList = $D_Coupon->getPagesize($_where,$this->pgSize,$_order);
+
+        $this->_arr['resList'] = $_resList;
+        if(!$_tempStr){
+            $_tempStr = 'my:coupon';
+        }
+        $this->_arr['c_status'] = $_cStatus;
+        $this->_showDisplay($_tempStr);
+    }
     
     
 }

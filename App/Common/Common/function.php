@@ -1253,4 +1253,14 @@ function buildPicPos($_key){
 
 }
 
+/**
+ * 处理标签扩展
+ * @param string $tag 标签名称
+ * @param mixed $params 传入参数
+ * @return void
+ */
+function hook($tag, &$params=NULL) {
+    \Think\Hook::listen($tag,$params);
+}
+
 
