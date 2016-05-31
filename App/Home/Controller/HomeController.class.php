@@ -51,7 +51,13 @@ class HomeController extends \Common\Controller\CommonController {
             "order_id" => $_tempOid,
             "order_status" => $_orderStatus
         );
-        $_data_order['price'] = $_amountCart;
+        //查询优惠券，CouponUser, 优惠券金额小于待付金额，且满额小于待付金额 的最大值优惠券
+        $_rst_coupon = D('coupon\CouponUser')->match_coupon($_amountCart,$this->_arr[self::FRONT_UID]);
+        $_reduce = $_rst_coupon['reduce'];
+        ////////////////////////////////
+
+        $_data_order['price'] = $_amountCart - $_reduce;
+        $_data_order['reduce'] = floatval($_reduce);
         $_data_order['order_type'] = $_orderType;
         $_data_order = array_merge($_data_temp,$_data_order);
         //dump($_data_order);

@@ -20,11 +20,7 @@ class CouponController extends AdminController {
                $_data = array(
                    "delete" => 1
                );
-               $_rst =  $D_Coupon->write($_data,array('id'=>$_id));
-               if(is_array($_rst)){
-                    $_msg = $_rst['msg'];
-                }
-               
+               $_rst =  $D_Coupon->saveData($_data,array('id'=>$_id));
                if(!$_rst){
                    $_msg = '删除失败';
                }else{
@@ -58,7 +54,8 @@ class CouponController extends AdminController {
             $_data = I('post.','','trim');
             $_data['time_start'] = strtotime($_data['time_start']);
             $_data['time_end'] = strtotime($_data['time_end']);
-          
+            $_data['time_valid_start'] = strtotime($_data['time_valid_start']);
+            $_data['time_valid_end'] = strtotime($_data['time_valid_end']);
             
             if($_data['id']){
                 $_where = array(
@@ -81,6 +78,8 @@ class CouponController extends AdminController {
             if(!$_resPage)exit;
             $this->_arr['resPage'] = $_resPage;
         }
+        $_resTypeList = $D_Coupon->coupon_type();
+        $this->_arr['resTypeList'] = $_resTypeList;
         
         $this->_showDisplay();
     }

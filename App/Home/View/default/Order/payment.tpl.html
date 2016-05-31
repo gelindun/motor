@@ -94,7 +94,7 @@ li.curr:after { content: "\e601";color: #017bbe;position: absolute;font-weight: 
                     <input type="text" readonly="true" value="￥{{$orderRes['price']}}">
                     
                 </div>
-                <div class="ui-form-item ui-form-item-l ui-border-b" style="height:auto;
+                <div class="ui-form-item ui-form-item-l ui-border-t ui-border-b" style="height:auto;
                 overflow:hidden;">
                     <label >
                          支付方式
@@ -121,6 +121,13 @@ li.curr:after { content: "\e601";color: #017bbe;position: absolute;font-weight: 
                                 </li>
                             </ul>
                     </div>
+                </div>
+                <div class="ui-form-item ui-form-item-l ui-border-b ">
+                    <label class="ui-border-r">
+                         优惠券抵扣
+                    </label>
+                    <input type="text" readonly="true" value="￥{{$orderRes['reduce']|default=0}}">
+                    
                 </div>
 
           

@@ -565,8 +565,8 @@ class MyController extends HomeController {
      * 优惠券
      */
     public function coupon(){
+        $D_CouponUser = D('coupon\CouponUser');
         $D_Coupon = D('coupon\Coupon');
-        $_where['delete'] = 0;
         $_cStatus   =   (int)I('get.c_status');
         $_where['front_uid'] = $this->_arr[self::FRONT_UID];
         $_where_over = $_where;
@@ -578,10 +578,17 @@ class MyController extends HomeController {
             );
         
         //更新过期券
-        $D_Coupon->saveData($_data_over,$_where_over);
+        $D_CouponUser->saveData($_data_over,$_where_over);
         $_where['c_status'] = $_cStatus;
         $_order = array("time_add"=>'DESC',"id"=>'DESC');
-        $_resList = $D_Coupon->getPagesize($_where,$this->pgSize,$_order);
+        $_resList = $D_CouponUser->getPagesize($_where,$this->pgSize,$_order);
+        // foreach($_resList['lists'] as $k=>$v){
+        //     $_where_c = array(
+        //             "id" => $v['cid']
+        //         );
+        //     $_rst = $D_Coupon->where($_where_c)->find();
+        //     $_resList['lists'][$k]['_t'] = $_rst;
+        // }
 
         $this->_arr['resList'] = $_resList;
         if(!$_tempStr){

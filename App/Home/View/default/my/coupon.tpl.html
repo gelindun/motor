@@ -40,10 +40,10 @@
                         ))}}">{{$v['title']|default='优惠券'}}</a> </P>
                 </h4>
 
-                <ul class="ui-list" onclick="window.location.href='{{$_url}}'">
+                <ul class="ui-list" >
                     <li >
-                        <div class="ui-list-info">
-                            <h4 class="ui-nowrap">5元券/满100元减</h4>
+                        <div class="ui-list-info" style="text-align:center;">
+                            <h4 class="ui-nowrap">{{$v['reduce']}}元券/{{eq name="v.least_cost" value="0.00"}}全场通用{{else /}}满{{$v.least_cost}}元减{{/eq}}</h4>
                         </div>
                     </li>
                 </ul>
@@ -51,7 +51,7 @@
                 <P style="line-height:24px;padding:3px 0;
                 position:relative;font-size:13px;text-align:right;"
                  class="ui-border-t">有效期
-                    {{$v['time_start']|date='Y-m-d H:i',###}} - {{$v['time_end']|date='Y-m-d H:i',###}} 
+                    {{$v['time_begin']|date='Y-m-d H:i',###}} - {{$v['time_end']|date='Y-m-d H:i',###}} 
                     </span></P>
                 <span style="position:absolute;right:10px;top:5px;line-height:30px;text-align:center;
                 border-radius:50%;width:30px;height:30px;

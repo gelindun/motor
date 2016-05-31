@@ -39,9 +39,12 @@ class IndexController extends HomeController {
         $_param = array();
         $_rst = \Think\Hook::exec('Behavior\ShareSuccessBehavior', 'share_success',$_param);
         //$_rst = \Think\Hook::listen('share_success',$_param);
-        pushJson($_rst['msg'],array(
+        if(count($_rst['data'])>0){
+            safeGetCookie('dataCoupon',json_encode($_rst['data']));
+            pushJson($_rst['msg'],array(
                 "url" => $_rst['url']
             ));
+        }
     }
    
 }

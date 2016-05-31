@@ -23,7 +23,7 @@
             <h3 class="box-title">列表</h3>
             <div class="box-tools">
                 <div class="input-group">
-                    <form action="{{:U('/Member/index')}}" method="get">
+                    <form action="{{:U('/Coupon/index')}}" method="get">
                     <input type="text" name="keyword" value='{{$keyword}}'
                            class="form-control input-sm " style="width: 150px;" placeholder="Search">
                     <div class="input-group-btn ">
@@ -55,7 +55,7 @@
                         <td>{{$r.time_valid_start|date='Y-m-d H:i', ###}}<br />
                             {{$r.time_valid_end|date='Y-m-d H:i', ###}}
                         </td>
-                        <td style="max-width:300px;">{{$r['remark']}}</td>
+                        <td style="max-width:300px;">{{$r['desc']}}</td>
                         <td><a class='fa fa-pencil' data-toggle="tooltip" title="编辑" href="{{:U('/Coupon/coupon_edit/',array('id'=>$r['id']))}}"></a>
                             &nbsp;&nbsp;<span data-toggle="tooltip" title="删除" class='fa fa-remove list-delete' _id='{{$r.id}}'></span></td>
                         

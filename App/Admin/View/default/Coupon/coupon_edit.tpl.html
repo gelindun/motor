@@ -41,49 +41,44 @@
                     <div class="form-group">
                         <label for="type">选择类型</label>
                         <select name="type" class="form-control w-200" >
-                            <option value="0">无分类</option>
                             {{volist name="resTypeList" id="r"}}
-                            <option value="{{$r['id']}}"
-                                    {{eq name="resPage.tid" value="$r['id']"}}selected="selected"{{/eq}}>{{$r['title']}}</option>
+                            <option value="{{$r['keys']}}"
+                                    {{eq name="resPage.type" value="$r['keys']"}}selected="selected"{{/eq}}>{{$r['title']}}</option>
                             {{/volist}}
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="discount">折扣</label>
+                    <div class="form-group type-block">
+                        <label for="reduce"  ctype="discount" style="display:none;">折扣(例0.88)</label>
+                        <label for="reduce" ctype="reduce">抵扣(元)</label>
                         <input type="text" class="form-control w-100"
-                               value="{{$resPage.discount}}" 
-                               name="discount" id="discount" required placeholder="填写折扣">
+                               value="{{$resPage.reduce|default=0}}" 
+                               name="discount" id="discount" >
                     </div>
-                    <div class="form-group">
-                        <label for="reduce">抵扣</label>
-                        <input type="text" class="form-control w-100"
-                               value="{{$resPage.reduce}}" 
-                               name="reduce" id="reduce" required placeholder="抵扣金额">
-                    </div>
+                   
                     <div class="form-group">
                         <label for="least_cost">使用条件，满额可用(0不限)</label>
                         <input type="text" class="form-control w-200"
-                               value="{{$resPage.least_cost}}" 
+                               value="{{$resPage.least_cost|default=0}}" 
                                name="least_cost" id="least_cost" required placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="limit">每人限领</label>
                         <input type="text" class="form-control w-100"
-                               value="{{$resPage.limit}}" 
+                               value="{{$resPage.limit|default=0}}" 
                                name="limit" id="limit" required placeholder="(0为不限制)">
                     </div>
                     <div class="form-group">
                         <label for="amount">优惠券总量</label>
                         <input type="text" class="form-control w-100"
-                               value="{{$resPage.amount}}" 
+                               value="{{$resPage.amount|default=0}}" 
                                name="amount" id="amount" required placeholder="(0为不限制)">
                     </div>
                     <div class="form-group">
                         <label for="sended">已发总量</label>
                         <input type="text" class="form-control w-100"
-                               value="{{$resPage.sended}}" readonly="readonly"
-                               name="sended" id="sended" required placeholder="(程序处理)">
+                               value="{{$resPage.sended|default=0}}" readonly="readonly"
+                               name="sended" id="sended"  placeholder="(程序处理)">
                     </div>
 
                     <div class="form-group">
@@ -151,4 +146,14 @@
         </form>
     </div>
 </section><!-- /.content -->
+<script>
+$(function(){
+    $("select[name=type]").on("change",function(){
+        $(".type-block").hide();
+        var _t = $(this).find("option:selected").val();
+
+        $(".type-block[ctype='"+_t+"']").show();
+    })
+})
+</script>
 {{include file='./App/Common/Tpl/fileupload_backend.tpl.html' /}}
