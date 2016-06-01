@@ -15,7 +15,55 @@ class HomeController extends \Common\Controller\CommonController {
         }
         $_data['url'] = $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
         D('log\LogBrowser')->write_logs($_data);
+        //$this->_arr['WX_BASE']
+        $this->attentionCheck();
     }
+    // 关注校验
+    protected function attentionCheck(){
+        if(isWeixinBrowser() && $this->_arr[self::FRONT_UID]){
+            $front_uid = $this->_arr[self::FRONT_UID];
+            $_flag_subscribe = true;
+            $D_Member = D('my\Member');
+            $D_MemberBind = D('my\MemberBind');
+            $D_LogAttention = D('log\LogAttention');
+            $_where = array(
+                "type" => "weixin",
+                "front_uid" => $front_uid
+            );
+            $wx_openid = $D_MemberBind->where($_where)->getField('type_uid');
+            $_where_c = array(
+                "wx_open_id" => $wx_openid
+            );
+            $_rst = $D_LogAttention->where($_where_c)->order(
+                    array(
+                        "id" => "DESC"
+                    )
+                )->find();
+            
+            if($_rst['a_status'] > 1){
+                $_flag_subscribe = false;
+            }else if(!$_rst['id']){
+                $_resArr = $D_Member->chkSubscribe($this->_arr['WX_BASE'],$wx_openid);
+                $_flag = $_resArr['subscribe'];
+                if(!$_flag){
+                    $_flag_subscribe = false;
+                }else{
+                    $_data_log = array(
+                        "wx_open_id" => $wx_openid,
+                        "a_status" => 0,
+                        "time_add" => $_resArr['subscribe_time'],
+                        "sid" => 0,
+                        "ip" => get_client_ip()
+                    );
+                    $D_LogAttention->addData($_data_log);
+                }
+            }
+            if(!$_flag_subscribe){
+                $this->_arr['showBtnSubscribe'] = true;
+            }
+        }//broswer check end
+    }
+
     /**
     * 生成订单
     $_dataPro = array(

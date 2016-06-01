@@ -127,5 +127,28 @@ class MemberModel extends \Common\Model\BaseModel{
         }
         return $_rst;
     }
+
+    /**
+     * 是否关注
+     * @param type $_uid
+     * @param type $_openid
+     * @return boolean
+     */
+    public function chkSubscribe($_wxbase,$_openid){
+        if($_openid){
+            return false;
+        }
+        
+        $_url_token = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' 
+                . $_wxbase['wx_appid'] . '&secret='
+                . $_wxbase['wx_appsecret'];
+        $_resObj = http_post($_url_token);
+        $_resArr = json_decode($_resObj, true);
+        //dump($_resArr);
+        $_url_info = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' . $_resArr['access_token'] . '&openid=' . $_openid;
+        $_res = http_post($_url_info);
+        $_resArr = json_decode($_res, true);
+        return $_resArr;
+    }
     
 }

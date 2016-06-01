@@ -26,7 +26,7 @@ class WxController extends HomeController {
         $_dataMessage = array();
         $_tmpData['fromUsername'] = $weObj->getRevFrom();
         $_tmpData['toUsername'] = $weObj->getRevTo();
-        
+        \Think\Log::write('type:'.$type);
         switch($type) {
             case \Wechat::MSGTYPE_TEXT:
                 //在线客服

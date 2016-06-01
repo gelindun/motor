@@ -290,6 +290,7 @@ transform:rotate(0deg) ;
 .rotate-module-in div a {display: block;width:100%;height:100%;z-index:10;}
 .rotate-id-img {position: absolute;top:0;left:0;}
 .rotate-id-img img {float:left;}
+.btn-scribe-foot {position: fixed;border-radius: 0;bottom:55px;right:0;}
 
 
 
