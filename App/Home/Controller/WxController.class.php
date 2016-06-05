@@ -31,6 +31,15 @@ class WxController extends HomeController {
             case \Wechat::MSGTYPE_TEXT:
                 //在线客服
                 //关键语回复
+                //关键语回复
+                $messageAll = $weObj->getRevContent();
+                $resReturn = $M_UserAttention->returnKeyword($messageAll, $id, $_tmpData);
+                //$resReturn = $M_UserAttention->returnKeyword('#sq#上墙，求iphone', $id);
+                if($resReturn['type'] == 'text') {
+                    $weObj->text($resReturn['text'])->reply();
+                } else if($resReturn['type'] == 'news') {
+                    $weObj->news($resReturn['news'])->reply();
+                }
                 break;
             case \Wechat::MSGTYPE_EVENT:
                 $eventArr = $weObj->getRevEvent();

@@ -1,0 +1,164 @@
+{{layout name="Public/layout" /}}
+<link href="__PUBLIC__/Admin/css/article_type.css" rel="stylesheet" type="text/css"/>
+<style>
+.rid-blk {display:none;}
+.rid-blk span {display:inline-block;padding:5px 8px;margin:1px;border: 1px solid #d9d9d9}
+.rid-blk span.curr {color:#f00;}
+</style>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/wechat.js"></script>
+<script type="text/javascript">
+    $(function(){
+        Wechat.menu();
+    })
+</script>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+       <a href="{{:U('/Wechat/menu/',array('action'=>'edit','id'=>$r['id']))}}"> <button class="btn btn-primary btn-xs"> + 新增菜单</button></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 微信菜单</a></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content ">
+    <div class="box box-primary" style="overflow:hidden;">
+    <dl class="row ">
+        
+        <dd class="col-md-6 ">
+            <div class="form-group" style="margin:10px 20px;color:#f00;">注意事项：微信限制只允许添加最多3个一级菜单，
+                每个一级菜单包含最多5个二级菜单</div>
+            <form id="wikiForm" action="?" method="POST">
+
+            <div class="box-body">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label for="title">菜单标题</label>
+                        <input type="text" class="form-control w-300"
+                               value="{{$resPage.title}}"
+                               name="title" id="title" required placeholder="填写类别标题">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="title">添加到</label>
+                        <select name="parent_id" class="form-control w-200" >
+                            <option value="0">一级菜单</option>
+                            {{volist name="resColumn" id="v"}}
+                            {{neq name="v.id" value="$resPage.id"}}
+                            <option value="{{$v.id}}"
+                                    {{eq name="v.id" value="$resPage.parent_id"}}selected="selected"{{/eq}} >{{$v['title']}}</option>
+                            {{/neq}}
+                            {{/volist}}
+                        </select>
+                    </div>
+                    <?php
+                        $_typeArr = array(
+                                array(
+                                        "key" => 0,
+                                        "title" => "无回复"
+                                    ), array(
+                                        "key" => 1,
+                                        "title" => "文本回复"
+                                    ),array(
+                                        "key" => 2,
+                                        "title" => "链接"
+                                    ),array(
+                                        "key" => 3,
+                                        "title" => "多图文"
+                                    )
+                            );
+                    ?>
+                    <div class="form-group">
+                        <label for="type">消息类型</label>
+                        <select name="type" class="form-control w-200" >
+                            {{volist name="_typeArr" id="r"}}
+                            <option value="{{$r.key}}" 
+                            {{eq name="r.key" value="$resPage['type']"}}selected="selected"{{/eq}}>
+                            {{$r['title']}}</option>
+                            {{/volist}}
+                        </select>
+                    </div>
+                    <input type="hidden" name="rid" value="{{$resPage['rid']}}" />
+                    <dd class="form-group">
+                        <div class="rid_1 rid-blk">
+                            {{volist name="resText" id="v"}}
+                            <span _id="{{$v['id']}}">{{$v.title}}</span>
+                            {{/volist}}
+                        </div>
+                        <div class="rid_2 rid-blk">
+                            {{volist name="resLink" id="v"}}
+                            <span _id="{{$v['id']}}">{{$v.title}}</span>
+                            {{/volist}}
+                        </div>
+                        <div class="rid_3 rid-blk">
+                            {{volist name="resNews" id="v"}}
+                            <span _id="{{$v['id']}}">{{$v.title}}</span>
+                            {{/volist}}
+                        </div>
+                    </dd>
+                </div>
+            </div>
+            <input type="hidden" name='action' value='edit_wx_menu' />
+            <input type="hidden" name='id' value='{{$resPage["id"]}}' />
+            <div class="box-footer text-center">
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button type="reset" class="btn btn-info">重置</button>
+            </div>
+            </form>
+        </dd>
+        <dd class="col-md-6 type-sort">
+            <ul class="sortable ">
+                {{volist name="resColumn" id="v"}}
+                <li class="sort-li" id="{{$v.id}}">
+                    <div class="sort-blk-warp">
+                        <span class="text">{{$v.title}}</span>
+                        <span class="tools">
+                            <i class="fa fa-edit" onclick="javascript:window.location.href='{{:U('/Wechat/menu/',array('id'=>$v['id']))}}'"></i>
+                                <i class="fa fa-trash-o list-delete" _id='{{$v.id}}'></i>
+                        </span>
+                    </div>
+                    {{notempty name="v._child"}}
+                    <ul class="sub-sortable">
+                        {{volist name="v['_child']" id="r"}}
+                        <li class="sub-sort-li"  id="{{$v.id}}">
+                            <span class="text">{{$r.title}}</span>
+                            <div class="tools">
+                                <i class="fa fa-edit" onclick="javascript:window.location.href='{{:U('/Wechat/menu/',array('action'=>'edit','id'=>$r['id']))}}'"></i>
+                                <i class="fa fa-trash-o list-delete" _id='{{$r.id}}'></i>
+                            </div>
+                        </li>
+                        {{/volist}}
+                    </ul>
+                    {{/notempty}}
+                </li>
+                {{/volist}}
+            </ul>
+            <div style="margin:15px;text-align:center;">
+            <button class="btn btn-primary  menu-publish"> > 发布菜单</button></div>
+        </dd>
+    </dl>
+        </div>
+</section>
+<script>
+$(function(){
+$("select[name=type]").change(function(){
+    var _idStr = $(this).val();
+    $(".rid-blk").hide();
+    $(".rid_"+_idStr).show();
+})
+$(".rid-blk span").on("click",function(){
+    var _idStr = $(this).attr("_id");
+    $(".rid-blk span").removeClass("curr");
+    $(this).addClass("curr");
+    $("input[name=rid]").val(_idStr);
+})
+{{notempty name="resPage.type"}}
+$(".rid_{{$resPage['type']}}").show();
+{{notempty name="resPage.rid"}}
+$(".rid-blk span[_id={{$resPage.rid}}]").addClass("curr");
+{{/notempty}}
+{{/notempty}}
+
+})
+</script>
