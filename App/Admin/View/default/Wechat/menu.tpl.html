@@ -159,6 +159,20 @@ $(".rid_{{$resPage['type']}}").show();
 $(".rid-blk span[_id={{$resPage.rid}}]").addClass("curr");
 {{/notempty}}
 {{/notempty}}
+$(".menu-publish").on("click",function(){
+    if(confirm("确定发布菜单么？")){
+        btsalert.loading();
+        $.post('?',{"action":"sub_menu"},function(data){
+            btsalert.loading(1);
+            if(typeof(data.msg)!= "undefined"){
+                btsalert.alert(data.msg,function(){
+                    window.location.reload();
+                });
+            }
+        },"json")
+    }
+
+})
 
 })
 </script>

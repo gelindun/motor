@@ -165,6 +165,85 @@ class WechatController extends AdminController {
                 }
                 pushJson('更新成功');
             }
+        }else if($do_action == 'sub_menu'){
+            //发布菜单
+            $_where = $_order = array();
+            $_where['parent_id'] = 0;
+            $_order = array('order_id' => 'ASC', 'id' => 'DESC');
+            $_resColumn = $D_WxMenu->where($_where)->order($_order)->select();
+            $_menu['button'] = array();
+            foreach($_resColumn as $k => $v){
+                if ($v['replay_type'] != 2) {
+                    $_arr = array(
+                        'type' => 'click', 'name' => $v['title'], 'key' => $v['id']
+                    );
+                } else {
+                    $_link = $v['url'];
+                    $preg = '|^http|';
+                    if(!preg_match($preg,$url)) {
+                         $_link = C('MAIN_DOMAIN').$_link;
+                    }
+                    $_arr = array(
+                        'type' => 'view', 'name' => $v['title'], 'url' => '' . $_link
+                    );
+                }
+
+                $_where_p = array(
+                        "parent_id" => $v['id']
+                    );
+                $_resChild = $D_WxMenu->where($_where_p)->order($_order)->select();
+                if(count($_resChild) > 0){
+                    $_arr['sub_button'] = array();
+                    unset($_arr['type']);
+                    if($_arr['key'])
+                        unset($_arr['key']);
+                    if($_arr['url'])
+                        unset($_arr['url']);
+                    foreach($_resChild as $kk => $vv){
+                        if ($vv['type'] != 2) {
+                            $_arr_c = array(
+                                'type' => 'click', 'name' => $vv['title'], 'key' => $vv['id']
+                            );
+                        } else {
+                            $D_MaterialLink = D('wx\MaterialLink');
+                            $_link = $D_MaterialLink->where(
+                                    array(
+                                            'id' => $vv['rid']
+                                        )
+                                )->getField('url');
+                            $preg = '|^http|';
+                            if(!preg_match($preg,$url)) {
+                                 $_link = C('MAIN_DOMAIN').$_link;
+                            }
+                            $_arr_c = array(
+                                'type' => 'view', 'name' => $v['title'], 'url' => '' . $_link
+                            );
+                        }
+
+                        array_push($_arr['sub_button'],$_arr_c);
+                    }
+                }
+                array_push($_menu['button'],$_arr);
+
+            }
+
+            $result = $this->wxMenu($_menu);
+            $_return = array();
+            if ($result == true) {
+                $_return['status'] = 1;
+                $_return['msg'] = '菜单发布成功';
+            } else if(empty($this->_arr['resUser']['wx_appid']) || empty($this->_arr['resUser']['wx_appsecret'])) {
+                $_return['status'] = 0;
+                $_return['msg'] = "菜单发布失败\n微信授权配置的AppId和AppSecret不能为空！";
+            } else {
+                $_return['status'] = 0;
+                $_return['msg'] = "菜单发布失败\n请检查菜单中为'链接网址'的是否正确(不允许带空格，必须是http开头，并且链接地址不能为空！)";
+            }
+            if($_return['status'] >0){
+                pushJson($_return['msg']);
+            }else{
+                pushError($_return['msg']);
+            }
         }
         
         //取出所有分类
@@ -332,6 +411,29 @@ class WechatController extends AdminController {
             $this->_arr['resPage'] = $_resPage;
         }
         $this->_showDisplay();
+    }
+
+    /**
+    *   添加删除菜单
+    */
+
+    protected function wxMenu($_menu = '') {
+        //验证token
+        vendor('Weixin.wechat', '', '.class.php');
+        $options = array(
+            'token' => $this->_arr['WX_BASE']['wx_token'],
+            'appid' => $this->_arr['WX_BASE']['wx_appid'],
+            'appsecret' => $this->_arr['WX_BASE']['wx_appsecret'],
+        );
+
+        $wechatObj = new \Wechat($options);
+        //验证token end
+        if ($_menu) {
+            $result = $wechatObj->createMenu($_menu);
+        } else {
+            $result = $wechatObj->deleteMenu();
+        }
+        return $result;
     }
     
 }
