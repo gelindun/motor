@@ -2,7 +2,7 @@
 {{layout name="Public/layout" /}}
 <link href="__PUBLIC__/Admin/css/reply_news.css" rel="stylesheet" />
 <script type="text/javascript" src="__PUBLIC__/static/masonry/masonry.js"></script>
-<script type="text/javascript" src="__PUBLIC__/Admin/js/Wechat.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/wechat.js"></script>
 <script type="text/javascript">
     $(function(){
         Wechat.news();
@@ -42,7 +42,7 @@
         </div><!-- /.box-header -->
         <div class="box-body row reply" id="reply-blk">
             {{volist name="resList.lists" id="r"}}
-            <div class="col-xs-6 col-md-3 news-item">
+            <div class="col-xs-6 col-md-4 news-item">
                 <div class="panel-group" >
                     <div class="panel panel-default ">
                         <div class="panel-body " >
