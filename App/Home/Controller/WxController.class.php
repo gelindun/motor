@@ -90,13 +90,13 @@ class WxController extends HomeController {
                                     $_link = $v['url'];
                                     $preg = '|^http|';
                                     if(!preg_match($preg,$url)) {
-                                         $_link = C('MAIN_DOMAIN').$_link;
+                                         $_link = uDomain('www').$_link;
                                     }
                                 }
 
                                 $_arrNew[$k] = array(
                                         "Title" => $v['title'],
-                                        "PicUrl" => C('MAIN_DOMAIN').showPic($v['thumb']),
+                                        "PicUrl" => uDomain('www').showPic($v['thumb']),
                                         "Description" => $v['Description'],
                                         "Url" = '';
                                     )

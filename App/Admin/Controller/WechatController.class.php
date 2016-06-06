@@ -26,13 +26,14 @@ class WechatController extends AdminController {
                     $_data_temp['action'] = "edit_news";
                     $_data_temp['time_add'] = time();
                     $_data_temp['parent_id'] = 0;
-                    if((int)I('post._id')){
-                        $D_MaterialNews->where(
+                    
+                    if($k == 0){
+
+                        if((int)I('post._id')){
+                            $D_MaterialNews->where(
                                 array('parent_id' => I('post._id'))
                             )->delete();
-                    }
-                    if($k == 0){
-                        if((int)I('post._id')){
+                            $_data_temp['action'] = 'edit_news';
                             $_where_temp = array(
                                 "id" => (int)I('post._id')
                             );
@@ -43,8 +44,9 @@ class WechatController extends AdminController {
                         if($_pid){
                             $_data_temp['parent_id'] = $_pid;
                         }
-                        $D_MaterialNews->write($_data_temp);
+                        $_rst_temp = $D_MaterialNews->write($_data_temp);
                     }
+                    usleep(100000);
                 }
                 pushJson('ok');
             }
@@ -172,17 +174,24 @@ class WechatController extends AdminController {
             $_order = array('order_id' => 'ASC', 'id' => 'DESC');
             $_resColumn = $D_WxMenu->where($_where)->order($_order)->select();
             $_menu['button'] = array();
+            $D_MaterialLink = D('wx\MaterialLink');
             foreach($_resColumn as $k => $v){
-                if ($v['replay_type'] != 2) {
+                if ($v['type'] != 2) {
                     $_arr = array(
                         'type' => 'click', 'name' => $v['title'], 'key' => $v['id']
                     );
                 } else {
-                    $_link = $v['url'];
+
+                    $_link = $D_MaterialLink->where(
+                            array(
+                                    'id' => $v['rid']
+                                )
+                        )->getField('url');
                     $preg = '|^http|';
                     if(!preg_match($preg,$url)) {
-                         $_link = C('MAIN_DOMAIN').$_link;
+                         $_link = uDomain('www').$_link;
                     }
+
                     $_arr = array(
                         'type' => 'view', 'name' => $v['title'], 'url' => '' . $_link
                     );
@@ -205,7 +214,7 @@ class WechatController extends AdminController {
                                 'type' => 'click', 'name' => $vv['title'], 'key' => $vv['id']
                             );
                         } else {
-                            $D_MaterialLink = D('wx\MaterialLink');
+                           
                             $_link = $D_MaterialLink->where(
                                     array(
                                             'id' => $vv['rid']
@@ -213,10 +222,10 @@ class WechatController extends AdminController {
                                 )->getField('url');
                             $preg = '|^http|';
                             if(!preg_match($preg,$url)) {
-                                 $_link = C('MAIN_DOMAIN').$_link;
+                                 $_link = uDomain('www').$_link;
                             }
                             $_arr_c = array(
-                                'type' => 'view', 'name' => $v['title'], 'url' => '' . $_link
+                                'type' => 'view', 'name' => $vv['title'], 'url' => '' . $_link
                             );
                         }
 
@@ -232,12 +241,13 @@ class WechatController extends AdminController {
             if ($result == true) {
                 $_return['status'] = 1;
                 $_return['msg'] = '菜单发布成功';
-            } else if(empty($this->_arr['resUser']['wx_appid']) || empty($this->_arr['resUser']['wx_appsecret'])) {
+            } else if(empty($this->_arr['WX_BASE']['wx_appid']) 
+                || empty($this->_arr['WX_BASE']['wx_appsecret'])) {
                 $_return['status'] = 0;
-                $_return['msg'] = "菜单发布失败\n微信授权配置的AppId和AppSecret不能为空！";
+                $_return['msg'] = "菜单发布失败,微信授权配置的AppId和AppSecret不能为空！";
             } else {
                 $_return['status'] = 0;
-                $_return['msg'] = "菜单发布失败\n请检查菜单中为'链接网址'的是否正确(不允许带空格，必须是http开头，并且链接地址不能为空！)";
+                $_return['msg'] = "菜单发布失败,请检查菜单中为'链接网址'的是否正确(不允许带空格，必须是http开头，并且链接地址不能为空！)";
             }
             if($_return['status'] >0){
                 pushJson($_return['msg']);
@@ -418,6 +428,7 @@ class WechatController extends AdminController {
     */
 
     protected function wxMenu($_menu = '') {
+
         //验证token
         vendor('Weixin.wechat', '', '.class.php');
         $options = array(
