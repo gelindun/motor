@@ -102,8 +102,8 @@ class WxController extends HomeController {
                                 $_arrNew[$k] = array(
                                         "Title" => $v['title'],
                                         "PicUrl" => uDomain('www').showPic($v['thumb']),
-                                        "Description" => $v['Description'],
-                                        "Url" => ''
+                                        "Description" => $v['description'],
+                                        "Url" => uDomain('www','/Page/material',array('id'=>$v['id']))
                                     );
                                 if($_link){
                                     $_arrNew[$k]['Url'] = $_link;

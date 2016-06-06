@@ -1,0 +1,40 @@
+{{include file="Public:header" /}}
+<h3 class="ui-nowrap" style="text-align:center;line-height:45px;font-size:22px;">{{$resPage['title']}}</h3>
+        <section class="ui-container index-block">
+           
+            <section id="list">
+                <div>
+                    <div >
+                        
+                        <ul class="ui-list ui-list-pure mar-v-10">
+                            {{notempty name="resPage['thumb']"}}
+                            {{notempty name="resPage['incontent']"}}
+                            <li style="text-align:center;overflow:hidden;margin:0;padding:0;">
+                                    <img src="{{$resPage['thumb']|showPic}}" style="width:100%;" />
+                            </li>
+                            {{/notempty}}
+                            {{/notempty}}
+                            {{notempty name="resPage['time_add']"}}
+                            <li>
+                                <i class="ui-icon-history"></i> {{$resPage['time_add']|date='Y/m/d',###}}
+                            </li>
+                            {{/notempty}}
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-warper">
+                    {{empty name="resPage['content']"}}
+                    抱歉，小编正在抓紧时间编辑页面！
+                    {{/empty}}
+                    {{$resPage['content']|htmlspecialchars_decode|addslashes}}
+                 </div>
+
+                
+            </section>
+            
+
+
+        </section><!-- /.ui-container-->
+<!--loading-->
+
+{{include file="Public:footer" /}}

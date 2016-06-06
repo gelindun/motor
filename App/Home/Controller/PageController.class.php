@@ -35,6 +35,15 @@ class PageController extends HomeController {
         $this->_showDisplay();
     }
 
+    public function material(){
+        $D_MaterialNews = D('wx\MaterialNews');
+        $_where_e = array(
+            "id" => (int)I('get.id')
+        );
+        $_rstA = $D_MaterialNews->where($_where_e)->find();
+        $this->_arr['resPage'] = $_rstA;
+        $this->_showDisplay();
+    }
     
     
    
