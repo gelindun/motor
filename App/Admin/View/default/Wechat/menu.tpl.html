@@ -121,7 +121,7 @@
                     {{notempty name="v._child"}}
                     <ul class="sub-sortable">
                         {{volist name="v['_child']" id="r"}}
-                        <li class="sub-sort-li"  id="{{$v.id}}">
+                        <li class="sub-sort-li"  id="{{$r.id}}">
                             <span class="text">{{$r.title}}</span>
                             <div class="tools">
                                 <i class="fa fa-edit" onclick="javascript:window.location.href='{{:U('/Wechat/menu/',array('action'=>'edit','id'=>$r['id']))}}'"></i>
