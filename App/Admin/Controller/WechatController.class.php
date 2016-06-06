@@ -446,5 +446,21 @@ class WechatController extends AdminController {
         }
         return $result;
     }
+
+    public function subscribe(){
+        
+        if(I('post.action') === 'edit_subscribe'){
+            $_data = I('post.');
+            unset($_data['action']);
+            $D_SiteBase = D('site\SiteBase');
+            if($D_SiteBase->writeSubscribe($_data)){
+                pushJson('更新成功');
+            }else{
+                pushError ('更新失败');
+            }
+        }
+        $this->_arr['SUBSCRIBE_BASE'] = D('site\SiteBase')->readSubscribe();
+        $this->_showDisplay();
+    }
     
 }

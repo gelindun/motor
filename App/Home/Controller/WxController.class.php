@@ -49,6 +49,11 @@ class WxController extends HomeController {
                 if($eventArr['event'] == 'subscribe') {
                     //新增关注
                     $D_LogAttention->addDataLog($eventArr['key'],  0,$_tmpData['fromUsername']);
+                    $_subscribe = D('site\SiteBase')->readSubscribe();
+                    $_text = $_subscribe['subscribeReply'];
+                    $_rst = $weObj->text($_text)->reply();
+                    dump($_rst);
+                    exit;
                 } else if($eventArr['event'] == 'unsubscribe') {
                     //取消关注
                     $D_LogAttention->addDataLog($eventArr['key'],  2, $_tmpData['fromUsername']);
@@ -98,8 +103,8 @@ class WxController extends HomeController {
                                         "Title" => $v['title'],
                                         "PicUrl" => uDomain('www').showPic($v['thumb']),
                                         "Description" => $v['Description'],
-                                        "Url" = '';
-                                    )
+                                        "Url" => ''
+                                    );
                                 if($_link){
                                     $_arrNew[$k]['Url'] = $_link;
                                 }
