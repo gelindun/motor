@@ -145,10 +145,10 @@ class PaywxController extends HomeController {
         if($notify->checkSign() == TRUE)
         {
             if ($notify->data["return_code"] == "FAIL") {
-                $this->log_result($log_name,"【通信出错】:\n".$xml."\n");
+                $this->log_result($log_name,"【通信出错】:\n".$returnXml."\n");
                 exit('return fail');
             }elseif($notify->data["result_code"] == "FAIL"){
-                $this->log_result($log_name,"【业务出错】:\n".$xml."\n");
+                $this->log_result($log_name,"【业务出错】:\n".$returnXml."\n");
                 exit("fail");
             }else{
                 $out_trade_no = $notify->data["out_trade_no"];
@@ -160,6 +160,23 @@ class PaywxController extends HomeController {
                 );
                 $_where = array( "order_id" => $out_trade_no );
                 $D_Order->saveData($_data_order,$_where);
+
+                $D_WxTemp = D('wx\WxTemp');
+                try{
+                    $_detail_url = uDomain('www','/My/order/',array(
+                        "order_type" => "clean_form",
+                        "order_status" => "2"
+                    ));
+                    $_ext = array(
+                            "money" => "￥0.1",
+                            "product_name" => "发动机除碳"
+                        );
+                    $_openid = "oYAJKxGq8tIpyNzXb0MnvOdfk1Eo";
+                    $D_WxTemp->sendTemp($_open_id,'TM00015',$_detail_url,$_ext);
+                }catch(e){
+                    
+                }
+
                 //异步为机器解锁
                 if(!$this->_arr['order']['device_id']){
                     $this->_arr['order'] = $D_Order->where($_where)->find();
@@ -169,7 +186,7 @@ class PaywxController extends HomeController {
                         $this->_arr['order']['device_id'] = $_pro_detail['device_id'];
                     }
                 }
-                $this->log_result($log_name,"###order####:".json_encode($this->_arr['order']));
+                //$this->log_result($log_name,"###order####:".json_encode($this->_arr['order']));
                 if($this->_arr['order']['device_id']){
                     Vendor('asynHandle.asynHandle','','.class.php');
                     $obj    = new \Verdor\asynHandle\asynHandle();
@@ -183,7 +200,7 @@ class PaywxController extends HomeController {
                     $obj->Request($_url);
                     //提交设备数据log
                 }
-                $this->log_result($log_name,"pay test:".M()->_sql());
+                //$this->log_result($log_name,"pay test:".M()->_sql());
                 exit("success");
             }
             //商户自行增加处理流程,更新订单状态,数据库操作,推送支付完成信息

@@ -1,0 +1,76 @@
+
+{{layout name="Public/layout" /}}
+<link href="__PUBLIC__/Admin/css/reply_news.css" rel="stylesheet" />
+
+<script type="text/javascript" src="__PUBLIC__/Admin/js/wechat.js"></script>
+<style>p.topcolor {height:2px;}div.msgtemp{padding:5px 10px;}
+.temp-p{font-size:14px;text-align:center;line-height: 18px;padding:5px;margin:0;}
+</style>
+<script type="text/javascript">
+    $(function(){
+        Wechat.temp_message_edit();
+    })
+    
+</script>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <a href="{{:U('/Wechat/tempMessage',array('action'=>'edit'))}}">
+        	<button class="btn btn-primary btn-xs"> + 添加图文</button></a>
+        <a href="{{:U('/Wechat/tempMessage')}}">
+        	<button class="btn btn-primary btn-xs"> > 消息模板列表</button></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 素材</a></li>
+        <li class="active">模板消息</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header" style="border-bottom:1px solid #d8d8d8;">
+            <h3 class="box-title" >{{$resPage['title']}} : {{$resPage['first_class']}}/{{$resPage['second_class']}}</h3>
+            
+        </div><!-- /.box-header -->
+        <div class="box-body row reply" id="reply-blk">
+            <div class="col-md-11">
+                1、模板消息调用时主要需要模板ID和模板中各参数的赋值内容；<br />
+                2、模板中参数内容必须以".DATA"结尾，否则视为保留字；<br />
+                3、模板保留符号"{{ }}"。<br />
+                在发送时，需要将内容中的参数（{{.DATA}}内为参数）赋值替换为需要的信息<br /><br />
+            </div>
+            <div class="col-xs-6 col-md-4 news-item">
+                <div class="panel-group" >
+                    <div class="panel panel-default ">
+                        <p class="temp-p">复制对应模板消息的相关内容</p>
+                    </div>
+                    <div class="panel panel-default ">
+                        <p class="temp-p">模板ID</p>
+                        <div class="panel-body " style="height:auto;padding:15px;">
+                            <textarea class="form-control w-500"  rows="2"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-default ">
+                        <p class="temp-p">详细内容</p>
+                        <div class="panel-body " style="height:auto;">
+                            <textarea class="form-control w-500"  rows="8"></textarea>
+                        </div>
+                    </div>
+                </div><!-- block item end -->
+                <div class="panel panel-default">
+                    <div class="panel-body" style="padding-right:15px;height:auto;text-align:center;">
+                        <div class="edit btn btn-xs btn-primary" >保存</a></div>
+                    </div>
+                </div>
+            </div><!-- col -->
+  
+
+
+
+        </div><!-- /.box-body -->
+    </div>
+
+
+</section><!-- /.content -->

@@ -446,7 +446,7 @@ class WechatController extends AdminController {
         }
         return $result;
     }
-
+    //关注回复
     public function subscribe(){
         
         if(I('post.action') === 'edit_subscribe'){
@@ -462,5 +462,36 @@ class WechatController extends AdminController {
         $this->_arr['SUBSCRIBE_BASE'] = D('site\SiteBase')->readSubscribe();
         $this->_showDisplay();
     }
+
+    //模板消息
+    public function tempMessage(){
+        $D_WxTemp = D('wx\WxTemp');
+        $do_action = I('get.action');
+        $_resList = $D_WxTemp->tempBase();
+        $this->_arr['resList'] = $_resList;
+        $temp = 'tempMessage';
+        if($do_action == 'edit'){
+            $_key = I('get.key');
+            if(I('post.do_action') == 'sub_news'){
+                $_data = I('post.data');
+                
+                pushJson('ok');
+            }
+            if($_key){
+                
+                $_res = $_resList[$_key];
+                if($_res){
+                    
+                    $this->_arr['resPage'] = $_res;
+                }
+
+            }
+            $temp = 'tempMessage_edit';
+        }
+
+        
+        $this->_showDisplay($temp);
+    }
+
     
 }

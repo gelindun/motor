@@ -1,0 +1,96 @@
+
+{{layout name="Public/layout" /}}
+<link href="__PUBLIC__/Admin/css/reply_news.css" rel="stylesheet" />
+<script type="text/javascript" src="__PUBLIC__/static/masonry/masonry.js"></script>
+<script type="text/javascript" src="__PUBLIC__/Admin/js/wechat.js"></script>
+<style>p.topcolor {height:2px;}div.msgtemp{padding:5px 10px;}
+.temp-p{font-size:14px;text-align:center;line-height: 18px;padding:5px;margin:0;}
+</style>
+<script type="text/javascript">
+    $(function(){
+        Wechat.temp_message();
+    })
+    
+</script>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <a href="{{:U('/Wechat/tempMessage',array('action'=>'edit'))}}">
+        	<button class="btn btn-primary btn-xs"> + 添加图文</button></a>
+        <a href="{{:U('/Wechat/tempMessage')}}">
+        	<button class="btn btn-primary btn-xs"> > 消息模板列表</button></a>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> 素材</a></li>
+        <li class="active">模板消息</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="box">
+        <div class="box-header" style="border-bottom:1px solid #d9d9d9;">
+            <h3 class="box-title">微信公众号模板消息列表</h3>
+            <div class="box-tools">
+                <div class="input-group">
+                    <form action="{{:U('/Wechat/tempMessage')}}" method="get">
+                    <input type="text" name="keyword" value='{{$keyword}}'
+                           class="form-control input-sm " style="width: 150px;" placeholder="Search">
+                    <div class="input-group-btn ">
+                        <i class="fa fa-search"></i><input type='submit' class="btn btn-sm btn-default" />
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.box-header -->
+        <div class="box-body row reply" id="reply-blk">
+            {{volist name="resList" id="r"}}
+            <div class="col-xs-6 col-md-4 news-item">
+                <div class="panel-group" >
+                    <div class="panel panel-default ">
+                        <p class="temp-p">{{$r['title']}}</p>
+                        <p class="temp-p">{{$r['first_class']}}/{{$r['second_class']}}</p>
+                        <div class="panel-body " style="background-color:#efefef;
+                        border-top:1px solid #d9d9d9;">
+                            <div class="massage-warp" style="background-color:#fff;">
+                                <p class="topcolor" id="k_topcolor" style="background:#FF0000"></p>
+                                
+                                <div class="msgtemp">
+                                    {{first.DATA}}<br /><br />
+
+                                    支付金额：{{orderMoneySum.DATA}}<br />
+                                    商品信息：{{orderProductName.DATA}}<br />
+                                    {{Remark.DATA}}<br /><br />
+                                    <span>详情</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="padding-right:15px;height:auto;text-align:center;">
+
+                            <div class="edit btn btn-xs btn-primary" 
+                            ><a style="color:#fff;" href="{{:U('/Wechat/tempMessage',
+                            array('action'=>'edit','key'=>$r['template_id_short']))}}"> 编辑</a></div>
+
+                        </div>
+                    </div>
+                </div><!-- block item end -->
+            </div><!-- col -->
+            {{/volist}}
+
+
+
+        </div><!-- /.box-body -->
+        {{notempty name="resList.show"}}
+        <div class="box-footer clearfix">
+            {{$resList.show}}
+        </div>
+        {{/notempty}}
+    </div>
+
+
+</section><!-- /.content -->

@@ -186,5 +186,14 @@ var Wechat = {
             }
          });
 
+    },temp_message:function(){
+        
+        window.onload = window.onresize = function(){
+            var _w = parseFloat($(".news-item").eq(0).width()) + 2*parseFloat($(".news-item").css("padding-left"));
+    
+            $('#reply-blk').masonry({itemSelector:'.news-item', columnWidth:(_w+6)});
+        }
+
+        
     }
 }
