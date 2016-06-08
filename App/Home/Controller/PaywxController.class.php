@@ -161,21 +161,20 @@ class PaywxController extends HomeController {
                 $_where = array( "order_id" => $out_trade_no );
                 $D_Order->saveData($_data_order,$_where);
 
-                $D_WxTemp = D('wx\WxTemp');
-                try{
-                    $_detail_url = uDomain('www','/My/order/',array(
-                        "order_type" => "clean_form",
-                        "order_status" => "2"
-                    ));
-                    $_ext = array(
-                            "money" => "￥0.1",
-                            "product_name" => "发动机除碳"
-                        );
-                    $_openid = "oYAJKxGq8tIpyNzXb0MnvOdfk1Eo";
-                    $D_WxTemp->sendTemp($_open_id,'TM00015',$_detail_url,$_ext);
-                }catch(e){
-                    
-                }
+                // $D_WxTemp = D('wx\WxTemp');
+                // $_detail_url = uDomain('www','/My/order/',array(
+                //     "order_type" => "clean_form",
+                //     "order_status" => "2"
+                // ));
+                // $_ext = array(
+                //         "money" => "￥0.1",
+                //         "product_name" => "发动机除碳"
+                //     );
+                // $_open_id = "oYAJKxGq8tIpyNzXb0MnvOdfk1Eo";
+                
+                // $_rst_temp = $D_WxTemp->sendTemp($this->_arr['WX_BASE'],$_open_id,
+                //     'TM00015',$_detail_url,$_ext);
+                
 
                 //异步为机器解锁
                 if(!$this->_arr['order']['device_id']){

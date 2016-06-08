@@ -46,15 +46,15 @@ Class WxTempModel {
             }
     }
   */
-  public function sendTemp($_open_id,$_template_id_short,$_detail_url,$_ext = array()){
+  public function sendTemp($_options,$_open_id,$_template_id_short,$_detail_url,$_ext = array()){
     $_template = $this->tempBase($_template_id_short);
     $_template_id = $_template["template_id"];
     vendor('Weixin.wechat', '', '.class.php');
-        $options = array(
-            'token' => $this->_arr['WX_BASE']['wx_token'],
-            'appid' => $this->_arr['WX_BASE']['wx_appid'],
-            'appsecret' => $this->_arr['WX_BASE']['wx_appsecret'],
-        );
+    $options = array(
+        'token' => $_options['wx_token'],
+        'appid' => $_options['wx_appid'],
+        'appsecret' => $_options['wx_appsecret'],
+    );
     $wechatObj = new \Wechat($options);
     switch($_template_id_short){
         case "TM00015":
@@ -64,17 +64,15 @@ Class WxTempModel {
                         "color" => "#4a5077"
                     ),
                     'orderMoneySum' => array(
-                        'title' => '支付金额',
                         'value' => $_ext['money'],
                         "color" => "#4a5077"
                     ),
                     'orderProductName' => array(
-                        'title' => '商品信息',
                         'value' => $_ext['product_name'],
                         "color" => "#4a5077"
                     ),
                     'Remark' => array(
-                        'value' => "\r\n如有问题可直接在公众号留言，我们将第一时间为您服务！",
+                        'value' => "如有问题可直接在公众号留言，我们将第一时间为您服务！",
                         "color" => "#4a5077"
                     )
                 );
@@ -89,7 +87,7 @@ Class WxTempModel {
             "topcolor" => "#FF0000",
             "data" => $_data
         );
-    $_r = $weObj->sendTemplateMessage($sendData);
+    $_r = $wechatObj->sendTemplateMessage($sendData);
     return $_r;
 
   }
