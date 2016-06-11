@@ -23,14 +23,7 @@ class CommonController extends Controller {
         $this->_arr['CLEAN_PRO'] = D('product\Product')->clean_form();
         $this->_arr['s_domain'] = $_SERVER['SERVER_NAME'];
 
-        $this->_arr['WX_BASE'] = array(
-            'wx_token' => '267b78c8276e323c69d267a155e14f86',//token ,md5('wx92517b64ec9c35b0')
-            'wx_aeskey' => 'WENkxAekIREc0eP2HtoQOPLqiDMQnwOrRFnr0VuIeAB',//AESKey
-            'wx_appid' => 'wx92517b64ec9c35b0',//appid
-            'wx_appsecret' => '5942af545618e950a3ce6447eea8ca17',//appsecret
-            'wx_pay_mchid' => '1322218301',//WXPAY_MCHID
-            'wx_pay_key' => '293cb31f6acbaaed291a3b5fc1adc28f' //WXPAY_KEY md5(wx_pay_mchid)
-        );
+        $this->_arr['WX_BASE'] = C('WX_BASE');
         $_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
         if(strstr($_user_agent, 'micromessenger')) {
             $this->_arr['isWeixin'] = true;

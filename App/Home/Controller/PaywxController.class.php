@@ -146,7 +146,7 @@ class PaywxController extends HomeController {
         {
             if ($notify->data["return_code"] == "FAIL") {
                 $this->log_result($log_name,"【通信出错】:\n".$returnXml."\n");
-                exit('return fail');
+                exit('fail');
             }elseif($notify->data["result_code"] == "FAIL"){
                 $this->log_result($log_name,"【业务出错】:\n".$returnXml."\n");
                 exit("fail");
@@ -160,31 +160,67 @@ class PaywxController extends HomeController {
                 );
                 $_where = array( "order_id" => $out_trade_no );
                 $D_Order->saveData($_data_order,$_where);
+                if(!$this->_arr['order']['device_id']){
+                    $this->_arr['order'] = $D_Order->where($_where)->find();
+                }
+                $_pro_info = json_decode($this->_arr['order']['product_info'],true);
+                $_pro_detail = $_pro_info[0]['product_detail'];
+                if($_pro_detail['device_id']){
+                    $this->_arr['order']['device_id'] = $_pro_detail['device_id'];
+                }
+                if($_pro_detail['store_id']){
+                    $_store_name = D('merchant')->where(array(
+                            'id' => $_pro_detail['store_id']
+                        ))->getField('store_name');
+                }
 
-                // $D_WxTemp = D('wx\WxTemp');
-                // $_detail_url = uDomain('www','/My/order/',array(
-                //     "order_type" => "clean_form",
-                //     "order_status" => "2"
-                // ));
-                // $_ext = array(
-                //         "money" => "￥0.1",
-                //         "product_name" => "发动机除碳"
-                //     );
-                // $_open_id = "oYAJKxGq8tIpyNzXb0MnvOdfk1Eo";
-                
-                // $_rst_temp = $D_WxTemp->sendTemp($this->_arr['WX_BASE'],$_open_id,
-                //     'TM00015',$_detail_url,$_ext);
+                $D_NotifyOrder = D('log\NotifyOrder');
+                $_notify_sent = $D_NotifyOrder->where(array(
+                        "order_id" => $out_trade_no
+                    ))->getField('id');
+                if(!$_notify_sent){
+                    $_data_notify = array(
+                        "order_id" => $out_trade_no
+                        );
+                    $D_NotifyOrder->addData($_data_notify);
+                    $notifyData = $notify->xmlToArray($xml);
+                    //$this->log_result($log_name,"【业务通知】:\n".$_strXml."\n");
+                    if($notifyData['openid']){
+                        $D_WxTemp = D('wx\WxTemp');
+                        $_detail_url = uDomain('www','/My/order/',array(
+                            "order_type" => "clean_form",
+                            "order_status" => "2"
+                        ));
+                        $_ext = array(
+                                "money" => "￥".floatval($notifyData['cash_fee']/100),
+                                "product_name" => "发动机除碳"
+                            );
+                        $_open_id = $notifyData['openid'];
+                        $_rst_temp = $D_WxTemp->sendTemp($this->_arr['WX_BASE'],$_open_id,
+                            'TM00015',$_detail_url,$_ext);
+                    }
+
+                    //管理员新订单通知
+                    $_detail_url = uDomain('admin','/Order/index/');
+
+                    $_ext = array(
+                            "tradeDateTime" => date('Y-m-d H:i:s',$this->_arr['order']['time_pay']),
+                            "orderType" => "发动机除碳",
+                            "customerInfo" => $_pro_detail['nickName'],
+                            "orderItemName" => "下单门店",
+                            "orderItemData" => $_store_name,
+                            "remark" => "订单金额：￥".$_pro_info[0]['price']
+                            .' 实付金额：￥'.$this->_arr['order']['price']
+                        );
+                    //$_open_id = "oYAJKxO6wWMWJ-Ax0MOV6ydn-INs";
+                    $_open_id = C("ADMIN_OPENID");
+                    $_rst_temp = $D_WxTemp->sendTemp($this->_arr['WX_BASE'],$_open_id,
+                        'TM00351',$_detail_url,$_ext);
+                }
                 
 
                 //异步为机器解锁
-                if(!$this->_arr['order']['device_id']){
-                    $this->_arr['order'] = $D_Order->where($_where)->find();
-                    $_pro_info = json_decode($this->_arr['order']['product_info'],true);
-                    $_pro_detail = $_pro_info[0]['product_detail'];
-                    if($_pro_detail['device_id']){
-                        $this->_arr['order']['device_id'] = $_pro_detail['device_id'];
-                    }
-                }
+
                 //$this->log_result($log_name,"###order####:".json_encode($this->_arr['order']));
                 if($this->_arr['order']['device_id']){
                     Vendor('asynHandle.asynHandle','','.class.php');

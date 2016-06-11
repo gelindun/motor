@@ -14,6 +14,13 @@ Class WxTempModel {
             "title" => "订单支付成功",
             "template_id_short" => "TM00015",
             "template_id" => "RlzwVwIEhfjkE-3_UGSoarsEeXw2VMFdjcoc4-xtFTU"
+        ),
+        "TM00351" => array(
+            "first_class" => "IT科技",
+            "second_class" => "互联网|电子商务",
+            "title" => "新订单通知",
+            "template_id_short" => "TM00351",
+            "template_id" => "CC1GXttduCluc5YnqYZxbFwUMA2QXXdEbu3k6xan_Y8"
         )
     );
     if($_arr[$_key]){
@@ -56,27 +63,61 @@ Class WxTempModel {
         'appsecret' => $_options['wx_appsecret'],
     );
     $wechatObj = new \Wechat($options);
+    $_color_blue = "#4a5077";
     switch($_template_id_short){
         case "TM00015":
             $_data = array(
                     'first' => array(
                         'value' => "您的订单已支付成功!",
-                        "color" => "#4a5077"
+                        "color" => $_color_blue
                     ),
                     'orderMoneySum' => array(
                         'value' => $_ext['money'],
-                        "color" => "#4a5077"
+                        "color" => $_color_blue
                     ),
                     'orderProductName' => array(
                         'value' => $_ext['product_name'],
-                        "color" => "#4a5077"
+                        "color" => $_color_blue
                     ),
                     'Remark' => array(
                         'value' => "如有问题可直接在公众号留言，我们将第一时间为您服务！",
-                        "color" => "#4a5077"
+                        "color" => $_color_blue
                     )
                 );
         break;
+        case "TM00351":
+            $_data = array(
+                'first' => array(
+                    'value' => "您收到了一条新的订单!",
+                    "color" => $_color_blue
+                ),
+                'tradeDateTime' => array(
+                    'value' => $_ext['tradeDateTime'],
+                    "color" => $_color_blue
+                ),
+                'orderType' => array(
+                    'value' => $_ext['orderType'],
+                    "color" => $_color_blue
+                ),
+                'customerInfo' => array(
+                    'value' => $_ext['customerInfo'],
+                    "color" => $_color_blue
+                ),
+                'orderItemName' => array(
+                    'value' => $_ext['orderItemName'],
+                    "color" => $_color_blue
+                ),
+                'orderItemData' => array(
+                    'value' => $_ext['orderItemData'],
+                    "color" => $_color_blue
+                ),
+                'remark' => array(
+                    'value' => $_ext['remark']?$_ext['remark']:"",
+                    "color" => $_color_blue
+                )
+            );
+        break;
+
         default :
         break;
     }
