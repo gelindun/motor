@@ -39,6 +39,7 @@
                         <th>ID</th>
                         <th>名称/类型</th>
                         <th>状态</th>
+                        <th>已派送</th>
                         <th>发放时间</th>
                         <th>可用时间</th>
                         <th>备注</th>
@@ -49,6 +50,7 @@
                         <td>{{$r.id}}</td>
                         <td>{{$r.title}}/{{$r.type}}</td>
                         <td>{{notempty name="r.status"}}已启用{{else /}}已禁用{{/notempty}}</td>
+                        <td>{{$r.sended}}<br />
                         <td>{{$r.time_start|date='Y-m-d H:i', ###}}<br />
                             {{$r.time_end|date='Y-m-d H:i', ###}}
                         </td>

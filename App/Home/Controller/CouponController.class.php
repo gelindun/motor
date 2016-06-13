@@ -50,6 +50,9 @@ class CouponController extends HomeController {
                         "least_cost" => $_data['least_cost']
                     );
                 $D_CouponUser->addData($_data_u);
+                D('coupon\Coupon')->where(array(
+                        "id" => $_data['id']
+                    ))->setInc("sended",1);
             }
             safeGetCookie('dataCoupon',null);
             redirect('/My/coupon');

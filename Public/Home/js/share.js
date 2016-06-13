@@ -70,7 +70,7 @@ $(function () {
                     //alert("result:"+JSON.stringify(res) + " obj"+JSON.stringify(dataForWeixin))
                 },
                 success: function (res) {
-                    if (success_ext)
+                    if (typeof(success_ext)!="undefined")
                         success_ext(res);
                     else
                         success_callback(res);
@@ -86,7 +86,7 @@ $(function () {
                 trigger: function (res) {
                 },
                 success: function (res) {
-                    if (success_ext)
+                    if (typeof(success_ext)!="undefined")
                         success_ext(res, 1);
                     else
                         success_callback(res, 1);
